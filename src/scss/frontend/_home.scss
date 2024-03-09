@@ -1,0 +1,304 @@
+// @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+/* Define a variable for the Fira Code font */
+$fira-code-font: 'Montserrat';
+
+.home {
+    .fontFamily {
+        font-family: $fira-code-font;
+    }
+
+    .light-table {
+        .ant-table {
+            .ant-table-tbody {
+                .ant-table-cell {
+                    .ant-table-row-expand-icon {
+                        background-color: white;
+                        color: black;
+                    }
+                }
+            }
+        }
+    }
+
+    .dark-table {
+        .ant-table {
+            background-color: #202020;
+
+            .ant-table-thead {
+                .ant-table-cell {
+                    background-color: #202020 !important;
+                }
+
+                .ant-table-cell:hover {
+                    background-color: #202020 !important;
+                }
+
+            }
+
+            .ant-table-tbody {
+                .ant-table-cell {
+                    .ant-table-row-expand-icon {
+                        background-color: #202020;
+                        color: white;
+                    }
+                }
+
+                .ant-table-column-sort {
+                    background-color: #202020;
+                    color: white;
+                }
+
+                .ant-table-cell-fix-left {
+                    background-color: #202020;
+                    color: white;
+                }
+            }
+
+        }
+
+        .ant-pagination {
+            .ant-pagination-prev {
+                .ant-pagination-item-link {
+                    color: white;
+                }
+            }
+
+            .ant-pagination-item-active {
+                color: #202020 !important;
+            }
+
+            .ant-pagination-item {
+                color: white;
+            }
+
+            .ant-pagination-next {
+                .ant-pagination-item-link {
+                    color: white;
+                }
+
+            }
+        }
+
+        .ant-table-column-sorter {
+            color: white;
+        }
+
+        .ant-table-thead>tr>th {
+            background-color: #202020;
+            color: white !important;
+        }
+
+        .ant-table-cell {
+            color: white !important;
+        }
+
+        .ant-table-cell-row-hover {
+            background-color: #202020 !important;
+            color: white !important;
+        }
+
+        .ant-table-expanded-row-fixed {
+            background-color: #202020 !important;
+        }
+
+        .ant-empty-description {
+            color: white;
+        }
+
+        .ant-spin {
+            .ant-spin-dot {
+                .ant-spin-dot-item {
+                    background-color: white;
+                }
+            }
+        }
+    }
+
+    .staking-calculator {
+
+        .ant-space {
+            width: 100% !important;
+        }
+
+        .ant-space-item {
+            width: 100% !important;
+        }
+
+        .ant-space-compact {
+            width: 100% !important;
+        }
+
+        .ant-select {
+            width: 50%;
+        }
+
+        .dark-dropdown {
+            background-color: #202020;
+
+            .ant-select-selector {
+                background-color: #202020;
+
+                .ant-select-selection-item {
+                    color: white !important;
+                }
+
+                .ant-select-selection-search-input {
+                    margin-top: 10px;
+                    margin-left: 0px;
+                    color: white !important;
+                }
+            }
+
+            .ant-select-open {
+                .ant-select-selection-item {
+                    color: white !important;
+                }
+            }
+
+            .ant-select-arrow {
+                color: white;
+            }
+
+            .ant-select-selection-placeholder {
+                color: rgba(255, 255, 255, 0.623)
+            }
+
+        }
+
+        .ant-select-selector {
+            width: 100% !important;
+            height: 50px !important;
+            padding: 10px !important;
+
+            .ant-select-selection-search-input {
+                margin-top: 10px;
+                margin-left: 0px;
+                // color: white !important;
+            }
+        }
+
+        .ant-input {
+            width: 50% !important;
+        }
+
+        .ant-input {
+            border-top-left-radius: 0px !important;
+            border-bottom-left-radius: 0px !important;
+            border-top-right-radius: 6px !important;
+            border-bottom-right-radius: 6px !important;
+        }
+
+        .input-placeholder::placeholder {
+            color: rgba(255, 255, 255, 0.623);
+        }
+
+        .rtl-input {
+            direction: rtl;
+            text-align: right;
+            /* For left-aligned text within the input */
+        }
+    }
+
+    .stake-tao {
+        .ant-select-selector {
+            width: 100%;
+            height: 50px;
+            padding: 10px;
+
+            .ant-select-selection-search-input {
+                margin-top: 10px;
+                margin-left: 0px;
+            }
+
+        }
+
+        .input-with-button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .ant-input {
+            height: 50px;
+        }
+
+        .input-with-button input {
+            padding: 10px;
+            border-top-right-radius: 6;
+            border-bottom-right-radius: 6;
+        }
+
+        .input-with-button button {
+            position: absolute;
+            right: 8px;
+            border-top-left-radius: 6;
+            border-bottom-left-radius: 6;
+        }
+
+        .dark-dropdown {
+            .ant-select-selector {
+                background-color: #202020;
+
+                .ant-select-selection-search-input {
+                    margin-top: 10px;
+                    margin-left: 0px;
+                    color: white !important;
+                }
+
+                .ant-select-selection-item {
+                    color: white !important;
+                }
+            }
+
+            .ant-select-open {
+                .ant-select-selection-item {
+                    color: white !important;
+                }
+            }
+
+            .ant-select-arrow {
+                color: white;
+            }
+
+            .ant-select-selection-placeholder {
+                color: rgba(255, 255, 255, 0.623)
+            }
+
+
+        }
+
+        .ant-select-selection-search-input {
+            margin-top: 10px;
+            margin-left: 0px;
+        }
+
+        .input-placeholder::placeholder {
+            color: rgba(255, 255, 255, 0.623);
+        }
+
+        .select-placeholder::placeholder {
+            // background-color: aqua !important;
+            color: rgba(255, 255, 255, 0.623) !important;
+        }
+
+        .input-label {
+            .ant-row {
+                .ant-col {
+                    label {
+                        color: white !important;
+                    }
+                }
+            }
+        }
+
+        .spinner-dark-mode {
+            .ant-spin-dot {
+                .ant-spin-dot-item {
+                    background-color: white;
+                }
+            }
+
+        }
+    }
+}

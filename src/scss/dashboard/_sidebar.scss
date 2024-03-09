@@ -1,0 +1,164 @@
+// .logo {
+//     // max-width: 135px;
+//     display: block;
+//     margin: 48px auto;
+// }
+
+
+
+.ant-layout {
+    background-color: $body-light;
+}
+
+.ant-layout-sider {
+    border-right: 1px dashed rgba(0, 0, 0, 0.2) !important;
+}
+
+.ant-menu {
+    padding: 10px;
+}
+
+.ant-menu-item {
+    margin-bottom: 20px !important;
+    margin-inline: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+
+    &:last-child {
+        margin-bottom: 80px !important;
+    }
+}
+
+.ant-menu-submenu {
+    margin-bottom: 30px !important;
+
+    .ant-menu-submenu-title {
+        margin-inline: 0 !important;
+    }
+
+    .ant-menu.ant-menu-sub {
+        background-color: $primary !important;
+    }
+
+    .ant-menu.ant-menu-sub {
+        background-color: $primary !important;
+    }
+
+    .ant-menu-item {
+        &:last-child {
+            margin-bottom: 0px !important;
+        }
+    }
+}
+
+/* Light Mode */
+// .dashboard.light {
+
+//     .ant-menu-dark .ant-menu-item-selected {
+//         background-color: #323743;
+//         color: white;
+//     }
+
+//     .ant-menu-dark .ant-menu-item-selected:hover {
+//         background-color: #323743;
+//         color: white;
+//     }
+
+//     /* Hovered menu item */
+//     .ant-menu-dark .ant-menu-item:hover {
+//         color: #323743;
+//     }
+
+//     .ant-layout-sider-trigger {
+//         background-color: #fcfcfc !important;
+//         color: black !important;
+//         border-right: 1px dashed rgba(0, 0, 0, 0.2) !important;
+//     }
+// }
+
+.dashboard.light {
+
+    /* Selected menu item */
+    .ant-menu-dark .ant-menu-item-selected {
+        background-color: #323743;
+        color: white;
+    }
+
+    /* Hovered state of selected menu item */
+    .ant-menu-dark .ant-menu-item-selected:hover {
+        background-color: #323743 !important;
+        color: white !important;
+    }
+
+    /* Hovered menu item */
+    .ant-menu-dark .ant-menu-item:hover {
+        background-color: #fcfcfc;
+        color: #323743;
+    }
+
+    /* Trigger */
+    .ant-layout-sider-trigger {
+        background-color: #fcfcfc !important;
+        color: black !important;
+        border-right: 1px dashed rgba(0, 0, 0, 0.2) !important;
+    }
+}
+
+
+/* Dark Mode */
+.dashboard.dark {
+    // .ant-layout-sider {
+    //     border-right: 1px dashed rgba(255, 7, 7) !important;
+    // }
+
+    .ant-menu-dark .ant-menu-item-selected {
+        background-color: #323743;
+    }
+
+    .ant-layout-sider-trigger {
+        background-color: #0d1321 !important;
+        // border-right: 1px dashed rgba(255, 7, 7) !important;
+    }
+}
+
+
+
+// .dashboard.light {
+//     .ant-layout-sider {
+//         border-right: 1px dashed rgba(0, 0, 0, 0.2) !important;
+//     }
+
+//     .ant-menu-dark .ant-menu-item-selected {
+//         background-color: #323743;
+//     }
+
+
+//     .ant-layout-sider-trigger {
+//         background-color: #fcfcfc !important;
+//         color: black !important;
+//         border-right: 1px dashed rgba(0, 0, 0, 0.2) !important;
+//     }
+// }
+
+// .dashboard.dark {
+//     .ant-layout-sider {
+//         // border-right: 1px dashed rgba(0, 0, 0, 0.2) !important;
+//         border-right: 1px dashed rgba(255, 7, 7) !important;
+//     }
+
+//     .ant-menu-dark .ant-menu-item-selected {
+//         background-color: #323743;
+//     }
+
+//     .ant-layout-sider-trigger {
+//         background-color: #0d1321 !important;
+//         border-right: 1px dashed rgba(255, 7, 7) !important;
+//     }
+// }
+
+// :where(.css-dev-only-do-not-override-1d5dsaa).ant-menu-dark .ant-menu-item-selected,
+// :where(.css-dev-only-do-not-override-1d5dsaa).ant-menu-dark>.ant-menu .ant-menu-item-selected {
+//     background-color: white !important;
+//     color: black;
+// }

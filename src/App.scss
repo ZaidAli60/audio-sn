@@ -1,0 +1,44 @@
+.dashboard.light {
+    background-color: #fcfcfc;
+    color: black !important;
+}
+
+.dashboard.dark {
+    background-color: #121212;
+    color: #fcfcfc;
+}
+
+@import "./scss/bootstrap";
+@import "./scss//frontend/navbar";
+@import "./scss/dashboard";
+@import "./scss/screen-loader";
+@import "./scss/buttons";
+@import "./scss/utilities";
+@import "./scss/frontend/home";
+@import "./scss/frontend/faqs";
+@import "./scss/frontend/footer";
+@import "./scss/frontend/404page";
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.ant-layout {
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+@media (min-width: 1920px) {
+    .custom-xxl-padding {
+        padding-left: 5rem !important;
+        padding-right: 5rem !important;
+    }
+}
