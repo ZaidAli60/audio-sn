@@ -1,0 +1,114 @@
+.login {
+
+
+    .hover-text:hover {
+        color: #26f7c5 !important;
+        transition: 0.5s;
+    }
+
+    .google-button {
+        font-size: 14px;
+        font-weight: 600;
+        background-color: white;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        border-radius: 18px;
+        color: #818181;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    .facebook-button {
+        font-size: 14px;
+        font-weight: 600;
+        background-color: #1877f2;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        border-radius: 18px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    .input-form {
+        .floating-label-content {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .floating-label {
+            color: #838282;
+            font-size: 15px;
+            font-weight: 600;
+            position: absolute;
+            pointer-events: none;
+            left: 15px;
+            top: 19px;
+            padding: 0 5px;
+            background: black;
+            transition: 0.2s ease all;
+            -moz-transition: 0.2s ease all;
+            -webkit-transition: 0.2s ease all;
+        }
+
+        .floating-input {
+            font-size: 16px;
+            display: block;
+            width: 100%;
+            height: 60px;
+            padding: 0 20px;
+            background: transparent;
+            color: white;
+            border: 1px solid #414141;
+            box-sizing: border-box;
+
+            &:focus {
+                border: 1px solid #26f7c5;
+                outline: none;
+
+                ~.floating-label {
+                    top: -8px;
+                    font-size: 13px;
+                    color: #26f7c5;
+                    font-weight: normal;
+                }
+            }
+        }
+
+        .floating-input:hover {
+            border: 1px solid white;
+            transition: 0.5s;
+        }
+
+        .floating-input:not(:placeholder-shown)~.floating-label {
+            top: -8px;
+            font-size: 13px;
+        }
+
+        .eye-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    }
+
+    .fullscreen-video {
+        height: 100vh;
+        width: 100%;
+        object-fit: cover;
+        // position: absolute;
+        inset: 0px;
+    }
+}
