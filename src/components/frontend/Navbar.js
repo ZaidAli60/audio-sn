@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Drawer, Menu } from 'antd'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { data } from "pages/Dashboard/SidebarItems"
 import { LiaBarsSolid } from 'react-icons/lia'
 
@@ -8,6 +8,8 @@ export default function Navbar() {
     const [selectedItem, setSelectedItem] = useState("home");
     const [drawerVisible, setDrawerVisible] = useState(false);
     const [isNavbarShadowed, setIsNavbarShadowed] = useState(false);
+
+    let navigate = useNavigate()
 
     useEffect(() => {
         let keys = window.location.pathname.split("/")
@@ -49,7 +51,7 @@ export default function Navbar() {
                         <Button className={`custom-btn`} shape="round" style={{ backgroundColor: "#8fb9ff" }}>Try it out for free</Button>
                     </div>
                     <div className="d-none d-lg-block me-2">
-                        <Button className={`custom-btn loginbtn`} shape="round">Log in</Button>
+                        <Button className={`custom-btn loginbtn`} shape="round" onClick={() => { navigate("auth") }}>Log in</Button>
                     </div>
                     <button className="navbar-toggler rounded-5 py-2 px-2" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <LiaBarsSolid className="navbar-toggler-icon" style={{ fontSize: "14px" }} />
