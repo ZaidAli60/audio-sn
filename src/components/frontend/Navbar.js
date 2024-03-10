@@ -63,11 +63,12 @@ export default function Navbar() {
                 title={
                     <div className='d-flex justify-content-between align-items-center'>
                         <div className='me-2'>
-                            <img src="" className='img-fluid' style={{ width: "170px", height: "auto" }} alt="Audio" />
+                            {/* <img src="" className='img-fluid' style={{ width: "170px", height: "auto" }} alt="Audio" /> */}
+                            <img src={`${window.logo}`} className='img-fluid me-lg-5 me-auto' style={{ width: "170px", height: "auto" }} alt="Audio" />
                         </div>
-                        <div>
+                        {/* <div>
                             <Button type="primary" className={`px-3 custom-btn`} shape="round">Connect</Button>
-                        </div>
+                        </div> */}
                     </div>
                 }
                 placement="right"
@@ -77,7 +78,7 @@ export default function Navbar() {
                 className='custom-drawer'
             >
                 <div className='py-4'>
-                    {selectedItem && <Menu theme='dark' mode="inline" defaultSelectedKeys={[selectedItem]} className="">
+                    {/* {selectedItem && <Menu theme='dark' mode="inline" defaultSelectedKeys={[selectedItem]} className="">
                         {data.map((item) => (
                             <Menu.Item
                                 key={item.key}
@@ -90,7 +91,7 @@ export default function Navbar() {
                                 {item.label}
                             </Menu.Item>
                         ))}
-                    </Menu>}
+                    </Menu>} */}
                     {/* {selectedItem && <Menu theme='dark' mode="inline" items={items} defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`} />} */}
                 </div>
             </Drawer>
