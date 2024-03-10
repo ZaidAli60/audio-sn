@@ -1,55 +1,52 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Col, Row, Typography, Button } from 'antd'
-import homeImg from "assets/images/intro-bg.jpg"
-import audioFile from "assets/images/audio.mp3"
-// import WaveSurfer from 'wavesurfer.js';
-// import { WaveformContianer, Wave, PlayButton } from "./Waveform.styled";
-// import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions.min";
-// import RegionsPlugin from "wavesurfer.js/dist/plugins/wavesurfer.regions.min";
-import { WaveSurfer, WaveForm } from "wavesurfer-react";
-import WavesurferPlayer from '@wavesurfer/react'
+import React, { useRef, useState } from 'react';
+import { Col, Row, Typography, Button } from 'antd';
+import { BsFillPauseFill } from "react-icons/bs";
+import { IoPlay } from "react-icons/io5";
+import homeImg from "assets/images/intro-bg.jpg";
+import audioFile from "assets/images/audio.mp3";
+import WavesurferPlayer from '@wavesurfer/react';
+import musicImg from "assets/images/by-musicians.png";
+
 const { Title, Text } = Typography
-
-// const Buttons = styled.div`
-//   display: inline-block;
-// `;
-
-// const Button = styled.button``;
 
 export default function Home() {
 
-    // const wavesurferRef = useRef(null);
-
-    // const handlePlayAudio = () => {
-    //     const wavesurfer = WaveSurfer.create({
-    //         container: wavesurferRef.current,
-    //         waveColor: '#999',
-    //         progressColor: '#333',
-    //         cursorWidth: 1,
-    //         cursorColor: '#333',
-    //         barWidth: 1,
-    //         barHeight: 10,
-    //         hideScrollbar: true,
-    //         responsive: true,
-    //     });
-
-    //     wavesurfer.load(audioFile);
-    //     wavesurfer.on('ready', () => {
-    //         wavesurfer.play();
-    //     });
-    // };
-
-    const [wavesurfer, setWavesurfer] = useState(null)
-    const [isPlaying, setIsPlaying] = useState(false)
+    const [wavesurfer, setWavesurfer] = useState(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const timerRef = useRef(null);
 
     const onReady = (ws) => {
-        setWavesurfer(ws)
-        setIsPlaying(false)
-    }
+        setWavesurfer(ws);
+        setIsPlaying(false);
+        setCurrentTime(0);
+        setDuration(ws.getDuration());
+    };
 
     const onPlayPause = () => {
-        wavesurfer && wavesurfer.playPause()
-    }
+        if (wavesurfer) {
+            wavesurfer.playPause();
+            setIsPlaying(!isPlaying);
+            if (!isPlaying) {
+                startTimer();
+            } else {
+                clearInterval(timerRef.current);
+            }
+        }
+    };
+
+    const startTimer = () => {
+        timerRef.current = setInterval(() => {
+            setCurrentTime(wavesurfer.getCurrentTime());
+        }, 1000);
+    };
+
+    const formatTime = (timeInSeconds) => {
+        const minutes = Math.floor(timeInSeconds / 60);
+        const seconds = Math.floor(timeInSeconds % 60);
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    };
 
     return (
         <div className={`home dashboard bg-primary min-vh-100`}>
@@ -57,12 +54,12 @@ export default function Home() {
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
 
                     <Row gutter={[16, 16]} className='mb-4'>
-                        <Col lg={8} >
+                        <Col xs={24} lg={8}>
                             <div
                                 className="card border-round-0 "
                                 style={{
                                     with: "100%",
-                                    height: "auto",
+                                    height: "100%",
                                     clipPath: "polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px)"
                                 }}
                             >
@@ -98,42 +95,45 @@ export default function Home() {
                                 </div>
                             </div>
                         </Col>
-                        <Col lg={16} >
+                        <Col xs={24} lg={16}>
                             <div className="card bg-white border-round-0 p-4"
                                 style={{
                                     borderColor: "white",
                                     clipPath: "polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px)"
                                 }}
                             >
-                                <Text className=' fs-5 opacity-75'>
-                                    Ambient Techno, meditation, Scandinavian Forest, 808 drum machine, 808 kick, claps, shaker, synthesizer, synth bass, Synth Drones, beautiful, peaceful, Ethereal, Natural, 122 BPM, Instrumental
-                                </Text>
-
-                                {/* <div>
-                                    <button onClick={handlePlayAudio}>Play Audio</button>
-                                    <div ref={wavesurferRef}></div>
-                                </div> */}
-                                <WavesurferPlayer
-                                    height={100}
-                                    // waveColor="violet"
-                                    waveColor='rgb(200, 0, 200)'
-                                    progressColor='rgb(100, 0, 100)'
-                                    barWidth="2"
-                                    // Optionally, specify the spacing between bars
-                                    barGap="1"
-                                    // And the bar radius
-                                    barRadius="2"
-                                    // url="https://api.twilio.com//2010-04-01/Accounts/AC25aa00521bfac6d667f13fec086072df/Recordings/RE6d44bc34911342ce03d6ad290b66580c.mp3"
-                                    url={`${audioFile}`}
-                                    onReady={onReady}
-                                    onPlay={() => setIsPlaying(true)}
-                                    onPause={() => setIsPlaying(false)}
-                                />
-
-                                <button onClick={onPlayPause}>
-                                    {isPlaying ? 'Pause' : 'Play'}
-                                </button>
-
+                                <div className="d-flex flex-column justify-content-between">
+                                    <Text className=' fs-5 opacity-75'>
+                                        Ambient Techno, meditation, Scandinavian Forest, 808 drum machine, 808 kick, claps, shaker, synthesizer, synth bass, Synth Drones, beautiful, peaceful, Ethereal, Natural, 122 BPM, Instrumental
+                                    </Text>
+                                    <div className='py-5 d-flex flex-column justify-content-center align-items-center'>
+                                        <img className='img-fluid  ' style={{ width: "40%" }} src={musicImg} alt="img" />
+                                    </div>
+                                    <div className="d-flex justify-content-center align-items-center">
+                                        <div className='me-2'>
+                                            <button className='btn btn-light rounded-5 border-0' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</button>
+                                        </div>
+                                        <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
+                                            <span className="current-time">{formatTime(currentTime)}</span>
+                                            <div style={{ width: "100%" }}>
+                                                <WavesurferPlayer
+                                                    height={50}
+                                                    waveColor="rgb(200, 0, 200)"
+                                                    progressColor="rgb(100, 0, 100)"
+                                                    barWidth="1"
+                                                    barGap="1"
+                                                    barRadius="1"
+                                                    url={audioFile}
+                                                    // url="https://wavesurfer.xyz/d740cbeb-abfb-43ca-978d-ddf0cca44716"
+                                                    onReady={onReady}
+                                                    onPlay={() => setIsPlaying(true)}
+                                                    onPause={() => setIsPlaying(false)}
+                                                />
+                                            </div>
+                                            <span className="duration-time">  {formatTime(duration)}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </Col>
                     </Row>
