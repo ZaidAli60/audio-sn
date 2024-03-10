@@ -96,9 +96,10 @@ export default function Home() {
                             </div>
                         </Col>
                         <Col xs={24} lg={16}>
-                            <div className="card bg-white border-round-0 p-4"
+                            <div className="card border-round-0 p-4"
                                 style={{
                                     borderColor: "white",
+                                    backgroundColor: "#f4f1ec",
                                     clipPath: "polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px)"
                                 }}
                             >
