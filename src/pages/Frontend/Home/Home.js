@@ -5,8 +5,9 @@ import audioFile from "assets/images/audio.mp3"
 // import WaveSurfer from 'wavesurfer.js';
 // import { WaveformContianer, Wave, PlayButton } from "./Waveform.styled";
 // import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions.min";
-import RegionsPlugin from "wavesurfer.js/dist/plugins/wavesurfer.regions.min";
+// import RegionsPlugin from "wavesurfer.js/dist/plugins/wavesurfer.regions.min";
 import { WaveSurfer, WaveForm } from "wavesurfer-react";
+import WavesurferPlayer from '@wavesurfer/react'
 const { Title, Text } = Typography
 
 // const Buttons = styled.div`
@@ -38,58 +39,17 @@ export default function Home() {
     //     });
     // };
 
-    const plugins = useMemo(() => {
-        return [
-            {
-                plugin: RegionsPlugin,
-                options: {
-                    dragSelection: false
-                }
-            }
-        ].filter(Boolean);
-    }, []);
+    const [wavesurfer, setWavesurfer] = useState(null)
+    const [isPlaying, setIsPlaying] = useState(false)
 
-    const wavesurferRef = useRef();
+    const onReady = (ws) => {
+        setWavesurfer(ws)
+        setIsPlaying(false)
+    }
 
-    const handleWSMount = useCallback((waveSurfer) => {
-        if (waveSurfer.markers) {
-            waveSurfer.clearMarkers();
-        }
-
-        wavesurferRef.current = waveSurfer;
-
-        if (wavesurferRef.current) {
-            wavesurferRef.current.load("/bensound-ukulele.mp3");
-
-            wavesurferRef.current.on("ready", () => {
-                console.log("WaveSurfer is ready");
-            });
-
-            wavesurferRef.current.on("region-removed", (region) => {
-                console.log("region-removed --> ", region);
-            });
-
-            wavesurferRef.current.on("loading", (data) => {
-                console.log("loading --> ", data);
-            });
-
-            if (window) {
-                window.surferidze = wavesurferRef.current;
-            }
-        }
-    }, []);
-
-    const play = useCallback(() => {
-        wavesurferRef.current.playPause();
-    }, []);
-
-    const next = useCallback(() => {
-        wavesurferRef.current.skipForward();
-    }, []);
-
-    const back = useCallback(() => {
-        wavesurferRef.current.skipBackward();
-    }, []);
+    const onPlayPause = () => {
+        wavesurfer && wavesurfer.playPause()
+    }
 
     return (
         <div className={`home dashboard bg-primary min-vh-100`}>
@@ -153,30 +113,26 @@ export default function Home() {
                                     <button onClick={handlePlayAudio}>Play Audio</button>
                                     <div ref={wavesurferRef}></div>
                                 </div> */}
-                                <div className="">
-                                    <WaveSurfer
-                                        plugins={plugins}
-                                        onMount={handleWSMount}
-                                        progressColor="#DB2C3B"
-                                        barWidth={2.67}
-                                        barGap={4}
-                                        skipLength={10}
-                                    >
-                                        <WaveForm id="waveform" cursorColor="transparent" />
-                                    </WaveSurfer>
+                                <WavesurferPlayer
+                                    height={100}
+                                    // waveColor="violet"
+                                    waveColor='rgb(200, 0, 200)'
+                                    progressColor='rgb(100, 0, 100)'
+                                    barWidth="2"
+                                    // Optionally, specify the spacing between bars
+                                    barGap="1"
+                                    // And the bar radius
+                                    barRadius="2"
+                                    // url="https://api.twilio.com//2010-04-01/Accounts/AC25aa00521bfac6d667f13fec086072df/Recordings/RE6d44bc34911342ce03d6ad290b66580c.mp3"
+                                    url={`${audioFile}`}
+                                    onReady={onReady}
+                                    onPlay={() => setIsPlaying(true)}
+                                    onPause={() => setIsPlaying(false)}
+                                />
 
-                                    <Button>
-                                        <Button onClick={back}>Voltar</Button>
-                                    </Button>
-
-                                    <Button>
-                                        <Button onClick={play}>Play / Pause</Button>
-                                    </Button>
-
-                                    <Button>
-                                        <Button onClick={next}>Pular</Button>
-                                    </Button>
-                                </div>
+                                <button onClick={onPlayPause}>
+                                    {isPlaying ? 'Pause' : 'Play'}
+                                </button>
 
                             </div>
                         </Col>
