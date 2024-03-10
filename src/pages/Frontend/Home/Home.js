@@ -6,6 +6,7 @@ import homeImg from "assets/images/intro-bg.jpg";
 import audioFile from "assets/images/audio.mp3";
 import WavesurferPlayer from '@wavesurfer/react';
 import musicImg from "assets/images/by-musicians.png";
+import RenventingMusic from './RenventingMusic';
 
 const { Title, Text } = Typography
 
@@ -54,7 +55,7 @@ export default function Home() {
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
 
                     <Row gutter={[16, 16]} className='mb-4'>
-                        <Col xs={24} lg={8}>
+                        {/* <Col xs={24} lg={8}>
                             <div
                                 className="card border-round-0 "
                                 style={{
@@ -63,7 +64,7 @@ export default function Home() {
                                     clipPath: "polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px)"
                                 }}
                             >
-                                {/* Overlay div for background color */}
+                    
                                 <img src={homeImg} alt="img" style={{ position: 'absolute', width: "100%", height: "100%", inset: "0" }} />
                                 <div
                                     style={{
@@ -80,27 +81,73 @@ export default function Home() {
                                         color: 'white', // Change text color to be visible against the background
                                     }}
                                 >
-                                    <div className='d-flex flex-column justify-content-between' style={{ height: "600px" }} >
-                                        <Title>
+                                    <div className="d-flex flex-column justify-content-between flex-grow-1" style={{ height: "100%" }}>
+                                        <Title className='mb-3'>
                                             Create music <br /> with AI.
                                         </Title>
-                                        <div className='mt-auto'>
+                                        <div>
                                             <p>
                                                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum, laboriosam moles
                                             </p>
                                             <Button type='primary' shape="round">Try it out</Button>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </Col> */}
+                        <Col xs={24} lg={8}>
+                            <div
+                                className="card border-round-0 "
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    clipPath: "polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px)"
+                                }}
+                            >
+                                {/* Overlay div for background color */}
+                                <img src={homeImg} alt="img" style={{ position: 'absolute', width: "100%", height: "100%", inset: "0" }} />
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        backgroundColor: 'rgba(226, 190, 154, 0.7)',
+                                        width: '100%',
+                                        height: '100%',
+                                    }}
+                                ></div>
 
+                                <div className='p-4'
+                                    style={{
+                                        position: 'relative',
+                                        color: 'white',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        height: '100%',
+                                    }}
+                                >
+                                    <div className="d-flex flex-column justify-content-between flex-grow-1">
+                                        <Title className='mb-3'>
+                                            Create music <br /> with AI.
+                                        </Title>
+                                    </div>
+
+                                    <div className="mt-auto">
+                                        <p>
+                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum, laboriosam moles
+                                        </p>
+                                        <Button type='primary' shape="round">Try it out</Button>
+                                    </div>
                                 </div>
                             </div>
                         </Col>
+
+
                         <Col xs={24} lg={16}>
                             <div className="card border-round-0 p-4"
                                 style={{
                                     borderColor: "white",
                                     backgroundColor: "#f4f1ec",
-                                    clipPath: "polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px)"
+                                    clipPath: "polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px)",
+                                    height: "100%"
                                 }}
                             >
                                 <div className="d-flex flex-column justify-content-between">
@@ -138,6 +185,13 @@ export default function Home() {
                             </div>
                         </Col>
                     </Row>
+
+                    {/* Renventing How to create Music Section */}
+
+                    <div>
+                        <RenventingMusic />
+                    </div>
+
                 </div>
             </div>
         </div >
