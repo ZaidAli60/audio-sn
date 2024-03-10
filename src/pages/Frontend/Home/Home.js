@@ -1,14 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Col, Row, Typography, Button } from 'antd'
 import homeImg from "assets/images/intro-bg.jpg"
 import audioFile from "assets/images/audio.mp3"
-import WaveSurfer from 'wavesurfer.js';
-
+// import WaveSurfer from 'wavesurfer.js';
+// import { WaveformContianer, Wave, PlayButton } from "./Waveform.styled";
+// import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions.min";
+import RegionsPlugin from "wavesurfer.js/dist/plugins/wavesurfer.regions.min";
+import { WaveSurfer, WaveForm } from "wavesurfer-react";
 const { Title, Text } = Typography
+
+// const Buttons = styled.div`
+//   display: inline-block;
+// `;
+
+// const Button = styled.button``;
 
 export default function Home() {
 
-    const wavesurferRef = useRef(null);
+    // const wavesurferRef = useRef(null);
 
     // const handlePlayAudio = () => {
     //     const wavesurfer = WaveSurfer.create({
@@ -23,39 +32,64 @@ export default function Home() {
     //         responsive: true,
     //     });
 
-    //     wavesurfer.load(AudioFile);
+    //     wavesurfer.load(audioFile);
     //     wavesurfer.on('ready', () => {
     //         wavesurfer.play();
     //     });
     // };
-    const handlePlayAudio = () => {
-        if (wavesurferRef.current) {
-            // If wavesurfer instance already exists, destroy it before creating a new one
-            wavesurferRef.current.destroy();
+
+    const plugins = useMemo(() => {
+        return [
+            {
+                plugin: RegionsPlugin,
+                options: {
+                    dragSelection: false
+                }
+            }
+        ].filter(Boolean);
+    }, []);
+
+    const wavesurferRef = useRef();
+
+    const handleWSMount = useCallback((waveSurfer) => {
+        if (waveSurfer.markers) {
+            waveSurfer.clearMarkers();
         }
 
-        // Create a new wavesurfer instance
-        const newWavesurfer = WaveSurfer.create({
-            container: wavesurferRef.current,
-            waveColor: '#999',
-            progressColor: '#333',
-            cursorWidth: 1,
-            cursorColor: '#333',
-            barWidth: 2,
-            barHeight: 15, // Adjust the bar height as needed
-            hideScrollbar: true,
-            responsive: true,
-        });
+        wavesurferRef.current = waveSurfer;
 
-        // Load audio file and start playing
-        newWavesurfer.load(audioFile);
-        newWavesurfer.on('ready', () => {
-            newWavesurfer.play();
-        });
+        if (wavesurferRef.current) {
+            wavesurferRef.current.load("/bensound-ukulele.mp3");
 
-        // Update the wavesurferRef to store the new instance
-        wavesurferRef.current = newWavesurfer;
-    };
+            wavesurferRef.current.on("ready", () => {
+                console.log("WaveSurfer is ready");
+            });
+
+            wavesurferRef.current.on("region-removed", (region) => {
+                console.log("region-removed --> ", region);
+            });
+
+            wavesurferRef.current.on("loading", (data) => {
+                console.log("loading --> ", data);
+            });
+
+            if (window) {
+                window.surferidze = wavesurferRef.current;
+            }
+        }
+    }, []);
+
+    const play = useCallback(() => {
+        wavesurferRef.current.playPause();
+    }, []);
+
+    const next = useCallback(() => {
+        wavesurferRef.current.skipForward();
+    }, []);
+
+    const back = useCallback(() => {
+        wavesurferRef.current.skipBackward();
+    }, []);
 
     return (
         <div className={`home dashboard bg-primary min-vh-100`}>
@@ -115,12 +149,33 @@ export default function Home() {
                                     Ambient Techno, meditation, Scandinavian Forest, 808 drum machine, 808 kick, claps, shaker, synthesizer, synth bass, Synth Drones, beautiful, peaceful, Ethereal, Natural, 122 BPM, Instrumental
                                 </Text>
 
-                                {/* <button onClick={handlePlayAudio}>Play Audio</button>
-                                <div ref={wavesurferRef}></div> */}
-
-                                <div>
+                                {/* <div>
                                     <button onClick={handlePlayAudio}>Play Audio</button>
                                     <div ref={wavesurferRef}></div>
+                                </div> */}
+                                <div className="">
+                                    <WaveSurfer
+                                        plugins={plugins}
+                                        onMount={handleWSMount}
+                                        progressColor="#DB2C3B"
+                                        barWidth={2.67}
+                                        barGap={4}
+                                        skipLength={10}
+                                    >
+                                        <WaveForm id="waveform" cursorColor="transparent" />
+                                    </WaveSurfer>
+
+                                    <Button>
+                                        <Button onClick={back}>Voltar</Button>
+                                    </Button>
+
+                                    <Button>
+                                        <Button onClick={play}>Play / Pause</Button>
+                                    </Button>
+
+                                    <Button>
+                                        <Button onClick={next}>Pular</Button>
+                                    </Button>
                                 </div>
 
                             </div>
