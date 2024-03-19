@@ -2,13 +2,13 @@ import React, { useRef, useState } from 'react';
 import { Col, Row, Typography, Button } from 'antd';
 import { BsFillPauseFill } from "react-icons/bs";
 import { IoPlay } from "react-icons/io5";
-import homeImg from "assets/images/intro-bg.jpg";
 import audioFile from "assets/images/audio.mp3";
 import WavesurferPlayer from '@wavesurfer/react';
 import musicImg from "assets/images/by-musicians.png";
 import RenventingMusic from './RenventingMusic';
+import gifVideo from "assets//video/vid_sub.mp4"
 
-const { Title, Text } = Typography
+const { Text } = Typography
 
 export default function Home() {
 
@@ -55,51 +55,24 @@ export default function Home() {
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
                     <Row gutter={[16, 16]} className='mb-4'>
                         <Col xs={24} lg={8}>
-                            <div
-                                className="card border-round-0 "
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    clipPath: "polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px)"
-                                }}
-                            >
-                                {/* Overlay div for background color */}
-                                <img src={homeImg} alt="img" style={{ position: 'absolute', width: "100%", height: "100%", inset: "0" }} />
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        backgroundColor: 'rgba(226, 190, 154, 0.7)',
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                ></div>
-
-                                <div className='p-4'
-                                    style={{
-                                        position: 'relative',
-                                        color: 'white',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        height: '100%',
-                                    }}
-                                >
-                                    <div className="d-flex flex-column justify-content-between flex-grow-1">
-                                        <Title className='mb-3'>
-                                            Create music <br /> with AI.
-                                        </Title>
-                                    </div>
-
-                                    <div className="mt-auto">
-                                        <p>
-                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum, laboriosam moles
-                                        </p>
-                                        <Button type='primary' shape="round">Try it out</Button>
+                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "100%" }}  >
+                                <video src={gifVideo} className='rounded-4' autoPlay muted loop playsInline controls={false}
+                                    style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute" }} >
+                                </video>
+                                <div className='z-3 p-3 h-100' >
+                                    <div className='z-3 p-3 d-flex flex-column justify-content-between h-100'>
+                                        <div className='mb-3'>
+                                            <h1 className='fw-bold'>Create music <br />with AI.</h1>
+                                        </div>
+                                        <div>
+                                            <p className='fs-5'>Generate high-quality audio that you can use commercially.</p>
+                                            <p className='fs-5'>Get started for free.</p>
+                                            <Button type='primary' shape="round">Try it out</Button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </Col>
-
-
                         <Col xs={24} lg={16}>
                             <div className="card border-round-0 p-4"
                                 style={{
