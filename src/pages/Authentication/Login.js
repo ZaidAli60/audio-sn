@@ -4,12 +4,16 @@ import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
 import { Divider } from 'antd';
 import video from 'assets/images/videoBg.mp4'
+import { useAuthContext } from 'context/AuthContext';
+import GoogleLogin from './GoogleLogin';
 
 const initialState = { email: "", password: "", }
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState('password')
     const [state, setState] = useState(initialState);
+    const { data } = useAuthContext()
+    console.log('data', data)
 
 
     const handleChange = (e) => {
@@ -20,8 +24,9 @@ export default function Login() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(state)
-
     }
+
+
     return (
         <div className='container-fluid login'>
             <div className="row">
@@ -46,6 +51,8 @@ export default function Login() {
                             </button>
 
                         </div>
+                        {/* <GoogleLogin logo_alignment='center' onSuccess={handleOnSuccess} onError={handleOnError} /> */}
+                        <GoogleLogin />
                         <Divider className='text-white border-white'>OR</Divider>
                         <div className='input-form'>
                             <div className='floating-label-content'>

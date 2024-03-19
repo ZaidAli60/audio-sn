@@ -53,48 +53,7 @@ export default function Home() {
         <div className={`home dashboard bg-primary min-vh-100`}>
             <div className="container-fluid px-xxl-3 px-lg-4 py-2">
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
-
                     <Row gutter={[16, 16]} className='mb-4'>
-                        {/* <Col xs={24} lg={8}>
-                            <div
-                                className="card border-round-0 "
-                                style={{
-                                    with: "100%",
-                                    height: "100%",
-                                    clipPath: "polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px)"
-                                }}
-                            >
-                    
-                                <img src={homeImg} alt="img" style={{ position: 'absolute', width: "100%", height: "100%", inset: "0" }} />
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        backgroundColor: 'rgba(226, 190, 154, 0.7)', // Adjust background color and opacity as needed
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                ></div>
-
-                                <div className='p-4'
-                                    style={{
-                                        position: 'relative',
-                                        color: 'white', // Change text color to be visible against the background
-                                    }}
-                                >
-                                    <div className="d-flex flex-column justify-content-between flex-grow-1" style={{ height: "100%" }}>
-                                        <Title className='mb-3'>
-                                            Create music <br /> with AI.
-                                        </Title>
-                                        <div>
-                                            <p>
-                                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum, laboriosam moles
-                                            </p>
-                                            <Button type='primary' shape="round">Try it out</Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </Col> */}
                         <Col xs={24} lg={8}>
                             <div
                                 className="card border-round-0 "

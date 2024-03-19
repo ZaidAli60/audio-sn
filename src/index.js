@@ -6,14 +6,20 @@ import "./config/global"
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BrowserRouter } from 'react-router-dom';
 import SidebarContextProvider from './context/SideBarContext';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import AuthContextProvider from 'context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <SidebarContextProvider>
-        <App />
-      </SidebarContextProvider>
+      <GoogleOAuthProvider clientId="274409146209-qp9qp2au3k9bgghu8tb7urf2j7qal8e3.apps.googleusercontent.com">
+        <AuthContextProvider>
+          <SidebarContextProvider>
+            <App />
+          </SidebarContextProvider>
+        </AuthContextProvider>
+      </GoogleOAuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
