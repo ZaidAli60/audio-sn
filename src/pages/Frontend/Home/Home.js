@@ -12,6 +12,7 @@ import gifVideo from "assets//video/vid_sub.mp4"
 import audioGif from "assets/video/audio.gif"
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { TbPlayerTrackPrevFilled } from "react-icons/tb";
+import tss1 from "assets/tts/TTS.wav"
 
 const { Text } = Typography
 
@@ -22,7 +23,7 @@ const musicData = [
 ];
 
 const speechData = [
-    { title: "Speech 1", url: "speech1 " },
+    { title: "Speech 1", url: tss1 },
     { title: "Speech 2", url: "speech2" },
     { title: "Speech 3", url: "speech3" }
 ];
