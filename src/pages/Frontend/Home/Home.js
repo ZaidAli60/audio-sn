@@ -117,7 +117,7 @@ export default function Home() {
                             {/* </div> */}
                             <div className='card rounded-4 border-0' style={{ width: "100%", height: "100%", borderColor: "white", backgroundColor: "#f4f1ec", }}  >
                                 <div className='p-3 d-flex flex-column justify-content-between'>
-                                    <div>
+                                    <div className='text-center'>
                                         <Button type='primary' shape="round">Text-2-Music</Button>
                                         <Button type='primary' shape="round">Text-2-Speech</Button>
                                     </div>
@@ -125,7 +125,7 @@ export default function Home() {
                                         <div>
                                             <Button shape="circle" size='large' ><TbPlayerTrackPrevFilled className='fs-5' /></Button>
                                         </div>
-                                        <img src={audioGif} className='img-fluid' alt="gif" />
+                                        <img src={audioGif} className='img-fluid ' alt="gif" />
                                         <div>
                                             <Button shape="circle" size='large' ><TbPlayerTrackNextFilled className='fs-5' /></Button>
                                         </div>
@@ -137,7 +137,6 @@ export default function Home() {
                                         <div className="d-flex justify-content-center align-items-center">
                                             <div className='me-2'>
                                                 <Button shape="circle" size='large' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
-                                                {/* <button className='btn btn-light rounded-5 border-0' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</button> */}
                                             </div>
                                             <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
                                                 <span className="current-time">{formatTime(currentTime)}</span>
