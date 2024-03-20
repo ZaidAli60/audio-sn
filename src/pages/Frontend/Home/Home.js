@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Col, Row, Typography, Button } from 'antd';
 import { BsFillPauseFill } from "react-icons/bs";
 import { IoPlay } from "react-icons/io5";
-import audioFile from "assets/images/audio.mp3";
+import audio1 from "assets/music/audio.mp3";
+import audio2 from "assets/music/audio2.mp3";
+import audio3 from "assets/music/audio3.mp3";
 import WavesurferPlayer from '@wavesurfer/react';
 import musicImg from "assets/images/by-musicians.png";
 import RenventingMusic from './RenventingMusic';
@@ -11,8 +13,19 @@ import audioGif from "assets/video/audio.gif"
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 
-
 const { Text } = Typography
+
+const musicData = [
+    { title: "Music 1", url: audio1 },
+    { title: "Music 2", url: audio2 },
+    { title: "Music 3", url: audio3 }
+];
+
+const speechData = [
+    { title: "Speech 1", url: "speech1 " },
+    { title: "Speech 2", url: "speech2" },
+    { title: "Speech 3", url: "speech3" }
+];
 
 export default function Home() {
 
@@ -21,13 +34,41 @@ export default function Home() {
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const timerRef = useRef(null);
-    const [wave, setWave] = useState(null);
+    const [activeBtn, setActiveBtn] = useState("music")
+    const [currentSongIndex, setCurrentSongIndex] = useState(0);
+    const [isCurrentTimeSet, setIsCurrentTimeSet] = useState(false);
+    // console.log('wavesurfer', wavesurfer)
 
-    const onReady = (ws) => {
+
+    const handleText2Music = () => {
+        setActiveBtn("music");
+        setCurrentSongIndex(0); // Reset song index when switching to music
+    }
+
+    const handleText2Speech = () => {
+        setActiveBtn("speech");
+        setCurrentSongIndex(0); // Reset song index when switching to speech
+    }
+
+    const handleNextSong = () => {
+        const data = activeBtn === "music" ? musicData : speechData;
+        const nextIndex = (currentSongIndex + 1) % data.length;
+        setCurrentSongIndex(nextIndex);
+        setIsPlaying(false); // Auto-play next song
+    };
+
+    const handlePrevSong = () => {
+        const data = activeBtn === "music" ? musicData : speechData;
+        const prevIndex = (currentSongIndex - 1 + data.length) % data.length;
+        setCurrentSongIndex(prevIndex);
+        setIsPlaying(false); // Auto-play previous song
+    };
+
+    const onReady = ws => {
         setWavesurfer(ws);
         setIsPlaying(false);
-        setCurrentTime(0);
         setDuration(ws.getDuration());
+        setCurrentTime(ws.getCurrentTime()); // Set current time to the correct value when new song is loaded and ready
     };
 
     const onPlayPause = () => {
@@ -48,13 +89,11 @@ export default function Home() {
         }, 1000);
     };
 
-    const formatTime = (timeInSeconds) => {
+    const formatTime = timeInSeconds => {
         const minutes = Math.floor(timeInSeconds / 60);
         const seconds = Math.floor(timeInSeconds % 60);
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
-
-
 
     return (
         <div className={`home dashboard bg-primary min-vh-100`}>
@@ -80,31 +119,43 @@ export default function Home() {
                                 </div>
                             </div>
                         </Col>
-                        <Col xs={24} lg={16}>
-                            {/* <div className="card border-round-0 p-3" style={{ borderColor: "white", backgroundColor: "#f4f1ec", height: "100%" }} >
-                                <div className="d-flex flex-column justify-content-between">
-                                    <Text className=' fs-5 opacity-75'>
-                                        Ambient Techno, meditation, Scandinavian Forest, 808 drum machine, 808 kick, claps, shaker, synthesizer, synth bass, Synth Drones, beautiful, peaceful, Ethereal, Natural, 122 BPM, Instrumental
-                                    </Text>
-                                    <div className='py-5 d-flex flex-column justify-content-center align-items-center'>
-                                        <img className='img-fluid  ' style={{ width: "40%" }} src={musicImg} alt="img" />
+                        {/* <Col xs={24} lg={16}>
+                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "100%", borderColor: "white", backgroundColor: "#f4f1ec", }}  >
+                                <div className='p-3 d-flex flex-column justify-content-between'>
+                                    <div className='text-center'>
+
+                                        <Button type={`${activeBtn === "music" ? "primary" : "default"}`} shape="round" className='me-2' onClick={() => handleText2Music()}>Text-2-Music</Button>
+
+                                        <Button type={`${activeBtn === "speech" ? "primary" : "default"}`} shape="round" onClick={() => handleText2Speech()}>Text-2-Speech</Button>
+
+                                    </div>
+                                    <div className='d-flex justify-content-between align-items-center'>
+                                        <div>
+                                            <Button shape="circle" size='large' onClick={handlePrevSong} ><TbPlayerTrackPrevFilled className='fs-5' /></Button>
+                                        </div>
+                                        <img src={audioGif} className='img-fluid ' alt="gif" />
+                                        <div>
+                                            <Button shape="circle" size='large' onClick={handleNextSong} ><TbPlayerTrackNextFilled className='fs-5' /></Button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>{data[currentSongIndex].title}</p>
                                     </div>
                                     <div className="d-flex justify-content-center align-items-center">
                                         <div className='me-2'>
-                                            <button className='btn btn-light rounded-5 border-0' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</button>
-                                            </div>
-                                            <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
+                                            <Button shape="circle" size='large' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                        </div>
+                                        <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
                                             <span className="current-time">{formatTime(currentTime)}</span>
                                             <div style={{ width: "100%" }}>
                                                 <WavesurferPlayer
                                                     height={50}
-                                                    waveColor="rgb(200, 0, 200)"
-                                                    progressColor="rgb(100, 0, 100)"
+                                                    waveColor="rgb(169,168,178)"
+                                                    progressColor="rgb(200, 0, 200)"
                                                     barWidth="1"
                                                     barGap="1"
                                                     barRadius="1"
-                                                    url={audioFile}
-                                                    // url="https://wavesurfer.xyz/d740cbeb-abfb-43ca-978d-ddf0cca44716"
+                                                    url={audioData[currentSongIndex]?.url}
                                                     onReady={onReady}
                                                     onPlay={() => setIsPlaying(true)}
                                                     onPause={() => setIsPlaying(false)}
@@ -113,50 +164,51 @@ export default function Home() {
                                             <span className="duration-time">  {formatTime(duration)}</span>
                                         </div>
                                     </div>
-                                </div> */}
-                            {/* </div> */}
-                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "100%", borderColor: "white", backgroundColor: "#f4f1ec", }}  >
+                                </div>
+                            </div>
+                        </Col> */}
+
+                        <Col xs={24} lg={16}>
+                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "100%", borderColor: "white", backgroundColor: "#f4f1ec" }}>
                                 <div className='p-3 d-flex flex-column justify-content-between'>
                                     <div className='text-center'>
-                                        <Button type='primary' shape="round">Text-2-Music</Button>
-                                        <Button type='primary' shape="round">Text-2-Speech</Button>
+                                        <Button type={`${activeBtn === "music" ? "primary" : "default"}`} shape="round" className='me-2' onClick={handleText2Music}>Text-2-Music</Button>
+                                        <Button type={`${activeBtn === "speech" ? "primary" : "default"}`} shape="round" onClick={handleText2Speech}>Text-2-Speech</Button>
                                     </div>
                                     <div className='d-flex justify-content-between align-items-center'>
                                         <div>
-                                            <Button shape="circle" size='large' ><TbPlayerTrackPrevFilled className='fs-5' /></Button>
+                                            <Button shape="circle" size='large' onClick={() => handlePrevSong()}><TbPlayerTrackPrevFilled className='fs-5' /></Button>
                                         </div>
-                                        <img src={audioGif} className='img-fluid ' alt="gif" />
+
+                                        <img src={activeBtn === "music" ? audioGif : audioGif} className='img-fluid' alt="gif" />
                                         <div>
-                                            <Button shape="circle" size='large' ><TbPlayerTrackNextFilled className='fs-5' /></Button>
+                                            <Button shape="circle" size='large' onClick={() => handleNextSong()}><TbPlayerTrackNextFilled className='fs-5' /></Button>
                                         </div>
                                     </div>
                                     <div>
-                                        <p>Ambient Techno, meditation, Scandinavian Forest, 808 drum machine, 808 kick, claps, shaker, synthesizer, synth bass, Synth Drones, beautiful, peaceful, Ethereal, Natural, 122 BPM, Instrumental</p>
+                                        <p>{activeBtn === "music" ? musicData[currentSongIndex]?.title : speechData[currentSongIndex]?.title}</p>
                                     </div>
-                                    <div className="card border-0 rounded-4">
-                                        <div className="d-flex justify-content-center align-items-center">
-                                            <div className='me-2'>
-                                                <Button shape="circle" size='large' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                    <div className="d-flex justify-content-center align-items-center">
+                                        <div className='me-2'>
+                                            <Button shape="circle" size='large' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                        </div>
+                                        <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
+                                            <span className="current-time">{formatTime(currentTime)}</span>
+                                            <div style={{ width: "100%" }}>
+                                                <WavesurferPlayer
+                                                    height={50}
+                                                    waveColor="rgb(169,168,178)"
+                                                    progressColor="rgb(200, 0, 200)"
+                                                    barWidth="1"
+                                                    barGap="1"
+                                                    barRadius="1"
+                                                    url={activeBtn === "music" ? musicData[currentSongIndex]?.url : speechData[currentSongIndex]?.url}
+                                                    onReady={onReady}
+                                                    onPlay={() => setIsPlaying(true)}
+                                                    onPause={() => setIsPlaying(false)}
+                                                />
                                             </div>
-                                            <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
-                                                <span className="current-time">{formatTime(currentTime)}</span>
-                                                <div style={{ width: "100%" }}>
-                                                    <WavesurferPlayer
-                                                        height={50}
-                                                        waveColor="rgb(169,168,178)"
-                                                        progressColor="rgb(200, 0, 200)"
-                                                        barWidth="1"
-                                                        barGap="1"
-                                                        barRadius="1"
-                                                        url={audioFile}
-                                                        // url="https://wavesurfer.xyz/d740cbeb-abfb-43ca-978d-ddf0cca44716"
-                                                        onReady={onReady}
-                                                        onPlay={() => setIsPlaying(true)}
-                                                        onPause={() => setIsPlaying(false)}
-                                                    />
-                                                </div>
-                                                <span className="duration-time">  {formatTime(duration)}</span>
-                                            </div>
+                                            <span className="duration-time">  {formatTime(duration)}</span>
                                         </div>
                                     </div>
                                 </div>
