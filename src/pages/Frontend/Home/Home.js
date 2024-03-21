@@ -171,12 +171,12 @@ export default function Home() {
 
                         <Col xs={24} lg={16}>
                             <div className='card rounded-4 border-0' style={{ width: "100%", height: "100%", borderColor: "white", backgroundColor: "#f4f1ec" }}>
-                                <div className='p-3 d-flex flex-column justify-content-between'>
+                                <div className='p-4 d-flex flex-column justify-content-between'>
                                     <div className='text-center'>
                                         <Button type={`${activeBtn === "music" ? "primary" : "default"}`} shape="round" className='me-2' onClick={handleText2Music}>Text-2-Music</Button>
                                         <Button type={`${activeBtn === "speech" ? "primary" : "default"}`} shape="round" onClick={handleText2Speech}>Text-2-Speech</Button>
                                     </div>
-                                    <div className='d-flex justify-content-between align-items-center'>
+                                    <div className='d-flex justify-content-between align-items-center py-2'>
                                         <div>
                                             <Button shape="circle" size='large' onClick={() => handlePrevSong()}><TbPlayerTrackPrevFilled className='fs-5' /></Button>
                                         </div>
