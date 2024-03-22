@@ -197,7 +197,7 @@ export default function Home() {
                                             <span className="current-time">{formatTime(currentTime)}</span>
                                             <div style={{ width: "100%" }}>
                                                 <WavesurferPlayer
-                                                    height={50}
+                                                    height={40}
                                                     waveColor="rgb(169,168,178)"
                                                     progressColor="rgb(200, 0, 200)"
                                                     barWidth="1"
