@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import reinventingicon from "assets/images/reinventing-icon.png"
 import { GoClockFill } from "react-icons/go";
 import { RiNumbersFill } from "react-icons/ri";
 import { Col, Row, Input, Typography, Button } from 'antd'
 import uidesktopImg from "assets/images/ui-example-desktop.png"
 import { InfoCircleOutlined } from '@ant-design/icons'
+import musicImg from "assets/images/by-musicians.png";
+import WavesurferPlayer from '@wavesurfer/react';
+import { BsFillPauseFill } from "react-icons/bs";
+import { IoPlay } from "react-icons/io5";
+import audio4 from "assets/music/deep-future-garage-royalty-free-music-163081.mp3"
+
 const { Title, Text } = Typography
 const { TextArea } = Input;
 
@@ -12,6 +18,12 @@ const { TextArea } = Input;
 export default function RenventingMusic() {
 
     const [seconds, setSeconds] = useState(0);
+    const [wavesurfer, setWavesurfer] = useState(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const timerRef = useRef(null);
+    const [wave, setWave] = useState(null);
 
     const handleDecrease = () => {
         if (seconds > 0) {
@@ -23,11 +35,43 @@ export default function RenventingMusic() {
         setSeconds(seconds + 1);
     };
 
+
+
+
+    const onReady = (ws) => {
+        setWavesurfer(ws);
+        setIsPlaying(false);
+        setCurrentTime(0);
+        setDuration(ws.getDuration());
+    };
+    const onPlayPause = () => {
+        if (wavesurfer) {
+            wavesurfer.playPause();
+            setIsPlaying(!isPlaying);
+            if (!isPlaying) {
+                startTimer();
+            } else {
+                clearInterval(timerRef.current);
+            }
+        }
+    };
+    const startTimer = () => {
+        timerRef.current = setInterval(() => {
+            setCurrentTime(wavesurfer.getCurrentTime());
+        }, 1000);
+    };
+    const formatTime = (timeInSeconds) => {
+        const minutes = Math.floor(timeInSeconds / 60);
+        const seconds = Math.floor(timeInSeconds % 60);
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    };
+
+
     return (
         <div className="py-5">
             <div className="py-5">
                 <div className='py-5'>
-                    <div className="">
+                    <div className="text-center">
                         <img src={reinventingicon} className='img-fluid mb-4' width="100px" alt="img" />
                         <div style={{ maxWidth: "400px", margin: "0 auto", textAlign: "center" }}>
                             <Title>Reinventing how we create music.</Title>
@@ -109,7 +153,38 @@ export default function RenventingMusic() {
                             <Col xs={24} md={24} lg={16} xxl={16}>
                                 <div className='mb-3'>
                                     <div className="card rounded-4 border-0 p-4 h-100">
-                                        <h1>card 2</h1>
+                                        <div className='d-flex gap-3 mb-5'>
+                                            <div >
+                                                <img src={musicImg} className='img-fluid' style={{ width: "300px" }} alt="gif" />
+                                            </div>
+                                            <div>
+                                                <Title level={4}>Deep Future</Title>
+                                                <p>Deep Future Garage (Royalty Free Music)</p>
+                                            </div>
+                                        </div>
+                                        <div className='d-flex justify-content-center align-items-center'>
+                                            <div className='me-2'>
+                                                <Button shape="circle" size='large' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                            </div>
+                                            <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
+                                                <span className="current-time">{formatTime(currentTime)}</span>
+                                                <div style={{ width: "100%" }}>
+                                                    <WavesurferPlayer
+                                                        height={50}
+                                                        waveColor="rgb(169,168,178)"
+                                                        progressColor="rgb(200, 0, 200)"
+                                                        barWidth="1"
+                                                        barGap="1"
+                                                        barRadius="1"
+                                                        url={audio4}
+                                                        onReady={onReady}
+                                                        onPlay={() => setIsPlaying(true)}
+                                                        onPause={() => setIsPlaying(false)}
+                                                    />
+                                                </div>
+                                                <span className="duration-time">  {formatTime(duration)}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
