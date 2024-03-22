@@ -208,6 +208,7 @@ export default function RenventingMusic() {
                                 </div>
                                 <div>
                                     <div className="card rounded-4 border-0 p-4 h-100">
+                                        <div className="badge text-bg-primary mb-4" style={{ width: "70px" }}>History</div>
                                         <div className='d-flex justify-content-between align-items-center'>
                                             <div className='d-flex align-items-center gap-3'>
                                                 <Button shape="circle" size='large' onClick={onPlayPause}>
