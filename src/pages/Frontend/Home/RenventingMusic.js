@@ -208,8 +208,27 @@ export default function RenventingMusic() {
                                 </div>
                                 <div>
                                     <div className="card rounded-4 border-0 p-4 h-100">
-                                        <h1>card 3</h1>
+                                        <div className='d-flex justify-content-between align-items-center'>
+                                            <div className='d-flex align-items-center gap-3'>
+                                                <Button shape="circle" size='large' onClick={onPlayPause}>
+                                                    {isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}
+                                                </Button>
+                                                <div>
+                                                    <Title level={5}>Deep Future Garage (Royalty Free Music)</Title>
+                                                    <span className="opacity-75"> {formatTime(duration)} / 1 day ago</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <Button type="text" size='large' shape='circle' onClick={() => setModal2Open(true)}>
+                                                    <IoShareSocialOutline className='fs-5 opacity-75' />
+                                                </Button>
+                                                <Button type="text" size='large' shape='circle'>
+                                                    <AiOutlineDownload className='fs-5 opacity-75' />
+                                                </Button>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
                             </Col>
                         </Row>
