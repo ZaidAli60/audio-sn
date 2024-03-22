@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import reinventingicon from "assets/images/reinventing-icon.png"
 import { GoClockFill } from "react-icons/go";
 import { RiNumbersFill } from "react-icons/ri";
-import { Col, Row, Input, Typography, Button } from 'antd'
+import { Col, Row, Input, Typography, Button, Modal } from 'antd'
 import uidesktopImg from "assets/images/ui-example-desktop.png"
 import { InfoCircleOutlined } from '@ant-design/icons'
 import musicImg from "assets/images/by-musicians.png";
@@ -10,6 +10,10 @@ import WavesurferPlayer from '@wavesurfer/react';
 import { BsFillPauseFill } from "react-icons/bs";
 import { IoPlay } from "react-icons/io5";
 import audio4 from "assets/music/deep-future-garage-royalty-free-music-163081.mp3"
+import { IoShareSocialOutline } from "react-icons/io5";
+import { AiOutlineDownload } from "react-icons/ai";
+
+
 
 const { Title, Text } = Typography
 const { TextArea } = Input;
@@ -24,6 +28,7 @@ export default function RenventingMusic() {
     const [duration, setDuration] = useState(0);
     const timerRef = useRef(null);
     const [wave, setWave] = useState(null);
+    const [modal2Open, setModal2Open] = useState(false);
 
     const handleDecrease = () => {
         if (seconds > 0) {
@@ -163,14 +168,12 @@ export default function RenventingMusic() {
                                             </div>
                                         </div>
                                         <div className='d-flex justify-content-center align-items-center'>
-                                            <div className='me-2'>
+                                            <div className='d-flex justify-content-center align-items-center me-4' style={{ flex: '1 1 0%', gap: "1rem" }}>
                                                 <Button shape="circle" size='large' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
-                                            </div>
-                                            <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
                                                 <span className="current-time">{formatTime(currentTime)}</span>
                                                 <div style={{ width: "100%" }}>
                                                     <WavesurferPlayer
-                                                        height={50}
+                                                        height={30}
                                                         waveColor="rgb(169,168,178)"
                                                         progressColor="rgb(200, 0, 200)"
                                                         barWidth="1"
@@ -183,6 +186,22 @@ export default function RenventingMusic() {
                                                     />
                                                 </div>
                                                 <span className="duration-time">  {formatTime(duration)}</span>
+                                            </div>
+                                            <div>
+                                                <Button type="text" size='large' shape='circle' onClick={() => setModal2Open(true)}><IoShareSocialOutline className='fs-5 opacity-75' /></Button>
+                                                <Button type="text" size='large' shape='circle' ><AiOutlineDownload className='fs-5 opacity-75' /></Button>
+                                                <Modal
+                                                    title="Share track link"
+                                                    centered
+                                                    open={modal2Open}
+                                                    onOk={() => setModal2Open(false)}
+                                                    onCancel={() => setModal2Open(false)}
+                                                    footer={null}
+                                                >
+                                                    <p>some contents...</p>
+                                                    <p>some contents...</p>
+                                                    <p>some contents...</p>
+                                                </Modal>
                                             </div>
                                         </div>
                                     </div>
