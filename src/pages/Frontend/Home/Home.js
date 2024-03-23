@@ -8,8 +8,9 @@ import audio3 from "assets/music/audio3.mp3";
 import WavesurferPlayer from '@wavesurfer/react';
 import musicImg from "assets/images/by-musicians.png";
 import RenventingMusic from './RenventingMusic';
-import gifVideo from "assets//video/vid_sub.mp4"
-import audioGif from "assets/video/audio.gif"
+import gifVideo from "assets/video/vid_sub.mp4"
+import circularWaves from "assets/images/circular-wave.gif"
+import circle from "assets/images/circle.png"
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import tss1 from "assets/tts/TTS.wav"
@@ -39,6 +40,10 @@ export default function Home() {
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
     const [isCurrentTimeSet, setIsCurrentTimeSet] = useState(false);
     // console.log('wavesurfer', wavesurfer)
+
+    const togglePlayback = () => {
+        setIsPlaying(prevState => !prevState);
+    };
 
 
     const handleText2Music = () => {
@@ -171,6 +176,7 @@ export default function Home() {
 
                         <Col xs={24} lg={16}>
                             <div className='card rounded-4 border-0' style={{ width: "100%", height: "100%", borderColor: "white", backgroundColor: "#f4f1ec" }}>
+
                                 <div className='p-4 d-flex flex-column justify-content-between'>
                                     <div className='text-center'>
                                         <Button type={`${activeBtn === "music" ? "primary" : "default"}`} shape="round" className='me-2' onClick={handleText2Music}>Text-2-Music</Button>
@@ -181,7 +187,21 @@ export default function Home() {
                                             <Button shape="circle" size='large' onClick={() => handlePrevSong()}><TbPlayerTrackPrevFilled className='fs-5' /></Button>
                                         </div>
 
-                                        <img src={activeBtn === "music" ? audioGif : audioGif} className='img-fluid' alt="gif" />
+                                        {/* <img src={activeBtn === "music" ? audioGif : audioGif} className='img-fluid' alt="gif" /> */}
+                                        {/* <div> */}
+                                        {isPlaying ? (
+                                            <img
+                                                src={circularWaves}
+                                                className='img-fluid img1'
+                                                alt="Circular Waves"
+                                            />
+                                        ) : (
+                                            <img
+                                                className='img-fluid img1'
+                                                src={circle}
+                                                alt="Circle"
+                                            />
+                                        )}
                                         <div>
                                             <Button shape="circle" size='large' onClick={() => handleNextSong()}><TbPlayerTrackNextFilled className='fs-5' /></Button>
                                         </div>

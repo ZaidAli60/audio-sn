@@ -3,17 +3,15 @@ import reinventingicon from "assets/images/reinventing-icon.png"
 import { GoClockFill } from "react-icons/go";
 import { RiNumbersFill } from "react-icons/ri";
 import { Col, Row, Input, Typography, Button, Modal } from 'antd'
-import uidesktopImg from "assets/images/ui-example-desktop.png"
 import { InfoCircleOutlined } from '@ant-design/icons'
-import musicImg from "assets/images/by-musicians.png";
-import WavesurferPlayer from '@wavesurfer/react';
 import { BsFillPauseFill } from "react-icons/bs";
 import { IoPlay } from "react-icons/io5";
-import audio4 from "assets/music/deep-future-garage-royalty-free-music-163081.mp3"
 import { IoShareSocialOutline } from "react-icons/io5";
 import { AiOutlineDownload } from "react-icons/ai";
-
-
+import WavesurferPlayer from '@wavesurfer/react';
+import audio4 from "assets/music/deep-future-garage-royalty-free-music-163081.mp3"
+import circularWaves from "assets/images/circular-wave.gif"
+import circle from "assets/images/circle.png"
 
 const { Title, Text } = Typography
 const { TextArea } = Input;
@@ -27,7 +25,6 @@ export default function RenventingMusic() {
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const timerRef = useRef(null);
-    const [wave, setWave] = useState(null);
     const [modal2Open, setModal2Open] = useState(false);
 
     const handleDecrease = () => {
@@ -39,9 +36,6 @@ export default function RenventingMusic() {
     const handleIncrease = () => {
         setSeconds(seconds + 1);
     };
-
-
-
 
     const onReady = (ws) => {
         setWavesurfer(ws);
@@ -89,7 +83,6 @@ export default function RenventingMusic() {
                                 Audio-2-Audio
                             </span>
                         </div>
-
                     </div>
 
                     <div className='py-5'>
@@ -158,9 +151,22 @@ export default function RenventingMusic() {
                             <Col xs={24} md={24} lg={16} xxl={16}>
                                 <div className='mb-3'>
                                     <div className="card rounded-4 border-0 p-4 h-100">
-                                        <div className='d-flex gap-3 mb-5'>
+                                        <div className='d-flex gap-3 mb-1'>
                                             <div >
-                                                <img src={musicImg} className='img-fluid' style={{ width: "300px" }} alt="gif" />
+                                                {/* <img src={musicImg} className='img-fluid' style={{ width: "300px" }} alt="gif" /> */}
+                                                {isPlaying ? (
+                                                    <img
+                                                        src={circularWaves}
+                                                        className='img-fluid img1'
+                                                        alt="Circular Waves"
+                                                    />
+                                                ) : (
+                                                    <img
+                                                        className='img-fluid img1'
+                                                        src={circle}
+                                                        alt="Circle"
+                                                    />
+                                                )}
                                             </div>
                                             <div>
                                                 <Title level={4}>Deep Future</Title>

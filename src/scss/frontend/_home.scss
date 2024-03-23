@@ -4,6 +4,110 @@
 $fira-code-font: 'Montserrat';
 
 .home {
+
+
+    .img1 {
+        user-select: none;
+        -drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+    // .center {
+    //     position: fixed;
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%, -50%);
+    // }
+
+    // .circle-music-waves {
+    //     height: 180px;
+    //     width: 180px;
+    //     border: 20px solid #403e35;
+    //     border-radius: 50%;
+    //     background-color: #FFC525;
+    //     position: relative;
+    //     animation: pulse 2s infinite linear;
+    //     box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+    // }
+
+    // @keyframes pulse {
+    //     0% {
+    //         transform: scale(0.8);
+    //     }
+
+    //     50% {
+    //         transform: scale(1.2);
+    //     }
+
+    //     100% {
+    //         transform: scale(0.8);
+    //     }
+    // }
+
+
+    .audio-player {
+        position: relative;
+        width: 100px;
+        /* Adjust width as needed */
+        height: 100px;
+        /* Adjust height as needed */
+    }
+
+    .audio-wave {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        /* Adjust width as needed */
+        height: 100px;
+        /* Adjust height as needed */
+        animation: waveAnimation 1.5s infinite linear;
+        opacity: 0.8;
+    }
+
+    @keyframes waveAnimation {
+        0% {
+            transform: scale(0.8);
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(0.8);
+        }
+    }
+
+    .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #03a9f4;
+        /* Adjust color as needed */
+        color: #fff;
+        /* Adjust color as needed */
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease-out;
+    }
+
+    .play-button:hover {
+        background-color: #0288d1;
+        /* Adjust hover color as needed */
+    }
+
+
+
     .fontFamily {
         font-family: $fira-code-font;
     }
