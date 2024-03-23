@@ -148,7 +148,7 @@ export default function RenventingMusic() {
                                     </div>
                                 </div>
                             </Col>
-                            <Col xs={24} md={24} lg={16} xxl={16}>
+                            <Col xs={24} md={24} lg={14} xxl={16}>
                                 <div className='mb-3'>
                                     <div className="card rounded-4 border-0 p-4 h-100">
                                         <div className='d-flex gap-3 mb-1'>
