@@ -77,10 +77,10 @@ export default function RenventingMusic() {
                         </div>
                         <div className="d-flex justify-content-center gap-2">
                             <span className='border border-dark rounded-4 px-3'>
-                                Text-2-Audio
+                                Text-2-Music
                             </span>
                             <span className='border border-dark rounded-4 px-3'>
-                                Audio-2-Audio
+                                Text-2-Speech
                             </span>
                         </div>
                     </div>
