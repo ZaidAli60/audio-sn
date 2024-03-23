@@ -153,20 +153,7 @@ export default function RenventingMusic() {
                                     <div className="card rounded-4 border-0 p-4 h-100">
                                         <div className='d-flex gap-3 mb-1'>
                                             <div >
-                                                {/* <img src={musicImg} className='img-fluid' style={{ width: "300px" }} alt="gif" /> */}
-                                                {isPlaying ? (
-                                                    <img
-                                                        src={circularWaves}
-                                                        className='img-fluid img1'
-                                                        alt="Circular Waves"
-                                                    />
-                                                ) : (
-                                                    <img
-                                                        className='img-fluid img1'
-                                                        src={circle}
-                                                        alt="Circle"
-                                                    />
-                                                )}
+                                                <img src={`${isPlaying ? circularWaves : circle}`} className='img-fluid' alt="Circular Waves" />
                                             </div>
                                             <div>
                                                 <Title level={4}>Deep Future</Title>

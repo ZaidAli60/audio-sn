@@ -189,7 +189,7 @@ export default function Home() {
 
                                         {/* <img src={activeBtn === "music" ? audioGif : audioGif} className='img-fluid' alt="gif" /> */}
                                         {/* <div> */}
-                                        {isPlaying ? (
+                                        {/* {isPlaying ? (
                                             <img
                                                 src={circularWaves}
                                                 className='img-fluid img1'
@@ -201,7 +201,8 @@ export default function Home() {
                                                 src={circle}
                                                 alt="Circle"
                                             />
-                                        )}
+                                        )} */}
+                                        <img src={`${isPlaying ? circularWaves : circle}`} className='img-fluid' alt="Circular Waves" />
                                         <div>
                                             <Button shape="circle" size='large' onClick={() => handleNextSong()}><TbPlayerTrackNextFilled className='fs-5' /></Button>
                                         </div>
