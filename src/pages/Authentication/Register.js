@@ -4,13 +4,15 @@ import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
 import { Divider } from 'antd';
 import video from 'assets/images/videoBg.mp4'
+import axios from 'axios';
+import { useAuthContext } from 'context/AuthContext';
 
 const initialState = { email: "", password: "", }
 
 export default function Register() {
+    const { dispatch } = useAuthContext()
     const [showPassword, setShowPassword] = useState('password')
     const [state, setState] = useState(initialState);
-
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -19,9 +21,32 @@ export default function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(state)
+        // console.log(state)
+        const { email, password } = state;
+        const formData = { email, password }
 
+        axios.post(`http://85.239.241.96:8000/react/email-signup`, formData)
+            .then(res => {
+                console.log('res', res)
+                let { status, data } = res
+                if (status === 200) {
+                    localStorage.setItem("jwt", JSON.stringify({ token: data.access_token }));
+                    dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
+                    window.toastify("Your account has been created successfully", "success")
+                }
+            })
+            .catch(err => {
+                const { response } = err
+                if (response?.status === 400) {
+                    window.toastify("User already exists. Please sign in instead.", "error")
+                } else {
+                    localStorage.removeItem("jwt")
+                    window.toastify(err?.response?.data?.error || "Something went wrong while creating your account, please try again", "error")
+                }
+                // setIsProcessing(false)
+            })
     }
+
     return (
         <div className='container-fluid login'>
             <div className="row">

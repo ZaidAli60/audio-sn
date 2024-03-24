@@ -52,9 +52,9 @@ export default function AuthContextProvider({ children }) {
         const { token } = data;
         console.log('token', token)
         const config = { headers: { Authorization: `Bearer ${token}` } }
-        axios.get(`http://38.80.122.248:40337/react/auth/user`, config)
+        axios.get(`http://85.239.241.96:8000/react/auth/user`, config)
             .then(res => {
-
+                console.log('resData', res)
                 let { data, status } = res
                 if (status === 200) {
                     let user = { ...data, roles: ["superAdmin"] }
@@ -73,27 +73,27 @@ export default function AuthContextProvider({ children }) {
             })
     }, [getUser])
 
-
-
     const handleLogout = () => {
         const token = accessToken
         console.log('accessToken', token)
-        const config = { headers: { Authorization: `Bearer ${123456}` } }
-        axios.get(`http://38.80.122.248:40337/react/signout`, {}, config)
-            .then(res => {
-                console.log('res', res)
-                let { data, status } = res
-                if (status === 200) {
-                    googleLogout()
-                    window.toastify(data.message, "success")
-                    localStorage.removeItem("jwt")
-                    dispatch({ type: "SET_LOGGED_OUT" })
-                }
-            })
-            .catch(err => {
-                console.error('err', err)
-                window.toastify("Something went wrong", "error")
-            })
+        localStorage.removeItem("jwt")
+        dispatch({ type: "SET_LOGGED_OUT" })
+        // const config = { headers: { Authorization: `Bearer ${123456}` } }
+        // axios.get(`http://85.239.241.96:8000/react/signout`, {}, config)
+        //     .then(res => {
+        //         console.log('res', res)
+        //         let { data, status } = res
+        //         if (status === 200) {
+        //             googleLogout()
+        //             window.toastify(data.message, "success")
+        //             localStorage.removeItem("jwt")
+        //             dispatch({ type: "SET_LOGGED_OUT" })
+        //         }
+        //     })
+        //     .catch(err => {
+        //         console.error('err', err)
+        //         window.toastify("Something went wrong", "error")
+        //     })
     }
 
 

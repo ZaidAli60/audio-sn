@@ -65,7 +65,7 @@ export default function Navbar() {
 
                         {
                             !isAuthenticated ?
-                                <Button className={`custom-btn loginbtn`} shape="round" onClick={() => { navigate("auth/login") }}>Log in</Button>
+                                <Button className={`custom-btn loginbtn`} shape="round" onClick={() => { navigate("auth") }}>Log in</Button>
                                 :
                                 <Dropdown
                                     menu={{
