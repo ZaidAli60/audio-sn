@@ -23,10 +23,10 @@ const reducer = (state, { type, payload }) => {
 
 export default function AuthContextProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState)
-    const [data, setData] = useState("false");
+    // const [data, setData] = useState("false");
     const [isAppLoading, setIsAppLoding] = useState(true)
     const [accessToken, setAccessToken] = useState("");
-    console.log('accessToken', accessToken)
+    console.log('isAppLoading', isAppLoading)
 
     const getUser = useCallback((user) => {
         console.log('user', user)
@@ -76,6 +76,7 @@ export default function AuthContextProvider({ children }) {
     const handleLogout = () => {
         const token = accessToken
         console.log('accessToken', token)
+        googleLogout()
         localStorage.removeItem("jwt")
         dispatch({ type: "SET_LOGGED_OUT" })
         // const config = { headers: { Authorization: `Bearer ${123456}` } }
@@ -110,7 +111,7 @@ export default function AuthContextProvider({ children }) {
 
 
     return (
-        <AuthContext.Provider value={{ ...state, data, dispatch, readUserProfile, handleLogout }}>
+        <AuthContext.Provider value={{ ...state, dispatch, readUserProfile, handleLogout }}>
             {children}
         </AuthContext.Provider>
     )

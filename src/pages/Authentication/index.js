@@ -12,9 +12,6 @@ export default function index() {
                 <Route path='register' element={<Register />} />
                 <Route path='forgot-password' element={<ForgotPassword />} />
             </Route>
-            {/* <Route path='login' element={<Login />} />
-            <Route path='register' element={<Register />} />
-            <Route path='forgot-password' element={<ForgotPassword />} /> */}
         </Routes>
     )
 }

@@ -1,22 +1,20 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FcGoogle } from "react-icons/fc";
+import { useAuthContext } from 'context/AuthContext';
 import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import { Divider } from 'antd';
 import video from 'assets/images/videoBg.mp4'
-import { useAuthContext } from 'context/AuthContext';
 import GoogleLogin from './GoogleLogin';
 import axios from 'axios';
 
 const initialState = { email: "", password: "", }
 
 export default function Login() {
+
     const { dispatch } = useAuthContext()
     const [showPassword, setShowPassword] = useState('password')
     const [state, setState] = useState(initialState);
-    const { data } = useAuthContext()
-    console.log('data', data)
-
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -25,11 +23,9 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(state)
 
         axios.post(`http://85.239.241.96:8000/react/email-signin`, state)
             .then(res => {
-                console.log('res', res)
                 let { status, data } = res
                 if (status === 200) {
                     localStorage.setItem("jwt", JSON.stringify({ token: data.access_token }));
@@ -38,18 +34,11 @@ export default function Login() {
                 }
             })
             .catch(err => {
-                console.log('err', err)
-                // const { response } = err
-                // if (response?.status === 400) {
-                //     window.toastify("User already exists. Please sign in instead.", "error")
-                // } else {
-                //     localStorage.removeItem("jwt")
-                // }
-                // window.toastify(err?.response?.data?.error || "Something went wrong while creating your account, please try again", "error")
+                // console.log('err', err)
+                window.toastify(err.response?.data?.error || "Something went wrong while signing in", "error")
                 // setIsProcessing(false)
             })
     }
-
 
     return (
         <div className='container-fluid login'>

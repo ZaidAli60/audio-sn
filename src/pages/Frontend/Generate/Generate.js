@@ -4,7 +4,7 @@ import { RiNumbersFill } from "react-icons/ri";
 import { Col, Row, Input, Typography, Button, Modal } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { BsFillPauseFill } from "react-icons/bs";
-import { IoMagnetOutline, IoPlay } from "react-icons/io5";
+import { IoPlay } from "react-icons/io5";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { AiOutlineDownload } from "react-icons/ai";
 import WavesurferPlayer from '@wavesurfer/react';

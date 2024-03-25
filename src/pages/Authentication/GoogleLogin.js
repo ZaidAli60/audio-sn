@@ -3,7 +3,6 @@ import { useAuthContext } from 'context/AuthContext';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 
-
 export default function Google() {
     const { dispatch } = useAuthContext();
 

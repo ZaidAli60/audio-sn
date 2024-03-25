@@ -11,7 +11,7 @@ export default function Index() {
         <Routes>
             <Route path='/*' element={<Frontend />} />
             {/* <Route path='/auth/*' element={<Authentication />} /> */}
-            <Route path='/auth/*' element={!isAuthenticated ? <Authentication /> : <Navigate to="/" replace />} />
+            <Route path='/auth/*' element={!isAuthenticated ? <Authentication /> : <Navigate to="/generate" replace />} />
         </Routes>
     )
 }

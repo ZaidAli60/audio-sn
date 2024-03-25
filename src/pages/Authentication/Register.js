@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
+import { useAuthContext } from 'context/AuthContext';
 import { Link } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
 import { Divider } from 'antd';
 import video from 'assets/images/videoBg.mp4'
 import axios from 'axios';
-import { useAuthContext } from 'context/AuthContext';
 
 const initialState = { email: "", password: "", }
 
@@ -21,13 +21,11 @@ export default function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // console.log(state)
         const { email, password } = state;
         const formData = { email, password }
 
         axios.post(`http://85.239.241.96:8000/react/email-signup`, formData)
             .then(res => {
-                console.log('res', res)
                 let { status, data } = res
                 if (status === 200) {
                     localStorage.setItem("jwt", JSON.stringify({ token: data.access_token }));

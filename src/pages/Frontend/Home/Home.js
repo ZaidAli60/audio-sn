@@ -1,21 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Col, Row, Typography, Button } from 'antd';
+import React, { useRef, useState } from 'react';
+import { Col, Row, Button } from 'antd';
 import { BsFillPauseFill } from "react-icons/bs";
 import { IoPlay } from "react-icons/io5";
+import { TbPlayerTrackNextFilled } from "react-icons/tb";
+import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import audio1 from "assets/music/audio.mp3";
 import audio2 from "assets/music/audio2.mp3";
 import audio3 from "assets/music/audio3.mp3";
 import WavesurferPlayer from '@wavesurfer/react';
-import musicImg from "assets/images/by-musicians.png";
 import RenventingMusic from './RenventingMusic';
 import gifVideo from "assets/video/vid_sub.mp4"
 import circularWaves from "assets/images/circular-wave.gif"
 import circle from "assets/images/circle.png"
-import { TbPlayerTrackNextFilled } from "react-icons/tb";
-import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import tss1 from "assets/tts/TTS.wav"
-
-const { Text } = Typography
 
 const musicData = [
     { title: "Music 1", url: audio1 },
@@ -39,9 +36,9 @@ export default function Home() {
     const [activeBtn, setActiveBtn] = useState("music")
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
 
-    const togglePlayback = () => {
-        setIsPlaying(prevState => !prevState);
-    };
+    // const togglePlayback = () => {
+    //     setIsPlaying(prevState => !prevState);
+    // };
 
     const handleText2Music = () => {
         setActiveBtn("music");
