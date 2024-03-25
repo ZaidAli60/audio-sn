@@ -5,13 +5,14 @@ import { RiNumbersFill } from "react-icons/ri";
 import { Col, Row, Input, Typography, Button, Modal } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { BsFillPauseFill } from "react-icons/bs";
-import { IoPlay } from "react-icons/io5";
+import { IoMagnetOutline, IoPlay } from "react-icons/io5";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { AiOutlineDownload } from "react-icons/ai";
 import WavesurferPlayer from '@wavesurfer/react';
 import audio4 from "assets/music/deep-future-garage-royalty-free-music-163081.mp3"
 import circularWaves from "assets/images/circular-wave.gif"
 import circle from "assets/images/circle.png"
+import uidesktopImg from "assets/images/ui-example-desktop.png"
 
 const { Title, Text } = Typography
 const { TextArea } = Input;
@@ -86,8 +87,8 @@ export default function RenventingMusic() {
                     </div>
 
                     <div className='py-5'>
-                        {/* <img src={uidesktopImg} className='img-fluid' alt="img" /> */}
-                        <Row gutter={[16, 16]}>
+                        <img src={uidesktopImg} className='img-fluid' alt="img" />
+                        {/* <Row gutter={[16, 16]}>
                             <Col xs={24} md={24} lg={10} xxl={8}>
                                 <div className="card rounded-4 border-0 p-4 h-100">
                                     <div className='d-flex justify-content-between mb-2'>
@@ -225,7 +226,7 @@ export default function RenventingMusic() {
 
                                 </div>
                             </Col>
-                        </Row>
+                        </Row> */}
                     </div>
                 </div>
             </div>

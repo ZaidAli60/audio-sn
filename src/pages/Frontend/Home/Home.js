@@ -38,13 +38,10 @@ export default function Home() {
     const timerRef = useRef(null);
     const [activeBtn, setActiveBtn] = useState("music")
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
-    const [isCurrentTimeSet, setIsCurrentTimeSet] = useState(false);
-    // console.log('wavesurfer', wavesurfer)
 
     const togglePlayback = () => {
         setIsPlaying(prevState => !prevState);
     };
-
 
     const handleText2Music = () => {
         setActiveBtn("music");
@@ -107,7 +104,7 @@ export default function Home() {
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
                     <Row gutter={[16, 16]} className='mb-4'>
                         <Col xs={24} lg={8}>
-                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "100%" }}  >
+                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "80vh" }}  >
                                 <video src={gifVideo} className='rounded-4' autoPlay muted loop playsInline controls={false}
                                     style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute" }} >
                                 </video>
@@ -125,58 +122,8 @@ export default function Home() {
                                 </div>
                             </div>
                         </Col>
-                        {/* <Col xs={24} lg={16}>
-                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "100%", borderColor: "white", backgroundColor: "#f4f1ec", }}  >
-                                <div className='p-3 d-flex flex-column justify-content-between'>
-                                    <div className='text-center'>
-
-                                        <Button type={`${activeBtn === "music" ? "primary" : "default"}`} shape="round" className='me-2' onClick={() => handleText2Music()}>Text-2-Music</Button>
-
-                                        <Button type={`${activeBtn === "speech" ? "primary" : "default"}`} shape="round" onClick={() => handleText2Speech()}>Text-2-Speech</Button>
-
-                                    </div>
-                                    <div className='d-flex justify-content-between align-items-center'>
-                                        <div>
-                                            <Button shape="circle" size='large' onClick={handlePrevSong} ><TbPlayerTrackPrevFilled className='fs-5' /></Button>
-                                        </div>
-                                        <img src={audioGif} className='img-fluid ' alt="gif" />
-                                        <div>
-                                            <Button shape="circle" size='large' onClick={handleNextSong} ><TbPlayerTrackNextFilled className='fs-5' /></Button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p>{data[currentSongIndex].title}</p>
-                                    </div>
-                                    <div className="d-flex justify-content-center align-items-center">
-                                        <div className='me-2'>
-                                            <Button shape="circle" size='large' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
-                                        </div>
-                                        <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
-                                            <span className="current-time">{formatTime(currentTime)}</span>
-                                            <div style={{ width: "100%" }}>
-                                                <WavesurferPlayer
-                                                    height={50}
-                                                    waveColor="rgb(169,168,178)"
-                                                    progressColor="rgb(200, 0, 200)"
-                                                    barWidth="1"
-                                                    barGap="1"
-                                                    barRadius="1"
-                                                    url={audioData[currentSongIndex]?.url}
-                                                    onReady={onReady}
-                                                    onPlay={() => setIsPlaying(true)}
-                                                    onPause={() => setIsPlaying(false)}
-                                                />
-                                            </div>
-                                            <span className="duration-time">  {formatTime(duration)}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </Col> */}
-
                         <Col xs={24} lg={16}>
-                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "100%", borderColor: "white", backgroundColor: "#f4f1ec" }}>
-
+                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "80vh", borderColor: "white", backgroundColor: "#f4f1ec" }}>
                                 <div className='p-4 d-flex flex-column justify-content-between'>
                                     <div className='text-center'>
                                         <Button type={`${activeBtn === "music" ? "primary" : "default"}`} shape="round" className='me-2' onClick={handleText2Music}>Text-2-Music</Button>
@@ -186,23 +133,7 @@ export default function Home() {
                                         <div>
                                             <Button shape="circle" size='large' onClick={() => handlePrevSong()}><TbPlayerTrackPrevFilled className='fs-5' /></Button>
                                         </div>
-
-                                        {/* <img src={activeBtn === "music" ? audioGif : audioGif} className='img-fluid' alt="gif" /> */}
-                                        {/* <div> */}
-                                        {/* {isPlaying ? (
-                                            <img
-                                                src={circularWaves}
-                                                className='img-fluid img1'
-                                                alt="Circular Waves"
-                                            />
-                                        ) : (
-                                            <img
-                                                className='img-fluid img1'
-                                                src={circle}
-                                                alt="Circle"
-                                            />
-                                        )} */}
-                                        <img src={`${isPlaying ? circularWaves : circle}`} className='img-fluid' alt="Circular Waves" />
+                                        <img src={`${isPlaying ? circularWaves : circle}`} className='img-fluid ' alt="Circular Waves" />
                                         <div>
                                             <Button shape="circle" size='large' onClick={() => handleNextSong()}><TbPlayerTrackNextFilled className='fs-5' /></Button>
                                         </div>

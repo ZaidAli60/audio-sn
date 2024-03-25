@@ -114,7 +114,6 @@ export default function Login() {
                             <Link to="forgot-password" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'>Forgot password?</Link>
                         </div>
                     </div>
-
                 </div>
                 <div className="col-7 p-0 m-0 d-none  d-md-block ">
                     <video
@@ -127,7 +126,6 @@ export default function Login() {
                         controls={false}
                     >
                     </video>
-
                 </div>
             </div>
         </div>
