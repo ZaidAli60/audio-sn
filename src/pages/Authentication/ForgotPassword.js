@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
 import video from 'assets/images/videoBg.mp4'
+import axios from 'axios';
 
 const initialState = { email: "", }
 
@@ -13,11 +14,32 @@ export default function ForgotPassword() {
         setState({ ...state, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(state)
+    const handleResetPassword = e => {
+        e.preventDefault()
 
+        let { email } = state
+
+        // email = email.trim()
+        // if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
+
+        // setIsProcessing(true)
+        console.log('state', state)
+        axios.post(`http://85.239.241.96:8000/react/forgot-password`, { email })
+            .then(res => {
+                console.log('res', res)
+                let { data, status } = res
+                if (status === 200) {
+                    window.toastify(data.message, "success")
+                }
+            })
+            .catch(err => {
+                window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
+            })
+            .finally(() => {
+                // setIsProcessing(false)
+            })
     }
+
     return (
         <div className='container-fluid login'>
             <div className="row">
@@ -32,7 +54,7 @@ export default function ForgotPassword() {
                                 <label className='floating-label'>Email</label>
                             </div>
 
-                            <button onClick={handleSubmit} style={{ backgroundColor: '#26f7c5', letterSpacing: '1px', fontSize: '12px' }} className='w-100 border-0 py-3 text-uppercase fw-bold text rounded-5 my-3'>
+                            <button onClick={handleResetPassword} style={{ backgroundColor: '#26f7c5', letterSpacing: '1px', fontSize: '12px' }} className='w-100 border-0 py-3 text-uppercase fw-bold text rounded-5 my-3'>
                                 Reset password
                             </button>
                             <Link to="/auth" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'><FiArrowLeft size={20} className='me-2' />Return to Log in</Link>

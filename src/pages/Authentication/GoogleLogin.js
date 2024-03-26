@@ -28,8 +28,8 @@ export default function Google() {
             .then(res => {
                 let { data, status } = res
                 if (status === 200) {
-                    let googleData = doc.userData
-                    dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, ...googleData, roles: ["superAdmin"] } } })
+                    // let googleData = doc.userData
+                    dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
                     window.toastify("Login successful", "success")
                 }
             })

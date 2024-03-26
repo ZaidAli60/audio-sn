@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Button, Drawer, Dropdown } from 'antd'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import { data } from "pages/Dashboard/SidebarItems"
 import { LiaBarsSolid } from 'react-icons/lia'
 import { useAuthContext } from 'context/AuthContext';
 import { UserOutlined } from "@ant-design/icons"
-
 
 export default function Navbar() {
     const { isAuthenticated, user, handleLogout } = useAuthContext()
@@ -13,7 +12,6 @@ export default function Navbar() {
     const [drawerVisible, setDrawerVisible] = useState(false);
     // const [isNavbarShadowed, setIsNavbarShadowed] = useState(false);
     console.log('selectedItem', selectedItem)
-    // console.log('user', user)
     let navigate = useNavigate()
 
     useEffect(() => {
@@ -43,7 +41,6 @@ export default function Navbar() {
     //         window.removeEventListener('scroll', handleScroll);
     //     };
     // }, [])
-
 
     return (
         <>
@@ -77,12 +74,14 @@ export default function Navbar() {
                                     placement="bottom"
                                     trigger={['click']}
                                 >
-                                    {
-                                        user?.picture ?
-                                            <Avatar size="large" src={user?.picture} />
+                                    {/* {
+                                        user === null ?
+                                            <Avatar size="large" src={user.userData.picture} />
                                             :
                                             <Avatar size="large" icon={<UserOutlined />} />
-                                    }
+                                    } */}
+                                    <Avatar size="large" icon={user?.userData?.picture ? null : <UserOutlined />} src={user?.userData?.picture} />
+
                                 </Dropdown>
 
                         }

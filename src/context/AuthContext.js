@@ -23,9 +23,10 @@ const reducer = (state, { type, payload }) => {
 
 export default function AuthContextProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState)
-    // const [data, setData] = useState("false");
     const [isAppLoading, setIsAppLoding] = useState(true)
-    const [accessToken, setAccessToken] = useState("");
+    // const [accessToken, setAccessToken] = useState("");
+
+    console.log('state', state)
     console.log('isAppLoading', isAppLoading)
 
     const getUser = useCallback((user) => {
@@ -74,8 +75,8 @@ export default function AuthContextProvider({ children }) {
     }, [getUser])
 
     const handleLogout = () => {
-        const token = accessToken
-        console.log('accessToken', token)
+        // const token = accessToken
+        // console.log('accessToken', token)
         googleLogout()
         localStorage.removeItem("jwt")
         dispatch({ type: "SET_LOGGED_OUT" })
@@ -103,7 +104,7 @@ export default function AuthContextProvider({ children }) {
         let data = JSON.parse(localStorage.getItem("jwt"))
         if (data) {
             readUserProfile(data)
-            setAccessToken(data)
+            // setAccessToken(data)
         } else {
             setTimeout(() => setIsAppLoding(false), 500);
         }

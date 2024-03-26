@@ -22,6 +22,10 @@ export default function Register() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const { email, password } = state;
+
+        if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
+        if (password.length < 8) { return window.toastify("Password must be atleast 8 chars.", "error") }
+
         const formData = { email, password }
 
         axios.post(`http://85.239.241.96:8000/react/email-signup`, formData)

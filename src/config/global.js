@@ -11,6 +11,8 @@ window.logo = logo
 window.getRandomId = () => Math.random().toString(36).slice(2)
 window.year = new Date().getFullYear()
 
+// eslint-disable-next-line
+window.isEmail = email => /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(email);
 
 window.toastify = (msg, type) => {
 

@@ -23,8 +23,12 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        let { email, password } = state
+        email = email.trim()
 
-        axios.post(`http://85.239.241.96:8000/react/email-signin`, state)
+        if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
+
+        axios.post(`http://85.239.241.96:8000/react/email-signin`, { email, password })
             .then(res => {
                 let { status, data } = res
                 if (status === 200) {
