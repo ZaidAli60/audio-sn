@@ -13,6 +13,7 @@ import gifVideo from "assets/video/vid_sub.mp4"
 import circularWaves from "assets/images/circular-wave.gif"
 import circle from "assets/images/circle.png"
 import tss1 from "assets/tts/TTS.wav"
+import { useNavigate } from 'react-router-dom';
 
 const musicData = [
     { title: "Music 1", url: audio1 },
@@ -36,6 +37,8 @@ export default function Home() {
     const [activeBtn, setActiveBtn] = useState("music")
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
 
+
+    let navigate = useNavigate()
     // const togglePlayback = () => {
     //     setIsPlaying(prevState => !prevState);
     // };
@@ -113,7 +116,7 @@ export default function Home() {
                                         <div>
                                             <p className='fs-5'>Generate high-quality audio that you can use commercially.</p>
                                             <p className='fs-5'>Get started for free.</p>
-                                            <Button type='primary' shape="round">Try it out</Button>
+                                            <Button type='primary' shape="round" onClick={() => navigate("/generate")}>Try it out</Button>
                                         </div>
                                     </div>
                                 </div>
