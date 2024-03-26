@@ -8,6 +8,7 @@ import video from 'assets/video/vid_sub.mp4'
 import GoogleLogin from './GoogleLogin';
 import axios from 'axios';
 
+const SERVER_URL = process.env.REACT_APP_API_END_POINT
 const initialState = { email: "", password: "", }
 
 export default function Login() {
@@ -28,7 +29,7 @@ export default function Login() {
 
         if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
 
-        axios.post(`http://85.239.241.96:8000/react/email-signin`, { email, password })
+        axios.post(`${SERVER_URL}/react/email-signin`, { email, password })
             .then(res => {
                 let { status, data } = res
                 if (status === 200) {

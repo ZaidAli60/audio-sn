@@ -2,12 +2,13 @@ import React from 'react';
 import { useAuthContext } from 'context/AuthContext';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+const SERVER_URL = process.env.REACT_APP_API_END_POINT
 
 export default function Google() {
     const { dispatch } = useAuthContext();
 
     const handleOnSuccess = response => {
-        axios.post(`http://85.239.241.96:8000/react/google-signin`, { id_token: response.credential })
+        axios.post(`${SERVER_URL}/react/google-signin`, { id_token: response.credential })
             .then(res => {
                 let { data, status } = res;
                 if (status === 200) {
@@ -24,7 +25,7 @@ export default function Google() {
 
     const readUserProfile = doc => {
         const config = { headers: { Authorization: `Bearer ${doc.access_token}` } }
-        axios.get(`http://85.239.241.96:8000/react/auth/user`, config)
+        axios.get(`${SERVER_URL}/react/auth/user`, config)
             .then(res => {
                 let { data, status } = res
                 if (status === 200) {

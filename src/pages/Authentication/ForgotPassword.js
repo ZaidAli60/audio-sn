@@ -4,6 +4,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import video from 'assets/video/vid_sub.mp4'
 import axios from 'axios';
 
+const SERVER_URL = process.env.REACT_APP_API_END_POINT
 const initialState = { email: "", }
 
 export default function ForgotPassword() {
@@ -24,7 +25,7 @@ export default function ForgotPassword() {
 
         // setIsProcessing(true)
         console.log('state', state)
-        axios.post(`http://85.239.241.96:8000/react/forgot-password`, { email })
+        axios.post(`${SERVER_URL}/react/forgot-password`, { email })
             .then(res => {
                 console.log('res', res)
                 let { data, status } = res

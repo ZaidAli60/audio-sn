@@ -20,6 +20,8 @@ const reducer = (state, { type, payload }) => {
             return state
     }
 }
+const SERVER_URL = process.env.REACT_APP_API_END_POINT
+
 
 export default function AuthContextProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState)
@@ -53,7 +55,7 @@ export default function AuthContextProvider({ children }) {
         const { token } = data;
         console.log('token', token)
         const config = { headers: { Authorization: `Bearer ${token}` } }
-        axios.get(`http://85.239.241.96:8000/react/auth/user`, config)
+        axios.get(`${SERVER_URL}/react/auth/user`, config)
             .then(res => {
                 console.log('resData', res)
                 let { data, status } = res

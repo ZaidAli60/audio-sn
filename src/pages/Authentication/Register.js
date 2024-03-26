@@ -7,6 +7,7 @@ import { Divider } from 'antd';
 import video from 'assets/video/vid_sub.mp4'
 import axios from 'axios';
 
+const SERVER_URL = process.env.REACT_APP_API_END_POINT
 const initialState = { email: "", password: "", }
 
 export default function Register() {
@@ -28,7 +29,7 @@ export default function Register() {
 
         const formData = { email, password }
 
-        axios.post(`http://85.239.241.96:8000/react/email-signup`, formData)
+        axios.post(`${SERVER_URL}/react/email-signup`, formData)
             .then(res => {
                 let { status, data } = res
                 if (status === 200) {
