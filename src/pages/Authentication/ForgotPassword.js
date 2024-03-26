@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
-import video from 'assets/images/videoBg.mp4'
+import video from 'assets/video/vid_sub.mp4'
 import axios from 'axios';
 
 const initialState = { email: "", }
@@ -62,15 +62,7 @@ export default function ForgotPassword() {
                     </div>
                 </div>
                 <div className="col-7 p-0 m-0 d-none  d-md-block ">
-                    <video
-                        src={video}
-                        className='fullscreen-video'
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        controls={false}
-                    >
+                    <video src={video} autoPlay muted loop playsInline controls={false} style={{ width: "100%", objectFit: "cover", height: "100vh" }}  >
                     </video>
                 </div>
             </div>
