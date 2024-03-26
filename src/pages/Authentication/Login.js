@@ -4,7 +4,7 @@ import { useAuthContext } from 'context/AuthContext';
 import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Divider } from 'antd';
-import video from 'assets/images/videoBg.mp4'
+import video from 'assets/video/vid_sub.mp4'
 import GoogleLogin from './GoogleLogin';
 import axios from 'axios';
 
@@ -109,15 +109,7 @@ export default function Login() {
                     </div>
                 </div>
                 <div className="col-7 p-0 m-0 d-none  d-md-block ">
-                    <video
-                        src={video}
-                        className='fullscreen-video'
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        controls={false}
-                    >
+                    <video src={video} autoPlay muted loop playsInline controls={false} style={{ width: "100%", objectFit: "cover", height: "100vh" }}  >
                     </video>
                 </div>
             </div>

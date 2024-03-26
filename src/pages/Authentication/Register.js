@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
 import { Divider } from 'antd';
-import video from 'assets/images/videoBg.mp4'
+import video from 'assets/video/vid_sub.mp4'
 import axios from 'axios';
 
 const initialState = { email: "", password: "", }
@@ -108,24 +108,13 @@ export default function Register() {
                             <button onClick={handleSubmit} style={{ backgroundColor: '#26f7c5', letterSpacing: '1px', fontSize: '12px', fontWeight: '900' }} className='w-100 border-0 py-3 text-uppercase fw-bold text rounded-5 my-3'>
                                 Start for free
                             </button>
-
                             <p style={{ color: '#90998b' }}>No Credit Card required.</p>
                         </div>
                     </div>
-
                 </div>
-                <div className="col-7 p-0 m-0 d-none  d-md-block ">
-                    <video
-                        src={video}
-                        className='fullscreen-video'
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        controls={false}
-                    >
+                <div className="col-7 p-0 m-0 d-none d-md-block ">
+                    <video src={video} autoPlay muted loop playsInline controls={false} style={{ width: "100%", objectFit: "cover", height: "100vh" }}  >
                     </video>
-
                 </div>
             </div>
         </div>
