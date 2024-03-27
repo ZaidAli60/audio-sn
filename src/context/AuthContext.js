@@ -26,7 +26,7 @@ const SERVER_URL = process.env.REACT_APP_API_END_POINT
 export default function AuthContextProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState)
     const [isAppLoading, setIsAppLoding] = useState(true)
-    // const [accessToken, setAccessToken] = useState("");
+    const [accessToken, setAccessToken] = useState("");
 
     console.log('state', state)
     console.log('isAppLoading', isAppLoading)
@@ -55,7 +55,7 @@ export default function AuthContextProvider({ children }) {
         const { token } = data;
         console.log('token', token)
         const config = { headers: { Authorization: `Bearer ${token}` } }
-        axios.get(`${SERVER_URL}/react/auth/user`, config)
+        axios.get(`${SERVER_URL}/api/auth/user`, config)
             .then(res => {
                 console.log('resData', res)
                 let { data, status } = res
@@ -106,7 +106,7 @@ export default function AuthContextProvider({ children }) {
         let data = JSON.parse(localStorage.getItem("jwt"))
         if (data) {
             readUserProfile(data)
-            // setAccessToken(data)
+            setAccessToken(data)
         } else {
             setTimeout(() => setIsAppLoding(false), 500);
         }
@@ -114,7 +114,7 @@ export default function AuthContextProvider({ children }) {
 
 
     return (
-        <AuthContext.Provider value={{ ...state, dispatch, readUserProfile, handleLogout }}>
+        <AuthContext.Provider value={{ ...state, dispatch, accessToken, readUserProfile, handleLogout }}>
             {children}
         </AuthContext.Provider>
     )

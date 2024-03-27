@@ -8,7 +8,7 @@ export default function Google() {
     const { dispatch } = useAuthContext();
 
     const handleOnSuccess = response => {
-        axios.post(`${SERVER_URL}/react/google-signin`, { id_token: response.credential })
+        axios.post(`${SERVER_URL}/api/google-signin`, { id_token: response.credential })
             .then(res => {
                 let { data, status } = res;
                 if (status === 200) {
@@ -25,7 +25,7 @@ export default function Google() {
 
     const readUserProfile = doc => {
         const config = { headers: { Authorization: `Bearer ${doc.access_token}` } }
-        axios.get(`${SERVER_URL}/react/auth/user`, config)
+        axios.get(`${SERVER_URL}/api/auth/user`, config)
             .then(res => {
                 let { data, status } = res
                 if (status === 200) {

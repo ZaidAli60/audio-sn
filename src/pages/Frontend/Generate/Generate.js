@@ -11,11 +11,15 @@ import WavesurferPlayer from '@wavesurfer/react';
 import audio4 from "assets/music/deep-future-garage-royalty-free-music-163081.mp3"
 import circularWaves from "assets/images/circular-wave.gif"
 import circle from "assets/images/circle.png"
+import axios from 'axios';
+import { useAuthContext } from 'context/AuthContext';
 
 const { Title, Text } = Typography
 const { TextArea } = Input;
+const SERVER_URL = process.env.REACT_APP_API_END_POINT
 
 export default function Generate() {
+    const { accessToken } = useAuthContext()
 
     const [seconds, setSeconds] = useState(0);
     const [wavesurfer, setWavesurfer] = useState(null);
@@ -63,6 +67,23 @@ export default function Generate() {
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
+    const handleGenerate = () => {
+        const prompt = "This is a example"
+        const config = { headers: { Authorization: `Bearer ${accessToken} ` } }
+        axios.post(`${SERVER_URL}/api/ttm_endpoint`, config, { prompt })
+            .then(res => {
+                console.log('res', res)
+                // if (status === 200) {
+                // }
+            })
+            .catch(err => {
+                console.error('err', err)
+                // setIsAppLoding(false)
+            })
+            .finally(() => {
+                // setIsAppLoding(false)
+            })
+    }
 
     return (
         <div className='bg-primary'>
@@ -125,7 +146,7 @@ export default function Generate() {
                                 </div>
                                 <hr className='p-0 m-0' />
                                 <div className='pt-3 d-flex justify-content-end'>
-                                    <Button type='primary' size='large' shape="round">Generate</Button>
+                                    <Button type='primary' size='large' shape="round" onClick={() => handleGenerate()}>Generate</Button>
                                 </div>
                             </div>
                         </Col>

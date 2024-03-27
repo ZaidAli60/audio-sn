@@ -29,7 +29,7 @@ export default function Login() {
 
         if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
 
-        axios.post(`${SERVER_URL}/react/email-signin`, { email, password })
+        axios.post(`${SERVER_URL}/api/email-signin`, { email, password })
             .then(res => {
                 let { status, data } = res
                 if (status === 200) {

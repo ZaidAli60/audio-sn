@@ -25,7 +25,7 @@ export default function ForgotPassword() {
 
         // setIsProcessing(true)
         console.log('state', state)
-        axios.post(`${SERVER_URL}/react/forgot-password`, { email })
+        axios.post(`${SERVER_URL}/api/forgot-password`, { email })
             .then(res => {
                 console.log('res', res)
                 let { data, status } = res
