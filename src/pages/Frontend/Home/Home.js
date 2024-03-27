@@ -15,7 +15,11 @@ import circle from "assets/images/circle.png"
 import tss1 from "assets/tts/TTS.wav"
 import { useNavigate } from 'react-router-dom';
 import { formatDuration } from '../../../components/frontend/formatDuration';
-import Music from '../../../assets/images/Screenshot 2024-03-27 222210.png'
+import Music from '../../../assets/images/SoundBackgrounds/1.png'
+import Music1 from '../../../assets/images/SoundBackgrounds/3.png'
+import Music2 from '../../../assets/images/SoundBackgrounds/2.png'
+import Music3 from '../../../assets/images/SoundBackgrounds/4.png'
+import Music4 from '../../../assets/images/SoundBackgrounds/5.png'
 import audio100 from "../../../assets/music/sounds/3D_Sms_Tone-8cb567fa-16e5-3b3a-84bc-e7ba9520bd1e.mp3"
 import audio101 from "../../../assets/music/sounds/Apple_pay-a6151b88-42b2-441d-b515-5b1a9bac38b3.mp3"
 import audio102 from "../../../assets/music/sounds/Arabic_Style_2010-f2641088-b6da-32f6-ab0c-5acd37396522.mp3"
@@ -36,16 +40,16 @@ const musicData = [
 
 const randomMusic = [
     { title: "Intimate session, hopeful, modern folk-pop, capoed melody", url: audio100, img: Music },
-    { title: "Indie Rock, Strings, Drum Kit, Electric Bass, Percussion, Shaker, Tambourine", url: audio101, img: Music },
-    { title: "Indie Rock, Strings, Drum Kit, Electric Bass, Percussion, Shaker, Tambourine, Melancholic", url: audio102, img: Music },
-    { title: "Indie Rock, Strings, Drum Kit, Electric Bass, Percussion, Shaker, Tambourine, Melancholic, Low-Key, 110 BPM", url: audio103, img: Music },
-    { title: "Music 5", url: audio104, img: Music },
-    { title: "Music 6", url: audio105, img: Music },
-    { title: "Music 7", url: audio106, img: Music },
-    { title: "Music 8", url: audio107, img: Music },
-    { title: "Music 9", url: audio108, img: Music },
-    { title: "Music 10", url: audio109, img: Music },
-    { title: "Music 11", url: audio110 }
+    { title: "Indie Rock, Strings, Drum Kit, Electric Bass, Percussion, Shaker, Tambourine", url: audio101, img: Music1 },
+    { title: "Indie Rock, Strings, Drum Kit, Electric Bass, Percussion, Shaker, Tambourine, Melancholic", url: audio102, img: Music2 },
+    { title: "Indie Rock, Strings, Drum Kit, Electric Bass, Percussion, Shaker, Tambourine, Melancholic, Low-Key, 110 BPM", url: audio103, img: Music3 },
+    { title: "Music 5", url: audio104, img: Music4 },
+    { title: "Music 6", url: audio105, img: Music2 },
+    { title: "Music 7", url: audio106, img: Music1 },
+    { title: "Music 8", url: audio107, img: Music2 },
+    { title: "Music 9", url: audio108, img: Music3 },
+    { title: "Music 10", url: audio109, img: Music4 },
+    { title: "Test Musics", url: audio110, img: Music4 },
 
 ]
 
@@ -85,6 +89,7 @@ export default function Home() {
     const [activeBtnBottom, setActiveBtnBottom] = useState("musicBottom")
     const [currentTimeBottom, setCurrentTimeBottom] = useState(0);
     const [durationBottom, setDurationBottom] = useState(0);
+    const [currentSongTitle, setCurrentSongTitle] = useState(null);
     const timerRefBottom = useRef(null);
 
     const onPlayPauseBottom = () => {
@@ -263,6 +268,7 @@ export default function Home() {
                     {/* <div>
                         <RenventingMusic />
                     </div> */}
+
                     {/* Mix Tape */}
                     <div className="row withcut m-0 p-0" style={{ backgroundColor: '#f4f1ec' }}>
                         <div className="col d-flex flex-row p-0 overflow-y-auto" style={{ height: '729px' }}>
@@ -272,7 +278,10 @@ export default function Home() {
                                         <div
                                             className="d-flex mb-3"
                                             key={index}
-                                            onClick={() => handleMusicClick(index)}
+                                            onClick={() => {
+                                                handleMusicClick(index);
+                                                setCurrentSongTitle(item.title);
+                                            }}
                                             style={{ cursor: 'pointer' }}
                                         >
                                             <img src={item.img} className='me-3' alt="" height={50} width={50} />
@@ -282,21 +291,15 @@ export default function Home() {
                                             </div>
                                         </div>
                                     ))}
-                                    {/* {randomMusic.map((item, index) => (
-                                        <div className="d-flex mb-3" key={index}>
-                                            <img src={item.img} className='me-3' alt="" height={50} width={50} />
-                                            <div>
-                                                <p className='p-0 m-0 fs-5'>{truncateTitle(item.title, 77)}</p>
-                                                <p className='p-0 m-0'>{durationList[index] || ''}</p>
-                                            </div>
-                                        </div>
-                                    ))} */}
                                 </div>
                             </div>
                         </div>
                         <div className="col p-0">
-                            <div className='bg-white w-100 p-4 withcut h-100'>
-                                hi
+                            <div className='bg-white w-100 p-4 withcut h-100 title-song fs-5'>
+                                {currentSongTitle}
+                                <div className='d-flex justify-content-center align-items-center'>
+                                    <img src={`${isPlayingBottom ? circularWaves : circle}`} className='img-fluid ' alt="Circular Waves" />
+                                </div>
                             </div>
                         </div>
                     </div>
