@@ -233,7 +233,7 @@ export default function Home() {
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
                     <Row gutter={[16, 16]} className='mb-5'>
                         <Col xs={24} lg={8}>
-                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "80vh" }}  >
+                            <div className='card rounded-4 border-0' style={{ width: "100%", height: '100%' }}  >
                                 <video src={gifVideo} className='rounded-4' autoPlay muted loop playsInline controls={false}
                                     style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute" }} >
                                 </video>
@@ -252,7 +252,7 @@ export default function Home() {
                             </div>
                         </Col>
                         <Col xs={24} lg={16}>
-                            <div className='card rounded-4 border-0' style={{ width: "100%", height: "80vh", borderColor: "white", backgroundColor: "#f4f1ec" }}>
+                            <div className='card rounded-4 border-0' style={{ width: "100%", borderColor: "white", backgroundColor: "#f4f1ec" }}>
                                 <div className='p-4 d-flex flex-column justify-content-between' style={{ flexGrow: 1 }}>
                                     <div className='text-center'>
                                         <Button type={`${activeBtn === "music" ? "primary" : "default"}`} shape="round" className='me-2' onClick={handleText2Music}>Text-2-Music</Button>
