@@ -47,8 +47,8 @@ export default function Login() {
 
     return (
         <div className='container-fluid login'>
-            <div className="row">
-                <div className="col-12 col-md-5 bg-black min-vh-100 text-white p-5 d-flex  align-items-center">
+            <div className="row mb-0">
+                <div className="col-12 col-md-5 col-xxl-4 bg-black min-vh-100 text-white p-5 d-flex  align-items-center">
                     <div className='w-100'>
                         <h4 className='fw-bold'>Login</h4>
                         <p className='m-0 p-0 mb-4' style={{ color: '#90998b' }}>Don't have an account? <Link to="register" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'>Don't have an account?</Link></p>
@@ -109,8 +109,8 @@ export default function Login() {
                         </div>
                     </div>
                 </div>
-                <div className="col-7 p-0 m-0 d-none  d-md-block ">
-                    <video src={video} autoPlay muted loop playsInline controls={false} style={{ width: "100%", objectFit: "cover", height: "100vh" }}  >
+                <div className="col-7 col-xxl-8 p-0 m-0 d-none  d-md-block h-full">
+                    <video src={video} autoPlay muted loop playsInline controls={false} style={{ width: "100%", objectFit: "cover", height: "100%" }}  >
                     </video>
                 </div>
             </div>
