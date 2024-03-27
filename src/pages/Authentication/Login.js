@@ -46,16 +46,16 @@ export default function Login() {
     }
 
     return (
-        <div className='container-fluid login'>
-            <div className="row mb-0">
-                <div className="col-12 col-md-5 col-xxl-4 bg-black min-vh-100 text-white p-5 d-flex  align-items-center">
+        <div className='login'>
+            <div className="mb-0 d-flex overflow-hidden max-vh-100">
+                <div className="bg-black text-white p-5 d-flex align-items-center left-signin" style={{ width: '500px', height: '100vh' }}>
                     <div className='w-100'>
                         <h4 className='fw-bold'>Login</h4>
                         <p className='m-0 p-0 mb-4' style={{ color: '#90998b' }}>Don't have an account? <Link to="register" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'>Don't have an account?</Link></p>
                         <div className="social-button my-3">
 
-                            <button className='google-button '>
-                                <FcGoogle size={25} className='position-absolute ' />
+                            <button className='google-button'>
+                                <FcGoogle size={25} className='position-absolute' />
                                 <span className='mx-auto'>
                                     Sign in with Google
                                 </span>
@@ -75,7 +75,7 @@ export default function Login() {
                         <div className='input-form'>
                             <div className='floating-label-content'>
                                 <input className='floating-input' value={state.email} onChange={handleChange} name='email' type='text' placeholder=' ' />
-                                <label className='floating-label'>Email</label>
+                                <label className='floating-label'>E-mail</label>
                             </div>
                             <div className='floating-label-content'>
                                 <input className='floating-input' value={state.password} onChange={handleChange} name='password' type={showPassword} placeholder=' ' />
@@ -109,7 +109,7 @@ export default function Login() {
                         </div>
                     </div>
                 </div>
-                <div className="col-7 col-xxl-8 p-0 m-0 d-none  d-md-block h-full">
+                <div className="p-0 m-0 d-none d-md-block h-full" style={{ flexGrow: 1, height: '100vh' }} >
                     <video src={video} autoPlay muted loop playsInline controls={false} style={{ width: "100%", objectFit: "cover", height: "100%" }}  >
                     </video>
                 </div>

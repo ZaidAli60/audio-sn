@@ -23,13 +23,13 @@ export default function Footer() {
                                 <a href="http://" target="_blank" rel="noopener noreferrer" className='text-decoration-none text-white'> Privacy Policy</a>
                             </div>
                         </div>
-                        <div className="col-md-2 col-sm-2 col-xs-2 mb-4">
+                        {/* <div className="col-md-2 col-sm-2 col-xs-2 mb-4">
                             <h5 className="heading">Resources</h5>
                             <div className='d-flex flex-column'>
                                 <a href="http://" target="_blank" rel="noopener noreferrer" className='text-decoration-none text-white'> User guide</a>
                                 <a href="http://" target="_blank" rel="noopener noreferrer" className='text-decoration-none text-white'> FAQs</a>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="col-md-2 col-sm-2 col-xs-2">
                             <h5 className="heading">Socials</h5>
                             <div className='d-flex flex-column'>
@@ -42,7 +42,7 @@ export default function Footer() {
                         </div>
                     </div>
                     <div className="divider mb-4"> </div>
-                    <div className="row" >
+                    <div className="row">
                         <div className="col-md-6 col-sm-6 col-xs-6">
                             <div className="pull-left">
                                 <p>Copyright &copy; {window.year} - All rights reserved</p>
@@ -53,7 +53,6 @@ export default function Footer() {
                                 <div>Terms of Use</div>
                                 <div>Privacy Policy</div>
                                 <div>Cookie Policy</div>
-
                             </div>
                         </div>
                     </div>

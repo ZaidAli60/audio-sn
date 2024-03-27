@@ -1,11 +1,9 @@
 // @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
 /* Define a variable for the Fira Code font */
-$fira-code-font: 'Montserrat';
+$fira-code-font: "Montserrat";
 
 .home {
-
-
     .img1 {
         user-select: none;
         -drag: none;
@@ -47,7 +45,6 @@ $fira-code-font: 'Montserrat';
     //         transform: scale(0.8);
     //     }
     // }
-
 
     .audio-player {
         position: relative;
@@ -106,8 +103,6 @@ $fira-code-font: 'Montserrat';
         /* Adjust hover color as needed */
     }
 
-
-
     .fontFamily {
         font-family: $fira-code-font;
     }
@@ -137,7 +132,6 @@ $fira-code-font: 'Montserrat';
                 .ant-table-cell:hover {
                     background-color: #202020 !important;
                 }
-
             }
 
             .ant-table-tbody {
@@ -158,7 +152,6 @@ $fira-code-font: 'Montserrat';
                     color: white;
                 }
             }
-
         }
 
         .ant-pagination {
@@ -180,7 +173,6 @@ $fira-code-font: 'Montserrat';
                 .ant-pagination-item-link {
                     color: white;
                 }
-
             }
         }
 
@@ -188,7 +180,7 @@ $fira-code-font: 'Montserrat';
             color: white;
         }
 
-        .ant-table-thead>tr>th {
+        .ant-table-thead > tr > th {
             background-color: #202020;
             color: white !important;
         }
@@ -220,7 +212,6 @@ $fira-code-font: 'Montserrat';
     }
 
     .staking-calculator {
-
         .ant-space {
             width: 100% !important;
         }
@@ -265,9 +256,8 @@ $fira-code-font: 'Montserrat';
             }
 
             .ant-select-selection-placeholder {
-                color: rgba(255, 255, 255, 0.623)
+                color: rgba(255, 255, 255, 0.623);
             }
-
         }
 
         .ant-select-selector {
@@ -314,7 +304,6 @@ $fira-code-font: 'Montserrat';
                 margin-top: 10px;
                 margin-left: 0px;
             }
-
         }
 
         .input-with-button {
@@ -366,10 +355,8 @@ $fira-code-font: 'Montserrat';
             }
 
             .ant-select-selection-placeholder {
-                color: rgba(255, 255, 255, 0.623)
+                color: rgba(255, 255, 255, 0.623);
             }
-
-
         }
 
         .ant-select-selection-search-input {
@@ -402,7 +389,9 @@ $fira-code-font: 'Montserrat';
                     background-color: white;
                 }
             }
-
         }
+    }
+    .withcut {
+        -webkit-clip-path: polygon(26px 0, 100% 0, 100% 100%, 0 100%, 0 26px);
     }
 }
