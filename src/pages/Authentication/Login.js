@@ -53,21 +53,18 @@ export default function Login() {
                         <h4 className='fw-bold'>Login</h4>
                         <p className='m-0 p-0 mb-4' style={{ color: '#90998b' }}>Don't have an account? <Link to="register" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'>Don't have an account?</Link></p>
                         <div className="social-button my-3">
-
                             <button className='google-button'>
                                 <FcGoogle size={25} className='position-absolute' />
                                 <span className='mx-auto'>
                                     Sign in with Google
                                 </span>
                             </button>
-
                             <button className='facebook-button'>
                                 <FaFacebook size={25} className='position-absolute' />
                                 <span className='mx-auto'>
                                     Continue with Facebook
                                 </span>
                             </button>
-
                         </div>
                         {/* <GoogleLogin logo_alignment='center' onSuccess={handleOnSuccess} onError={handleOnError} /> */}
                         <GoogleLogin />
@@ -109,7 +106,7 @@ export default function Login() {
                         </div>
                     </div>
                 </div>
-                <div className="p-0 m-0 d-none d-md-block h-full" style={{ flexGrow: 1, height: '100vh' }} >
+                <div className="p-0 m-0 d-none d-md-block h-full" style={{ flexGrow: 1, height: '100vh' }}>
                     <video src={video} autoPlay muted loop playsInline controls={false} style={{ width: "100%", objectFit: "cover", height: "100%" }}  >
                     </video>
                 </div>

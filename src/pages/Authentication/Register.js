@@ -51,9 +51,9 @@ export default function Register() {
     }
 
     return (
-        <div className='container-fluid login'>
-            <div className="row">
-                <div className="col-12 col-md-5 col-xxl-4 bg-black min-vh-100 text-white p-5 d-flex align-items-center">
+        <div className='login'>
+            <div className="mb-0 d-flex overflow-hidden max-vh-100">
+                <div className="bg-black min-vh-100 text-white p-5 d-flex align-items-center left-signin" style={{ width: '500px', height: '100vh' }}>
                     <div className='w-100'>
 
                         <h4 className='fw-bold'>Create Account</h4>
@@ -113,7 +113,7 @@ export default function Register() {
                         </div>
                     </div>
                 </div>
-                <div className="col-7 col-xxl-8 p-0 m-0 d-none  d-md-block h-full">
+                <div className="p-0 m-0 d-none d-md-block h-full" style={{ flexGrow: 1, height: '100vh' }}>
                     <video src={video} autoPlay muted loop playsInline controls={false} style={{ width: "100%", objectFit: "cover", height: "100%" }}  >
                     </video>
                 </div>

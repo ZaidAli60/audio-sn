@@ -43,13 +43,13 @@ const randomMusic = [
     { title: "Indie Rock, Strings, Drum Kit, Electric Bass, Percussion, Shaker, Tambourine", url: audio101, img: Music1 },
     { title: "Indie Rock, Strings, Drum Kit, Electric Bass, Percussion, Shaker, Tambourine, Melancholic", url: audio102, img: Music2 },
     { title: "Indie Rock, Strings, Drum Kit, Electric Bass, Percussion, Shaker, Tambourine, Melancholic, Low-Key, 110 BPM", url: audio103, img: Music3 },
-    { title: "Music 5", url: audio104, img: Music4 },
-    { title: "Music 6", url: audio105, img: Music2 },
-    { title: "Music 7", url: audio106, img: Music1 },
-    { title: "Music 8", url: audio107, img: Music2 },
-    { title: "Music 9", url: audio108, img: Music3 },
-    { title: "Music 10", url: audio109, img: Music4 },
-    { title: "Test Musics", url: audio110, img: Music4 },
+    { title: "Post-Rock, Guitars, Drum Kit, Bass, Strings, Eupho", url: audio104, img: Music4 },
+    { title: "Post-Rock, Guitars, Drum Kit, Bass, Strings, Eupho", url: audio105, img: Music2 },
+    { title: "Trance, Ibiza, Beach, Sun, 4 AM, Progressive, Synthesizer, 909, Dramatic Chords, Choir, Euphoric, Nostalgic, Dynamic, Flowing", url: audio106, img: Music1 },
+    { title: "Trance, Ibiza, Beach, Sun, 4 AM, Progressive, Synthesizer, 909, Dramatic Chords, Choir, Euphoric, Nostalgic, Dynamic, Flowing", url: audio107, img: Music2 },
+    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio108, img: Music3 },
+    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio109, img: Music4 },
+    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio110, img: Music4 },
 
 ]
 
@@ -271,7 +271,7 @@ export default function Home() {
 
                     {/* Mix Tape */}
                     <div className="row withcut m-0 p-0" style={{ backgroundColor: '#f4f1ec' }}>
-                        <div className="col d-flex flex-row p-0 overflow-y-auto" style={{ height: '729px' }}>
+                        <div className="col-sm-12 col-md-6 d-flex flex-row p-0 overflow-y-auto" style={{ height: '729px' }}>
                             <div className='bg-red w-100 p-4'>
                                 <div className="d-flex flex-column">
                                     {randomMusic.map((item, index) => (
@@ -286,7 +286,7 @@ export default function Home() {
                                         >
                                             <img src={item.img} className='me-3' alt="" height={50} width={50} />
                                             <div>
-                                                <p className='p-0 m-0 fs-5'>{truncateTitle(item.title, 77)}</p>
+                                                <p className='p-0 m-0 fs-6'>{truncateTitle(item.title, 85)}</p>
                                                 <p className='p-0 m-0'>{durationList[index] || ''}</p>
                                             </div>
                                         </div>
@@ -294,8 +294,8 @@ export default function Home() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col p-0">
-                            <div className='bg-white w-100 p-4 withcut h-100 title-song fs-5'>
+                        <div className="col-sm-12 col-md-6 p-0">
+                            <div className='bg-white w-100 p-4 withcut h-100 title-song fs-6'>
                                 {currentSongTitle}
                                 <div className='d-flex justify-content-center align-items-center'>
                                     <img src={`${isPlayingBottom ? circularWaves : circle}`} className='img-fluid ' alt="Circular Waves" />
@@ -328,32 +328,6 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                    {/* <div className='p-3 mb-5' style={{ backgroundColor: "#fff" }}>
-                        <div className="d-flex justify-content-center align-items-center">
-                            <div className='me-2'>
-                                <Button shape="circle" size='large' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
-                            </div>
-                            <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
-                                <span className="current-time">{formatTime(currentTime)}</span>
-                                <div style={{ width: "100%" }}>
-                                    <WavesurferPlayer
-                                        height={40}
-                                        waveColor="rgb(169,168,178)"
-                                        progressColor="rgb(200, 0, 200)"
-                                        barWidth="1"
-                                        barGap="1"
-                                        barRadius="1"
-                                        url={activeBtn === "music" ? randomMusic[currentSongIndex]?.url : speechData[currentSongIndex]?.url}
-                                        // url={activeBtn === "music" ? musicData[currentSongIndex]?.url : speechData[currentSongIndex]?.url}
-                                        onReady={onReady}
-                                        onPlay={() => setIsPlaying(true)}
-                                        onPause={() => setIsPlaying(false)}
-                                    />
-                                </div>
-                                <span className="duration-time">  {formatTime(duration)}</span>
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </div >
