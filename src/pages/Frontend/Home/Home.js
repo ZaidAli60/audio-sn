@@ -99,6 +99,7 @@ export default function Home() {
     const [currentTimeBottom, setCurrentTimeBottom] = useState(0);
     const [durationBottom, setDurationBottom] = useState(0);
     const [currentSongTitle, setCurrentSongTitle] = useState(randomMusic[0]?.title);
+    const [currentSongIndexBottom, setCurrentSongIndexBottom] = useState(0);
     const timerRefBottom = useRef(null);
 
     const onPlayPauseBottom = () => {
@@ -124,9 +125,28 @@ export default function Home() {
         setCurrentTimeBottom(ws.getCurrentTime());
     };
 
+    // const onReadyBottom = (ws, audioUrl) => {
+    //     setWavesurferBottom(ws);
+    //     setIsPlayingBottom(false);
+    //     setDurationBottom(ws.getDuration());
+    //     setCurrentTimeBottom(ws.getCurrentTime());
+    //     ws.load(audioUrl); // Load the audio URL into the bottom player
+    // };
+
+    const handleNextSongBottom = () => {
+        const nextIndex = (currentSongIndexBottom + 1) % randomMusic.length;
+        setCurrentSongIndexBottom(nextIndex);
+        setCurrentSongTitle(randomMusic[nextIndex].title); // Update current song title
+        setIsPlayingBottom(false); // Auto-play next song
+    };
 
 
-
+    const handlePrevSongBottom = () => {
+        const prevIndex = (currentSongIndexBottom - 1 + randomMusic.length) % randomMusic.length;
+        setCurrentSongIndexBottom(prevIndex);
+        setCurrentSongTitle(randomMusic[prevIndex].title); 
+        setIsPlayingBottom(false); 
+    };
 
 
     // const togglePlayback = () => {
@@ -195,10 +215,15 @@ export default function Home() {
         }
         return title;
     };
+
     const handleMusicClick = (index) => {
         setCurrentSongIndex(index);
-        const audio = new Audio(randomMusic[index].url);
-        onReady(wavesurfer, audio);
+        const audioUrl = randomMusic[index].url; // Get the URL of the clicked song
+        const audio = new Audio(audioUrl);
+        setIsPlaying(false); // Pause the top player when changing the song
+        setIsPlayingBottom(false); // Pause the bottom player when changing the song
+        onReady(wavesurfer, audio); // Update the top player with the new audio
+        onReadyBottom(wavesurferBottom, audioUrl); // Update the bottom player with the new audio URL
     };
 
     return (
@@ -230,7 +255,6 @@ export default function Home() {
                                 <div className='p-4 d-flex flex-column justify-content-between' style={{ flexGrow: 1 }}>
                                     <div className='text-center'>
                                         <Button type={`${activeBtn === "music" ? "primary" : "default"}`} shape="round" className='me-2' onClick={handleText2Music}>Text-2-Music</Button>
-                                        {/* <Button type={`${activeBtn === "speech" ? "primary" : "default"}`} shape="round" onClick={handleText2Speech}>Text-2-Speech</Button> */}
                                     </div>
                                     <div className='d-flex justify-content-between align-items-center py-2'>
                                         <div>
@@ -314,10 +338,19 @@ export default function Home() {
                     </div>
                     <div className='p-3 mb-5' style={{ backgroundColor: "#fff" }}>
                         <div className="d-flex justify-content-center align-items-center">
-                            <div className='me-2'>
+                            {/* <div className='me-2'>
                                 <Button shape="circle" size='large' onClick={onPlayPauseBottom}>{isPlayingBottom ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
-                            </div>
+                            </div> */}
                             <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
+                                <div>
+                                    <Button shape="circle" size='large' onClick={() => handlePrevSongBottom()}><TbPlayerTrackPrevFilled className='fs-5' /></Button>
+                                </div>
+                                <div className='me-1'>
+                                    <Button shape="circle" size='large' onClick={onPlayPauseBottom}>{isPlayingBottom ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                </div>
+                                <div>
+                                    <Button shape="circle" size='large' onClick={() => handleNextSongBottom()}><TbPlayerTrackNextFilled className='fs-5' /></Button>
+                                </div>
                                 <span className="current-time">{formatTime(currentTimeBottom)}</span>
                                 <div style={{ width: "100%" }}>
                                     <WavesurferPlayer
@@ -327,8 +360,8 @@ export default function Home() {
                                         barWidth="1"
                                         barGap="1"
                                         barRadius="1"
-                                        url={activeBtnBottom === "musicBottom" ? randomMusic[currentSongIndex]?.url : speechData[currentSongIndex]?.url || randomMusic[0]?.url}
-                                        onReady={(ws) => onReadyBottom(ws, new Audio(randomMusic[currentSongIndex]?.url))}
+                                        url={activeBtnBottom === "musicBottom" ? randomMusic[currentSongIndexBottom]?.url : speechData[currentSongIndexBottom]?.url || randomMusic[0]?.url}
+                                        onReady={(ws) => onReadyBottom(ws, new Audio(randomMusic[currentSongIndexBottom]?.url))}
                                         onPlay={() => setIsPlayingBottom(true)}
                                         onPause={() => setIsPlayingBottom(false)}
                                     />
