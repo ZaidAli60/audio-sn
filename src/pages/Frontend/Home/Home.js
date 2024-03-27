@@ -309,7 +309,7 @@ export default function Home() {
                         <img src={Curve} alt="Cure" className='img-fluid' width={50} height={50} />
                         <div className='d-none d-md-block'></div>
                     </div>
-                    <div className="row rounded-4 m-0 p-0" style={{ backgroundColor: '#f4f1ec' }}>
+                    <div className="row rounded-top-4 m-0 p-0" style={{ backgroundColor: '#f4f1ec' }}>
                         <div className="col-sm-12 col-md-6 d-flex flex-row p-0 overflow-y-auto" style={{ height: '729px' }}>
                             <div className='bg-red w-100 p-4'>
                                 <div className="d-flex flex-column">
@@ -334,7 +334,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="col-sm-12 col-md-6 p-0">
-                            <div className='bg-white w-100 p-4 h-100 title-song fs-6 rounded-4'>
+                            <div className='bg-white w-100 p-4 h-100 title-song fs-6 rounded-top-4'>
                                 {currentSongTitle}
                                 <div className='d-flex justify-content-center align-items-center'>
                                     <img src={`${isPlayingBottom ? circularWaves : circle}`} className='img-fluid ' alt="Circular Waves" />
@@ -342,7 +342,7 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                    <div className='p-3 rounded-4 mb-5' style={{ backgroundColor: "#fff" }}>
+                    <div className='p-3 rounded-bottom-4 mb-5' style={{ backgroundColor: "#fff" }}>
                         <div className="d-flex justify-content-center align-items-center rounded-4">
                             {/* <div className='me-2'>
                                 <Button shape="circle" size='large' onClick={onPlayPauseBottom}>{isPlayingBottom ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
