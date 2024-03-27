@@ -35,6 +35,7 @@ import audio111 from "../../../assets/music/sounds/12.mp3"
 import audio112 from "../../../assets/music/sounds/13.mp3"
 import audio113 from "../../../assets/music/sounds/14.mp3"
 import audio114 from "../../../assets/music/sounds/15.mp3"
+import Curve from '../../../assets/images/curve.svg'
 
 const musicData = [
     { title: "Music 1", url: audio1 },
@@ -144,8 +145,8 @@ export default function Home() {
     const handlePrevSongBottom = () => {
         const prevIndex = (currentSongIndexBottom - 1 + randomMusic.length) % randomMusic.length;
         setCurrentSongIndexBottom(prevIndex);
-        setCurrentSongTitle(randomMusic[prevIndex].title); 
-        setIsPlayingBottom(false); 
+        setCurrentSongTitle(randomMusic[prevIndex].title);
+        setIsPlayingBottom(false);
     };
 
 
@@ -260,7 +261,7 @@ export default function Home() {
                                         <div>
                                             <Button shape="circle" size='large' onClick={() => handlePrevSong()}><TbPlayerTrackPrevFilled className='fs-5' /></Button>
                                         </div>
-                                        <img src={`${isPlaying ? circularWaves : circle}`} className='img-fluid ' alt="Circular Waves" />
+                                        <img src={`${isPlaying ? circularWaves : circle}`} className='img-fluid sm-audio-img' alt="Circular Waves" />
                                         <div>
                                             <Button shape="circle" size='large' onClick={() => handleNextSong()}><TbPlayerTrackNextFilled className='fs-5' /></Button>
                                         </div>
@@ -303,6 +304,11 @@ export default function Home() {
                     </div> */}
 
                     {/* Mix Tape */}
+                    <div className='d-flex justify-content-between align-items-center mb-2'>
+                        <h5 className='fw-bold'>Mixtape</h5>
+                        <img src={Curve} alt="Cure" className='img-fluid' width={50} height={50} />
+                        <div className='d-none d-md-block'></div>
+                    </div>
                     <div className="row withcut m-0 p-0" style={{ backgroundColor: '#f4f1ec' }}>
                         <div className="col-sm-12 col-md-6 d-flex flex-row p-0 overflow-y-auto" style={{ height: '729px' }}>
                             <div className='bg-red w-100 p-4'>
