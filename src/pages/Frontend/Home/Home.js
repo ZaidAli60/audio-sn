@@ -20,17 +20,21 @@ import Music1 from '../../../assets/images/SoundBackgrounds/3.png'
 import Music2 from '../../../assets/images/SoundBackgrounds/2.png'
 import Music3 from '../../../assets/images/SoundBackgrounds/4.png'
 import Music4 from '../../../assets/images/SoundBackgrounds/5.png'
-import audio100 from "../../../assets/music/sounds/3D_Sms_Tone-8cb567fa-16e5-3b3a-84bc-e7ba9520bd1e.mp3"
-import audio101 from "../../../assets/music/sounds/Apple_pay-a6151b88-42b2-441d-b515-5b1a9bac38b3.mp3"
-import audio102 from "../../../assets/music/sounds/Arabic_Style_2010-f2641088-b6da-32f6-ab0c-5acd37396522.mp3"
-import audio103 from "../../../assets/music/sounds/Blackberry_Classic-b3b4db91-7969-3a25-b98d-3d392c7766b8.mp3"
-import audio104 from "../../../assets/music/sounds/Ehd_e_wafa-b2e970d0-9c52-4f1c-9de4-c2255c7b343b.mp3"
-import audio105 from "../../../assets/music/sounds/Gyurza-9f3d7cc3-65db-4bff-9183-fbe478432b26.mp3"
-import audio106 from "../../../assets/music/sounds/Hakkan_-i_cant_be-d606cb00-7170-446d-8ac6-0cfe71cc509b.mp3"
-import audio107 from "../../../assets/music/sounds/iPhone_Original_Tone-7d7a1e22-2299-35de-b41d-13b332743f1e.mp3"
-import audio108 from "../../../assets/music/sounds/Romantic_Message-0d82c8ad-140d-3957-840a-8fbf8a71115f.mp3"
-import audio109 from "../../../assets/music/sounds/Sad_Ringtone-404c7a3c-27f6-3dad-a5fd-d6344492ed3b.mp3"
-import audio110 from "../../../assets/music/sounds/Water_Drop-43908a1c-869f-4c62-85e1-1a3d05b8f776.mp3"
+import audio100 from "../../../assets/music/sounds/1.mp3"
+import audio101 from "../../../assets/music/sounds/2.mp3"
+import audio102 from "../../../assets/music/sounds/3.mp3"
+import audio103 from "../../../assets/music/sounds/4.mp3"
+import audio104 from "../../../assets/music/sounds/5.mp3"
+import audio105 from "../../../assets/music/sounds/6.mp3"
+import audio106 from "../../../assets/music/sounds/7.mp3"
+import audio107 from "../../../assets/music/sounds/8.mp3"
+import audio108 from "../../../assets/music/sounds/9.mp3"
+import audio109 from "../../../assets/music/sounds/10.mp3"
+import audio110 from "../../../assets/music/sounds/11.mp3"
+import audio111 from "../../../assets/music/sounds/12.mp3"
+import audio112 from "../../../assets/music/sounds/13.mp3"
+import audio113 from "../../../assets/music/sounds/14.mp3"
+import audio114 from "../../../assets/music/sounds/15.mp3"
 
 const musicData = [
     { title: "Music 1", url: audio1 },
@@ -48,8 +52,13 @@ const randomMusic = [
     { title: "Trance, Ibiza, Beach, Sun, 4 AM, Progressive, Synthesizer, 909, Dramatic Chords, Choir, Euphoric, Nostalgic, Dynamic, Flowing", url: audio106, img: Music1 },
     { title: "Trance, Ibiza, Beach, Sun, 4 AM, Progressive, Synthesizer, 909, Dramatic Chords, Choir, Euphoric, Nostalgic, Dynamic, Flowing", url: audio107, img: Music2 },
     { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio108, img: Music3 },
-    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio109, img: Music4 },
-    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio110, img: Music4 },
+    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio109, img: Music1 },
+    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio110, img: Music2 },
+    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio111, img: Music3 },
+    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio112, img: Music4 },
+    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio113, img: Music },
+    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio114, img: Music1 },
+    { title: "Pop, Pop-Electronic, Ballad, Billboard, Drum Machine, Bass, Lush Synthersizer Pads", url: audio108, img: Music2 },
 
 ]
 
@@ -89,7 +98,7 @@ export default function Home() {
     const [activeBtnBottom, setActiveBtnBottom] = useState("musicBottom")
     const [currentTimeBottom, setCurrentTimeBottom] = useState(0);
     const [durationBottom, setDurationBottom] = useState(0);
-    const [currentSongTitle, setCurrentSongTitle] = useState(null);
+    const [currentSongTitle, setCurrentSongTitle] = useState(randomMusic[0]?.title);
     const timerRefBottom = useRef(null);
 
     const onPlayPauseBottom = () => {
@@ -112,7 +121,7 @@ export default function Home() {
         setWavesurferBottom(ws);
         setIsPlayingBottom(false);
         setDurationBottom(ws.getDuration());
-        setCurrentTimeBottom(ws.getCurrentTime()); // Set current time to the correct value when new song is loaded and ready
+        setCurrentTimeBottom(ws.getCurrentTime());
     };
 
 
@@ -318,7 +327,7 @@ export default function Home() {
                                         barWidth="1"
                                         barGap="1"
                                         barRadius="1"
-                                        url={activeBtnBottom === "musicBottom" ? randomMusic[currentSongIndex]?.url : speechData[currentSongIndex]?.url}
+                                        url={activeBtnBottom === "musicBottom" ? randomMusic[currentSongIndex]?.url : speechData[currentSongIndex]?.url || randomMusic[0]?.url}
                                         onReady={(ws) => onReadyBottom(ws, new Audio(randomMusic[currentSongIndex]?.url))}
                                         onPlay={() => setIsPlayingBottom(true)}
                                         onPause={() => setIsPlayingBottom(false)}

@@ -40,7 +40,6 @@ export default function ForgotPassword() {
                 // setIsProcessing(false)
             })
     }
-
     return (
         <div className='login'>
             <div className="mb-0 d-flex overflow-hidden max-vh-100">
@@ -66,10 +65,6 @@ export default function ForgotPassword() {
                     <video src={video} autoPlay muted loop playsInline controls={false} style={{ width: "100%", objectFit: "cover", height: "100%" }}  >
                     </video>
                 </div>
-                {/* <div className="p-0 m-0 d-none d-md-block h-full" style={{ flexGrow: 1, height: '100vh' }}>
-                    <video src={video} autoPlay muted loop playsInline controls={false} style={{ width: "100%", objectFit: "cover", height: "100%" }}  >
-                    </video>
-                </div> */}
             </div>
         </div>
     )
