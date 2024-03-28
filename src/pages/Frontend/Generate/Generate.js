@@ -20,7 +20,6 @@ const SERVER_URL = process.env.REACT_APP_API_END_POINT
 
 export default function Generate() {
     const { accessToken } = useAuthContext()
-
     const [seconds, setSeconds] = useState(0);
     const [wavesurfer, setWavesurfer] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -28,6 +27,8 @@ export default function Generate() {
     const [duration, setDuration] = useState(0);
     const timerRef = useRef(null);
     const [modal2Open, setModal2Open] = useState(false);
+
+    console.log('accessToken', accessToken)
 
     const handleDecrease = () => {
         if (seconds > 0) {
@@ -69,12 +70,11 @@ export default function Generate() {
 
     const handleGenerate = () => {
         const prompt = "This is a example"
-        const config = { headers: { Authorization: `Bearer ${accessToken} ` } }
-        axios.post(`${SERVER_URL}/api/ttm_endpoint`, config, { prompt })
+        // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJPcGVudGVuc29yQGhvdG1haWwuY29tIiwiZXhwIjoxNzExNTczODc4fQ.kFFc64PGNgk_Sdg7xTPPzkF1Un1jy8yyaD1GIjz7Yk4"
+        // const config = { headers: { Authorization: `Bearer ${token} ` } }
+        axios.post(`${SERVER_URL}/api/ttm_endpoint`, prompt)
             .then(res => {
                 console.log('res', res)
-                // if (status === 200) {
-                // }
             })
             .catch(err => {
                 console.error('err', err)

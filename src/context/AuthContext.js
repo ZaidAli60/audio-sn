@@ -53,7 +53,7 @@ export default function AuthContextProvider({ children }) {
 
     const readUserProfile = useCallback(data => {
         const { token } = data;
-        console.log('token', token)
+        // console.log('token', token)
         const config = { headers: { Authorization: `Bearer ${token}` } }
         axios.get(`${SERVER_URL}/api/auth/user`, config)
             .then(res => {
