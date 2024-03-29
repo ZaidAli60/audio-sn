@@ -142,15 +142,17 @@ export default function RenventingMusic() {
                         <div className='bg-red w-100 p-4'>
                             <div className="d-flex flex-column">
                                 {randomMusic.map((item, index) => (
-                                    <div
-                                        className="d-flex mb-3"
-                                        key={index}
-                                        style={{ cursor: 'pointer' }}
-                                        onClick={() => handleSelectMusic(item, index)} // Set music when clicked
-                                    >
-                                        <img src={item.img} className='me-3' alt="" height={50} width={50} />
-                                        <div>
-                                            <p className='p-0 m-0 fs-6'>{truncateTitle(item.title, 85)}</p>
+                                    <div className="card p-2 border-0 " style={{ backgroundColor: "#f4f1ec" }}>
+                                        <div
+                                            className="d-flex"
+                                            key={index}
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={() => handleSelectMusic(item, index)} // Set music when clicked
+                                        >
+                                            <img src={item.img} className='me-3' alt="" height={50} width={50} />
+                                            <div>
+                                                <p className='p-0 m-0 fs-6'>{truncateTitle(item.title, 85)}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
