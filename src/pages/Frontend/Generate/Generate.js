@@ -68,21 +68,17 @@ export default function Generate() {
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
-    const handleGenerate = () => {
-        const prompt = "This is a example"
-        // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJPcGVudGVuc29yQGhvdG1haWwuY29tIiwiZXhwIjoxNzExNTczODc4fQ.kFFc64PGNgk_Sdg7xTPPzkF1Un1jy8yyaD1GIjz7Yk4"
-        // const config = { headers: { Authorization: `Bearer ${token} ` } }
-        axios.post(`${SERVER_URL}/api/ttm_endpoint`, prompt)
-            .then(res => {
-                console.log('res', res)
-            })
-            .catch(err => {
-                console.error('err', err)
-                // setIsAppLoding(false)
-            })
-            .finally(() => {
-                // setIsAppLoding(false)
-            })
+    const handleGenerate = async () => {
+        const prompt = "Bring The Joy [Pop Upbeat Indie Hipster Synthpop Uplifting Happy"
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJPcGVudGVuc29yQGhvdG1haWwuY29tIiwiZXhwIjoxNzExNzI4NTc0fQ.NpPu5wb7mA_MkCbxiZP8LpvkhZHWclAYZbVgqamVF0A"
+        const config = { headers: { Authorization: `Bearer ${token} ` } }
+        try {
+            const response = await axios.post(`${SERVER_URL}/api/ttm_endpoint`, { prompt }, config);
+            console.log('response', response)
+        } catch (error) {
+            console.log('error', error)
+        }
+
     }
 
     return (
