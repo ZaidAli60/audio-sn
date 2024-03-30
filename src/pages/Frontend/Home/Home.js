@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Col, Row, Button } from 'antd';
 import { BsFillPauseFill } from "react-icons/bs";
 import { IoPlay } from "react-icons/io5";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { TbPlayerTrackPrevFilled } from "react-icons/tb";
-import WavesurferPlayer from '@wavesurfer/react';
+import { useWavesurfer } from '@wavesurfer/react';
 // import RenventingMusic from './RenventingMusic';
 import gifVideo from "assets/video/vid_sub.mp4"
 import circularWaves from "assets/images/circular-wave.gif"
@@ -14,72 +14,13 @@ import Music from '../../../assets/images/SoundBackgrounds/1.png'
 import Music3 from '../../../assets/images/SoundBackgrounds/3.png'
 
 const randomMusic = [
-    { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav", img: Music3 },
-    { title: "1 Intimate session, hopeful, modern folk-pop, capoed melody", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711706048/bkr8d4jjd6zzpd4edvjn.mp3", img: Music },
-    { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711742714/TTM1_z9vxca.wav", img: Music3 },
-    { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711744788/TTM_3_dfc6ya.wav", img: Music },
+    { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav", img: Music3, time: "0:15" },
+    { title: "1 Intimate session, hopeful, modern folk-pop, capoed melody", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711706048/bkr8d4jjd6zzpd4edvjn.mp3", img: Music, time: "01:30" },
+    { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711742714/TTM1_z9vxca.wav", img: Music3, time: "0:15" },
+    { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711744788/TTM_3_dfc6ya.wav", img: Music, time: "0:15" },
 ]
 
 export default function Home() {
-
-    const [wavesurfer, setWavesurfer] = useState(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [duration, setDuration] = useState(0);
-    const [currentSongIndex, setCurrentSongIndex] = useState(0);
-    const timerRef = useRef(null);
-    let navigate = useNavigate()
-
-    const handleNextSong = () => {
-        const nextIndex = (currentSongIndex + 1) % randomMusic.length;
-        setCurrentSongIndex(nextIndex);
-    };
-
-    const handlePrevSong = () => {
-        const prevIndex = (currentSongIndex - 1 + randomMusic.length) % randomMusic.length;
-        setCurrentSongIndex(prevIndex);
-    };
-
-    const handleSelectMusic = (data, index) => {
-        if (wavesurfer) {
-            setCurrentSongIndex(index); // Update current song index
-            wavesurfer.load(data.url);
-            wavesurfer.play();
-        }
-    }
-
-    const onReady = ws => {
-        setWavesurfer(ws);
-        setIsPlaying(false);
-        setDuration(ws.getDuration());
-        setCurrentTime(ws.getCurrentTime()); // Set current time to the correct value when new song is loaded and ready
-    };
-
-    const onPlayPause = () => {
-        if (wavesurfer) {
-            wavesurfer.playPause();
-            setIsPlaying(!isPlaying);
-            if (!isPlaying) {
-                startTimer();
-            } else {
-                clearInterval(timerRef.current);
-            }
-        }
-    };
-
-    const startTimer = () => {
-        timerRef.current = setInterval(() => {
-            setCurrentTime(wavesurfer.getCurrentTime());
-        }, 1000);
-    };
-
-    const formatTime = timeInSeconds => {
-        const minutes = Math.floor(timeInSeconds / 60);
-        const seconds = Math.floor(timeInSeconds % 60);
-        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    };
-
-
 
     // const [wavesurfer, setWavesurfer] = useState(null);
     // const [isPlaying, setIsPlaying] = useState(false);
@@ -87,7 +28,7 @@ export default function Home() {
     // const [duration, setDuration] = useState(0);
     // const [currentSongIndex, setCurrentSongIndex] = useState(0);
     // const timerRef = useRef(null);
-    // let navigate = useNavigate();
+    // let navigate = useNavigate()
 
     // const handleNextSong = () => {
     //     const nextIndex = (currentSongIndex + 1) % randomMusic.length;
@@ -101,18 +42,11 @@ export default function Home() {
 
     // const handleSelectMusic = (data, index) => {
     //     if (wavesurfer) {
-    //         console.log('Loading audio:', data.url);
-    //         wavesurfer.load(data.url);
-    //         wavesurfer.on('ready', () => {
-    //             console.log('Audio loaded successfully');
-    //             console.log('Playing audio...');
-    //             wavesurfer.play();
-    //         });
     //         setCurrentSongIndex(index); // Update current song index
-    //     } else {
-    //         console.error('wavesurfer instance is null');
+    //         wavesurfer.load(data.url);
+    //         wavesurfer.play();
     //     }
-    // };
+    // }
 
     // const onReady = ws => {
     //     setWavesurfer(ws);
@@ -145,15 +79,87 @@ export default function Home() {
     //     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     // };
 
-    // // Cleanup timer on component unmount
-    // useEffect(() => {
-    //     return () => {
-    //         clearInterval(timerRef.current);
-    //     };
-    // }, []);
+    const formatTime = (seconds) => [seconds / 60, seconds % 60].map((v) => `0${Math.floor(v)}`.slice(-2)).join(':')
+
+    const containerRef = useRef(null)
+    const [totalDuration, setTotalDuration] = useState(0)
+    const [currentTime, setCurrentTime] = useState(0)
+    const [isPlaying, setIsPlaying] = useState(false)
+    const [currentSongIndex, setCurrentSongIndex] = useState(0);
+    let navigate = useNavigate()
+
+    const { wavesurfer } = useWavesurfer({
+        container: containerRef,
+        height: 40,
+        waveColor: "rgb(169,168,178)",
+        progressColor: "rgb(58, 91, 201)",
+        barWidth: "1",
+        barGap: "1",
+        barRadius: "1",
+        url: randomMusic[currentSongIndex].url,
+        autoPlay: false, // Disable autoplay
+    });
+
+    useEffect(() => {
+        if (!wavesurfer) return;
+
+        const onReadyCallback = () => {
+            setTotalDuration(wavesurfer.getDuration());
+            if (currentSongIndex !== 0) {
+                wavesurfer.play();
+                setIsPlaying(true);
+            }
+        };
+
+        wavesurfer.on('ready', onReadyCallback);
+
+        return () => {
+            wavesurfer.un('ready', onReadyCallback);
+        };
+    }, [wavesurfer, currentSongIndex]); // Re-run effect when wavesurfer or currentSongIndex changes
+
+    useEffect(() => {
+        // Update current time every second
+        const interval = setInterval(() => {
+            if (wavesurfer && wavesurfer.isPlaying()) {
+                setCurrentTime(wavesurfer.getCurrentTime());
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [wavesurfer]);
+
+    useEffect(() => {
+        if (wavesurfer) {
+            wavesurfer.on('finish', () => {
+                setIsPlaying(false);
+            });
+        }
+        return () => {
+            wavesurfer && wavesurfer.un('finish');
+        };
+    }, [wavesurfer]);
+
+    const onSelectMusic = (index) => {
+        setCurrentSongIndex(index);
+        if (wavesurfer) {
+            wavesurfer.load(randomMusic[index].url); // Load the selected track
+            setIsPlaying(true); // Start playing automatically
+        }
+    };
 
 
-
+    const togglePlayPause = () => {
+        if (wavesurfer) {
+            if (wavesurfer.isPlaying()) {
+                wavesurfer.pause();
+                setIsPlaying(false);
+            } else {
+                wavesurfer.play();
+                setIsPlaying(true);
+            }
+        }
+    };
 
     return (
         <div className={`home dashboard bg-primary min-vh-100`}>
@@ -188,60 +194,45 @@ export default function Home() {
                                         </div>
                                         <div className='d-flex justify-content-between align-items-center'>
                                             <div>
-                                                <Button shape="circle" size='large' onClick={() => handlePrevSong()}><TbPlayerTrackPrevFilled className='fs-5' /></Button>
+                                                <Button shape="circle" size='large' onClick={() => onSelectMusic(currentSongIndex - 1)}><TbPlayerTrackPrevFilled className='fs-5' /></Button>
                                             </div>
-                                            <img src={`${isPlaying ? circularWaves : circle}`} className='img-fluid sm-audio-img' alt="Circular Waves" />
+                                            <img src={isPlaying ? circularWaves : circle} className='img-fluid sm-audio-img' alt="Circular Waves" />
                                             <div>
-                                                <Button shape="circle" size='large' onClick={() => handleNextSong()}><TbPlayerTrackNextFilled className='fs-5' /></Button>
+                                                <Button shape="circle" size='large' onClick={() => onSelectMusic(currentSongIndex + 1)}><TbPlayerTrackNextFilled className='fs-5' /></Button>
                                             </div>
                                         </div>
                                         <div className="d-flex justify-content-center align-items-center">
                                             <div className='me-2'>
-                                                <Button shape="circle" size='large' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                                <Button shape="circle" size='large' onClick={togglePlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
                                             </div>
                                             <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
                                                 <span className="current-time">{formatTime(currentTime)}</span>
                                                 <div style={{ width: "100%" }}>
-                                                    <WavesurferPlayer
-                                                        height={40}
-                                                        waveColor="rgb(169,168,178)"
-                                                        progressColor="rgb(58, 91, 201)"
-                                                        barWidth="1"
-                                                        barGap="1"
-                                                        barRadius="1"
-                                                        url={randomMusic[currentSongIndex].url}
-                                                        onReady={onReady}
-                                                        onPlay={() => setIsPlaying(true)}
-                                                        onPause={() => setIsPlaying(false)}
-                                                    />
+                                                    <div ref={containerRef} />
                                                 </div>
-                                                <span className="duration-time">  {formatTime(duration)}</span>
+                                                <span className="duration-time">{formatTime(totalDuration)}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div>
                                 <div className="card rounded-4 border-0 p-4 h-100" style={{ backgroundColor: "#f4f1ec" }}>
                                     <div>
                                         <div className="d-flex flex-column overflow-y-auto" style={{ height: '200px' }}>
-                                            {randomMusic.map((item, index) => {
-                                                return (<div className={`card border-0 music-card    p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} >
-                                                    <div
-                                                        className="d-flex"
-                                                        key={index}
-                                                        style={{ cursor: 'pointer' }}
-                                                        onClick={() => handleSelectMusic(item, index)} // Set music when clicked
-                                                    >
+                                            {randomMusic.map((item, index) => (
+                                                <div className={`card border-0 music-card    p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }}
+                                                    onClick={() => onSelectMusic(index)}>
+                                                    <div className="d-flex">
                                                         <img src={item.img} className='me-3 img-fluid' alt="" height={50} width={50} />
                                                         <div>
                                                             <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
-                                                            <span>0:45</span>
+                                                            <span>{item.time}</span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                )
-                                            })}
+                                            ))}
                                         </div>
                                     </div>
                                 </div>

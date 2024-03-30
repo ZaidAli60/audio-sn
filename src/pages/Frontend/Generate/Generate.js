@@ -27,7 +27,9 @@ export default function Generate() {
     const [duration, setDuration] = useState(0);
     const timerRef = useRef(null);
     const [modal2Open, setModal2Open] = useState(false);
-
+    const [isProcessing, setIsProcessing] = useState(false)
+    const [audioData, setAudioData] = useState("")
+    console.log('audioData', audioData)
     console.log('accessToken', accessToken)
 
     const handleDecrease = () => {
@@ -70,15 +72,21 @@ export default function Generate() {
 
     const handleGenerate = async () => {
         const prompt = "Bring The Joy [Pop Upbeat Indie Hipster Synthpop Uplifting Happy"
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJPcGVudGVuc29yQGhvdG1haWwuY29tIiwiZXhwIjoxNzExNzI4NTc0fQ.NpPu5wb7mA_MkCbxiZP8LpvkhZHWclAYZbVgqamVF0A"
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJPcGVudGVuc29yQGhvdG1haWwuY29tIiwiZXhwIjoxNzExODM3NzI1fQ.ckeumZACYgxISA05r1XEfzqghCJBk17R_SF3pKHAMVU"
         const config = { headers: { Authorization: `Bearer ${token} ` } }
+        setIsProcessing(true)
         try {
-            const response = await axios.post(`${SERVER_URL}/api/ttm_endpoint`, { prompt }, config);
+            const response = await axios.post(`${SERVER_URL}/api/ttm_endpoint`, { prompt }, { ...config, responseType: 'blob' });
             console.log('response', response)
+            const audioBlob = new Blob([response.data], { type: 'audio/wav' });
+            const url = URL.createObjectURL(audioBlob);
+            setAudioData(url)
+            console.log('response', response.data)
+            setIsProcessing(false)
         } catch (error) {
             console.log('error', error)
+            setIsProcessing(false)
         }
-
     }
 
     return (
@@ -142,7 +150,7 @@ export default function Generate() {
                                 </div>
                                 <hr className='p-0 m-0' />
                                 <div className='pt-3 d-flex justify-content-end'>
-                                    <Button type='primary' size='large' shape="round" onClick={() => handleGenerate()}>Generate</Button>
+                                    <Button type='primary' loading={isProcessing} size='large' shape="round" onClick={() => handleGenerate()}>Generate</Button>
                                 </div>
                             </div>
                         </Col>
@@ -170,7 +178,7 @@ export default function Generate() {
                                                     barWidth="1"
                                                     barGap="1"
                                                     barRadius="1"
-                                                    url={audio4}
+                                                    url={audioData}
                                                     onReady={onReady}
                                                     onPlay={() => setIsPlaying(true)}
                                                     onPause={() => setIsPlaying(false)}
