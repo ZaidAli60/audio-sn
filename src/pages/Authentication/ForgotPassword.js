@@ -43,7 +43,7 @@ export default function ForgotPassword() {
     return (
         <div className='login'>
             <div className="mb-0 d-flex overflow-hidden max-vh-100">
-                <div className="bg-black min-vh-100 text-white p-5 d-flex align-items-center left-signin" style={{ width: '500px', height: '100vh' }}>
+                <div className="bg-black min-vh-100 text-white p-2 p-md-5 d-flex align-items-center left-signin" style={{ width: '500px', height: '100vh' }}>
                     <div className='w-100'>
                         <h4 className='fw-bold'>Forgot Password
                         </h4>
