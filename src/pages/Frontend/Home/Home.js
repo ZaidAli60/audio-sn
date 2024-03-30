@@ -220,7 +220,7 @@ export default function Home() {
                             <div>
                                 <div className="card rounded-4 border-0 p-4 h-100" style={{ backgroundColor: "#f4f1ec" }}>
                                     <div>
-                                        <div className="d-flex flex-column overflow-y-auto" style={{ height: '200px' }}>
+                                        <div className="d-flex flex-column overflow-y-auto" style={{ height: '230px' }}>
                                             {randomMusic.map((item, index) => (
                                                 <div className={`card border-0 music-card    p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }}
                                                     onClick={() => onSelectMusic(index)}>
