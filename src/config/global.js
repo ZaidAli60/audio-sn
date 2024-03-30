@@ -1,5 +1,5 @@
 import { message } from "antd"
-import logo from "assets/images/logo.svg"
+import logo from "assets/images/logo.png"
 
 window.appName = process.env.REACT_APP_NAME
 window.logo = logo

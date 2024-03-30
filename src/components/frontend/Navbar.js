@@ -46,7 +46,7 @@ export default function Navbar() {
         <>
             <nav className={`navbar px-xxl-5 custom-lg-padding custom-xxl-padding py-3 custom-navbar sticky-top  bg-primary`}>
                 <div className="container-fluid px-xxl-3 px-lg-4">
-                    <img src={`${window.logo}`} className='img-fluid me-lg-5 me-auto' style={{ width: "170px", height: "auto" }} alt="Audio" />
+                    <img src={`${window.logo}`} className='img-fluid me-lg-5 me-auto' style={{ width: "150px", height: "auto" }} alt="Audio" />
                     <div className="navbar-nav me-auto">
                     </div>
                     <div className='icon-container me-2 d-none d-lg-block'>
@@ -97,7 +97,7 @@ export default function Navbar() {
                     <div className='d-flex justify-content-between align-items-center'>
                         <div className='me-2'>
                             {/* <img src="" className='img-fluid' style={{ width: "170px", height: "auto" }} alt="Audio" /> */}
-                            <img src={`${window.logo}`} className='img-fluid me-lg-5 me-auto' style={{ width: "170px", height: "auto" }} alt="Audio" />
+                            <img src={`${window.logo}`} className='img-fluid me-lg-5 me-auto' style={{ width: "150px", height: "auto" }} alt="Audio" />
                         </div>
                         {/* <div>
                             <Button type="primary" className={`px-3 custom-btn`} shape="round">Connect</Button>
