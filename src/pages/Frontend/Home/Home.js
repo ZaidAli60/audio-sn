@@ -167,7 +167,7 @@ export default function Home() {
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
                     <Row gutter={[16, 16]} className='mb-5'>
                         <Col xs={24} lg={8}>
-                            <div className='card rounded-4 border-0' style={{ width: "100%", height: '100%' }}  >
+                            <div className='card rounded-4 border-0' style={{ width: "100%", height: '85vh' }}  >
                                 <video src={gifVideo} className='rounded-4 mb-0' autoPlay muted loop playsInline controls={false}
                                     style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute" }} >
                                 </video>
@@ -185,9 +185,9 @@ export default function Home() {
                                 </div>
                             </div>
                         </Col>
-                        <Col xs={24} lg={16}>
-                            <div className='mb-2'>
-                                <div className='card rounded-4 border-0' style={{ width: "100%", height: '100%', borderColor: "white", backgroundColor: "#f4f1ec" }}>
+                        <Col xs={24} lg={16} style={{ height: '85vh', }} className='d-flex flex-column h-sm-auto'>
+                            <div className='mb-2' style={{ flexGrow: "1" }}>
+                                <div className='card rounded-4 border-0 d-flex flex-column h-100' style={{ width: "100%", borderColor: "white", backgroundColor: "#f4f1ec" }}>
                                     <div className='p-4 d-flex flex-column justify-content-between' style={{ flexGrow: 1 }}>
                                         <div className='text-center'>
                                             <Button shape="round" >Text-2-Music</Button>
@@ -217,26 +217,27 @@ export default function Home() {
                                 </div>
                             </div>
 
-                            <div>
-                                <div className="card rounded-4 border-0 p-4 h-100" style={{ backgroundColor: "#f4f1ec" }}>
-                                    <div>
-                                        <div className="d-flex flex-column overflow-y-auto" style={{ height: '230px' }}>
-                                            {randomMusic.map((item, index) => (
-                                                <div className={`card border-0 music-card    p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }}
-                                                    onClick={() => onSelectMusic(index)}>
-                                                    <div className="d-flex">
-                                                        <img src={item.img} className='me-3 img-fluid' alt="" height={50} width={50} />
-                                                        <div>
-                                                            <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
-                                                            <span>{item.time}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
+                            {/* <div> */}
+                            <div className="card rounded-4 border-0 p-4 h-100 h-sm-200" style={{ backgroundColor: "#f4f1ec", overflowY: "auto" }}>
+                                {/* <div>
+                                    <div> */}
+                                {/*  className="d-flex flex-column overflow-y-auto" style={{ height: '230px' }} */}
+                                {randomMusic.map((item, index) => (
+                                    <div className={`card border-0 music-card    p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }}
+                                        onClick={() => onSelectMusic(index)}>
+                                        <div className="d-flex">
+                                            <img src={item.img} className='me-3 img-fluid' alt="" height={50} width={50} />
+                                            <div>
+                                                <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
+                                                <span>{item.time}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                ))}
                             </div>
+                            {/* </div>
+                            </div> */}
+                            {/* </div> */}
                         </Col>
                     </Row>
 

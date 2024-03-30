@@ -79,7 +79,6 @@ $fira-code-font: "Montserrat";
     //     }
     // }
 
-
     .para {
         font-size: 1rem;
         /* Default font size */
@@ -129,11 +128,15 @@ $fira-code-font: "Montserrat";
         }
     }
 
+    @media (max-width: 992px) {
+        .h-sm-200 {
+            height: 200px !important;
+        }
 
-
-
-
-
+        .h-sm-auto {
+            height: auto !important;
+        }
+    }
 
     // .center {
     //     position: fixed;
@@ -301,7 +304,7 @@ $fira-code-font: "Montserrat";
             color: white;
         }
 
-        .ant-table-thead>tr>th {
+        .ant-table-thead > tr > th {
             background-color: #202020;
             color: white !important;
         }
@@ -519,7 +522,19 @@ $fira-code-font: "Montserrat";
 
     @media screen and (max-width: 660px) {
         .sm-audio-img {
-            max-width: 80% !important;
+            max-width: 67% !important;
         }
     }
+    // @media screen and (max-width: 568px) {
+    //     .sm-audio-img {
+    //         max-width: 75% !important;
+    //         position: absolute;
+    //         right: 10px !important;
+    //     }
+    // }
+    // @media screen and (max-width: 350px) {
+    //     .sm-audio-img {
+    //         max-width: 70% !important;
+    //     }
+    // }
 }
