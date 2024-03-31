@@ -304,7 +304,7 @@ $fira-code-font: "Montserrat";
             color: white;
         }
 
-        .ant-table-thead > tr > th {
+        .ant-table-thead>tr>th {
             background-color: #202020;
             color: white !important;
         }
@@ -525,6 +525,7 @@ $fira-code-font: "Montserrat";
             max-width: 67% !important;
         }
     }
+
     // @media screen and (max-width: 568px) {
     //     .sm-audio-img {
     //         max-width: 75% !important;

@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Col, Row, Button } from 'antd';
 import { BsFillPauseFill } from "react-icons/bs";
 import { IoPlay } from "react-icons/io5";
-import { TbPlayerTrackNextFilled } from "react-icons/tb";
-import { TbPlayerTrackPrevFilled } from "react-icons/tb";
+// import { TbPlayerTrackNextFilled } from "react-icons/tb";
+// import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import { useWavesurfer } from '@wavesurfer/react';
-// import RenventingMusic from './RenventingMusic';
 import gifVideo from "assets/video/vid_sub.mp4"
 import circularWaves from "assets/images/circular-wave.gif"
 import circle from "assets/images/circle.png"
@@ -21,63 +20,6 @@ const randomMusic = [
 ]
 
 export default function Home() {
-
-    // const [wavesurfer, setWavesurfer] = useState(null);
-    // const [isPlaying, setIsPlaying] = useState(false);
-    // const [currentTime, setCurrentTime] = useState(0);
-    // const [duration, setDuration] = useState(0);
-    // const [currentSongIndex, setCurrentSongIndex] = useState(0);
-    // const timerRef = useRef(null);
-    // let navigate = useNavigate()
-
-    // const handleNextSong = () => {
-    //     const nextIndex = (currentSongIndex + 1) % randomMusic.length;
-    //     setCurrentSongIndex(nextIndex);
-    // };
-
-    // const handlePrevSong = () => {
-    //     const prevIndex = (currentSongIndex - 1 + randomMusic.length) % randomMusic.length;
-    //     setCurrentSongIndex(prevIndex);
-    // };
-
-    // const handleSelectMusic = (data, index) => {
-    //     if (wavesurfer) {
-    //         setCurrentSongIndex(index); // Update current song index
-    //         wavesurfer.load(data.url);
-    //         wavesurfer.play();
-    //     }
-    // }
-
-    // const onReady = ws => {
-    //     setWavesurfer(ws);
-    //     setIsPlaying(false);
-    //     setDuration(ws.getDuration());
-    //     setCurrentTime(ws.getCurrentTime()); // Set current time to the correct value when new song is loaded and ready
-    // };
-
-    // const onPlayPause = () => {
-    //     if (wavesurfer) {
-    //         wavesurfer.playPause();
-    //         setIsPlaying(!isPlaying);
-    //         if (!isPlaying) {
-    //             startTimer();
-    //         } else {
-    //             clearInterval(timerRef.current);
-    //         }
-    //     }
-    // };
-
-    // const startTimer = () => {
-    //     timerRef.current = setInterval(() => {
-    //         setCurrentTime(wavesurfer.getCurrentTime());
-    //     }, 1000);
-    // };
-
-    // const formatTime = timeInSeconds => {
-    //     const minutes = Math.floor(timeInSeconds / 60);
-    //     const seconds = Math.floor(timeInSeconds % 60);
-    //     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    // };
 
     const formatTime = (seconds) => [seconds / 60, seconds % 60].map((v) => `0${Math.floor(v)}`.slice(-2)).join(':')
 
@@ -148,7 +90,6 @@ export default function Home() {
         }
     };
 
-
     const togglePlayPause = () => {
         if (wavesurfer) {
             if (wavesurfer.isPlaying()) {
@@ -192,14 +133,8 @@ export default function Home() {
                                         <div className='text-center'>
                                             <Button shape="round" >Text-2-Music</Button>
                                         </div>
-                                        <div className='d-flex justify-content-between align-items-center'>
-                                            <div>
-                                                <Button shape="circle" size='large' onClick={() => onSelectMusic(currentSongIndex - 1)}><TbPlayerTrackPrevFilled className='fs-5' /></Button>
-                                            </div>
+                                        <div className='d-flex justify-content-center align-items-center'>
                                             <img src={isPlaying ? circularWaves : circle} className='img-fluid sm-audio-img' alt="Circular Waves" />
-                                            <div>
-                                                <Button shape="circle" size='large' onClick={() => onSelectMusic(currentSongIndex + 1)}><TbPlayerTrackNextFilled className='fs-5' /></Button>
-                                            </div>
                                         </div>
                                         <div className="d-flex justify-content-center align-items-center">
                                             <div className='me-2'>
@@ -216,28 +151,20 @@ export default function Home() {
                                     </div>
                                 </div>
                             </div>
-
-                            {/* <div> */}
                             <div className="card rounded-4 border-0 p-4 h-100 h-sm-200" style={{ backgroundColor: "#f4f1ec", overflowY: "auto" }}>
-                                {/* <div>
-                                    <div> */}
-                                {/*  className="d-flex flex-column overflow-y-auto" style={{ height: '230px' }} */}
                                 {randomMusic.map((item, index) => (
-                                    <div className={`card border-0 music-card    p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }}
-                                        onClick={() => onSelectMusic(index)}>
-                                        <div className="d-flex">
-                                            <img src={item.img} className='me-3 img-fluid' alt="" height={50} width={50} />
-                                            <div>
+                                    <div className={`card border-0 music-card p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }} onClick={() => onSelectMusic(index)}>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className='d-flex align-items-center'>
+                                                <Button shape="circle" className='me-2' size='large' onClick={togglePlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
                                                 <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
-                                                <span>{item.time}</span>
                                             </div>
+                                            <span>{item.time}</span>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                            {/* </div>
-                            </div> */}
-                            {/* </div> */}
+
                         </Col>
                     </Row>
 
