@@ -102,6 +102,21 @@ export default function Home() {
         }
     };
 
+    const togglePlayPauseSong = (index) => {
+        if (index === currentSongIndex) {
+            if (isPlaying) {
+                wavesurfer.pause(); // Pause the currently playing song
+                setIsPlaying(false);
+            } else {
+                wavesurfer.play(); // Play the currently paused song
+                setIsPlaying(true);
+            }
+        } else {
+            onSelectMusic(index); // Play the selected song
+            setIsPlaying(true); // Ensure that isPlaying is set to true
+        }
+    };
+
     return (
         <div className={`home dashboard bg-primary min-vh-100`}>
             <div className="container-fluid px-xxl-3 px-lg-4 py-2">
@@ -153,10 +168,12 @@ export default function Home() {
                             </div>
                             <div className="card rounded-4 border-0 p-4 h-100 h-sm-200" style={{ backgroundColor: "#f4f1ec", overflowY: "auto" }}>
                                 {randomMusic.map((item, index) => (
-                                    <div className={`card border-0 music-card p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }} onClick={() => onSelectMusic(index)}>
+                                    <div className={`card border-0 music-card p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }} onClick={() => togglePlayPauseSong(index)}>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div className='d-flex align-items-center'>
-                                                <Button shape="circle" className='me-2' size='large' onClick={togglePlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                                <Button shape="circle" className='me-2' size='large'>
+                                                    {index === currentSongIndex && isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}
+                                                </Button>
                                                 <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
                                             </div>
                                             <span>{item.time}</span>
