@@ -14,6 +14,9 @@ import Music3 from '../../../assets/images/SoundBackgrounds/3.png'
 
 const randomMusic = [
     { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav", img: Music3, time: "0:15" },
+    { title: "Groovy Cats 30_Advertising, Upbeat, Retro, Cool, Hip, Indie, Pop, Fun, Catchy", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711919931/TTM1_jwe5ww.wav", img: Music3, time: "0:15" },
+    { title: "Timeless (Underscore) Pop Upbeat Cinematic Majestic Reflective Regal Powerful", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711920134/TTM2_dvwkyv.wav", img: Music3, time: "0:15" },
+    { title: "Uplifting Stadium Pop Anthem Coldplay. Energetic Joyful Upbeat Claps Motivation", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711920201/TTM3_jgsy5f.wav", img: Music3, time: "0:15" },
     { title: "1 Intimate session, hopeful, modern folk-pop, capoed melody", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711706048/bkr8d4jjd6zzpd4edvjn.mp3", img: Music, time: "01:30" },
     { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711742714/TTM1_z9vxca.wav", img: Music3, time: "0:15" },
     { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711744788/TTM_3_dfc6ya.wav", img: Music, time: "0:15" },
