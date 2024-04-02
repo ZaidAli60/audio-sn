@@ -72,8 +72,8 @@ export default function Generate() {
 
     const handleGenerate = async () => {
         const prompt = "Bring The Joy [Pop Upbeat Indie Hipster Synthpop Uplifting Happy"
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJPcGVudGVuc29yQGhvdG1haWwuY29tIiwiZXhwIjoxNzExODM3NzI1fQ.ckeumZACYgxISA05r1XEfzqghCJBk17R_SF3pKHAMVU"
-        const config = { headers: { Authorization: `Bearer ${token} ` } }
+        // const token = ""
+        const config = { headers: { Authorization: `Bearer ${accessToken} ` } }
         setIsProcessing(true)
         try {
             const response = await axios.post(`${SERVER_URL}/api/ttm_endpoint`, { prompt }, { ...config, responseType: 'blob' });
