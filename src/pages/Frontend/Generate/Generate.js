@@ -71,9 +71,10 @@ export default function Generate() {
     };
 
     const handleGenerate = async () => {
-        const prompt = "Bring The Joy [Pop Upbeat Indie Hipster Synthpop Uplifting Happy"
+        // const prompt = "Bring The Joy [Pop Upbeat Indie Hipster Synthpop Uplifting Happy"
+        const prompt = "Compose a modern pop ballad with emotive lyrics and a captivating melody"
         // const token = ""
-        const config = { headers: { Authorization: `Bearer ${accessToken} ` } }
+        const config = { headers: { Authorization: `Bearer ` } }
         setIsProcessing(true)
         try {
             const response = await axios.post(`${SERVER_URL}/api/ttm_endpoint`, { prompt }, { ...config, responseType: 'blob' });
@@ -90,7 +91,7 @@ export default function Generate() {
     }
 
     return (
-        <div className='bg-primary'>
+        <div className='bg-primary min-vh-100'>
             <div className="container-fluid px-xxl-3 px-lg-4 py-2">
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding py-5">
                     <Row gutter={[16, 16]}>

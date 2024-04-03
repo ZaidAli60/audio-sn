@@ -17,9 +17,12 @@ const randomMusic = [
     { title: "Groovy Cats 30_Advertising, Upbeat, Retro, Cool, Hip, Indie, Pop, Fun, Catchy", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711919931/TTM1_jwe5ww.wav", img: Music3, time: "0:15" },
     { title: "Timeless (Underscore) Pop Upbeat Cinematic Majestic Reflective Regal Powerful", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711920134/TTM2_dvwkyv.wav", img: Music3, time: "0:15" },
     { title: "Uplifting Stadium Pop Anthem Coldplay. Energetic Joyful Upbeat Claps Motivation", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711920201/TTM3_jgsy5f.wav", img: Music3, time: "0:15" },
-    { title: "1 Intimate session, hopeful, modern folk-pop, capoed melody", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711706048/bkr8d4jjd6zzpd4edvjn.mp3", img: Music, time: "01:30" },
     { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711742714/TTM1_z9vxca.wav", img: Music3, time: "0:15" },
-    { title: "Upbeat Happy Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711744788/TTM_3_dfc6ya.wav", img: Music, time: "0:15" },
+    { title: "Positive Dreamy Inspirational Motivational Human Voices Pop", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1712171291/ey67cn3ipvjbnglcjfya.wav", img: Music, time: "0:15" },
+    { title: "Relax Saxophone. Popular Melody. Romantic Dreamy", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1712171452/soatr9kk4vb8j81tlrd7.wav", img: Music, time: "0:15" },
+    { title: "Soft Future Bass: Pop Fashion Energetic Background", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1712172511/zfudk747i7db7u2eilc0.wav", img: Music, time: "0:15" },
+    { title: "Action Uplifting & Upbeat Energetic Summer Pop Indie Rock Fun", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1712172703/crmoufvwzjhyleskw2fj.wav", img: Music, time: "0:15" },
+    { title: "Fashion Background Stylish Funk Groove. Upbeat Youthful Urban Uptown Funky Pop", url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1712173830/bc363lwjqu5qb2crhqk7.wav", img: Music, time: "0:15" },
 ]
 
 export default function Home() {
@@ -120,11 +123,75 @@ export default function Home() {
         }
     };
 
+
     return (
         <div className={`home dashboard bg-primary min-vh-100`}>
             <div className="container-fluid px-xxl-3 px-lg-4 py-2">
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
-                    <Row gutter={[16, 16]} className='mb-5'>
+                    <Row gutter={[16, 16]} className='mb-5' style={{ height: '85vh', }}>
+                        <Col xs={24} lg={8} style={{ height: '100%' }}>
+                            <div className='card rounded-4 border-0' style={{ width: "100%", height: '100%' }}  >
+                                <video src={gifVideo} className='rounded-4 mb-0' autoPlay muted loop playsInline controls={false}
+                                    style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute" }} >
+                                </video>
+                                <div className='z-3 p-3 h-100' >
+                                    <div className='z-3 p-3 d-flex flex-column justify-content-between h-100'>
+                                        <div className='mb-3'>
+                                            <h1 className='fw-bold'>Create music <br />with AI.</h1>
+                                        </div>
+                                        <div>
+                                            <p className='fs-5'>Generate high-quality audio that you can use commercially.</p>
+                                            <p className='fs-5'>Get started for free.</p>
+                                            <Button type='primary' shape="round" onClick={() => navigate("/generate")}>Try it out</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Col>
+
+                        <Col xs={24} lg={16} style={{ height: '100%' }} className='d-flex flex-column'>
+                            {/* <div className='' style={{ height: "50%", overflowY: "auto" }}> */}
+                            <div className='card rounded-4 border-0 d-flex flex-column mb-2 ' style={{ width: "100%", height: "50%", borderColor: "white", backgroundColor: "#f4f1ec", overflowY: "auto" }}>
+                                <div className='p-4 d-flex flex-column justify-content-between' style={{ flexGrow: 1 }}>
+                                    <div className='text-center'>
+                                        <Button shape="round" >Text-2-Music</Button>
+                                    </div>
+                                    <div className='d-flex justify-content-center align-items-center'>
+                                        <img src={isPlaying ? circularWaves : circle} className={`img-fluid sm-audio-img `} alt="Circular Waves" />
+                                    </div>
+                                    <div className="d-flex justify-content-center align-items-center">
+                                        <div className='me-2'>
+                                            <Button shape="circle" size='large' onClick={togglePlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                        </div>
+                                        <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
+                                            <span className="current-time">{formatTime(currentTime)}</span>
+                                            <div style={{ width: "100%" }}>
+                                                <div ref={containerRef} />
+                                            </div>
+                                            <span className="duration-time">{formatTime(totalDuration)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* </div> */}
+                            <div className="card rounded-4 border-0 p-4 h-sm-200" style={{ backgroundColor: "#f4f1ec", height: "50%", overflowY: "auto" }}>
+                                {randomMusic.map((item, index) => (
+                                    <div className={`card border-0 music-card p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }} onClick={() => togglePlayPauseSong(index)}>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className='d-flex align-items-center'>
+                                                <Button shape="circle" className='me-2' size='large'>
+                                                    {index === currentSongIndex && isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}
+                                                </Button>
+                                                <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
+                                            </div>
+                                            <span>{item.time}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Col>
+
+                        {/* <Row gutter={[16, 16]} className='mb-5'>
                         <Col xs={24} lg={8}>
                             <div className='card rounded-4 border-0' style={{ width: "100%", height: '85vh' }}  >
                                 <video src={gifVideo} className='rounded-4 mb-0' autoPlay muted loop playsInline controls={false}
@@ -144,7 +211,52 @@ export default function Home() {
                                 </div>
                             </div>
                         </Col>
-                        <Col xs={24} lg={16} style={{ height: '85vh' }} className='d-flex flex-column h-sm-auto'>
+
+                        <Col xs={24} lg={16} style={{ height: '85vh', }} className='d-flex flex-column h-sm-auto'>
+                            <div className='mb-2' style={{ flexGrow: "1" }}>
+                                <div className='card rounded-4 border-0 d-flex flex-column h-100' style={{ width: "100%", borderColor: "white", backgroundColor: "#f4f1ec" }}>
+                                    <div className='p-4 d-flex flex-column justify-content-between' style={{ flexGrow: 1 }}>
+                                        <div className='text-center'>
+                                            <Button shape="round" >Text-2-Music</Button>
+                                        </div>
+                                        <div className='d-flex justify-content-center align-items-center'>
+                                            <img src={isPlaying ? circularWaves : circle} className={`img-fluid sm-audio-img `} alt="Circular Waves" />
+                                        </div>
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <div className='me-2'>
+                                                <Button shape="circle" size='large' onClick={togglePlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                            </div>
+                                            <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
+                                                <span className="current-time">{formatTime(currentTime)}</span>
+                                                <div style={{ width: "100%" }}>
+                                                    <div ref={containerRef} />
+                                                </div>
+                                                <span className="duration-time">{formatTime(totalDuration)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card rounded-4 border-0 p-4 h-100 h-sm-200" style={{ backgroundColor: "#f4f1ec", overflowY: "auto" }}>
+                                {randomMusic.map((item, index) => (
+                                    <div className={`card border-0 music-card p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }} onClick={() => togglePlayPauseSong(index)}>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className='d-flex align-items-center'>
+                                                <Button shape="circle" className='me-2' size='large'>
+                                                    {index === currentSongIndex && isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}
+                                                </Button>
+                                                <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
+                                            </div>
+                                            <span>{item.time}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                        </Col> */}
+
+
+                        {/* <Col xs={24} lg={16} style={{ height: '85vh' }} className='d-flex flex-column h-sm-auto'>
                             <div className='mb-2 d-flex flex-grow-1'>
                                 <div className='card rounded-4 border-0 d-flex flex-column h-100 w-100' style={{ borderColor: "white", backgroundColor: "#f4f1ec", display: 'flex' }}>
                                     <div className='p-4 d-flex flex-column justify-content-between flex-grow-1'>
@@ -184,7 +296,7 @@ export default function Home() {
                                     </div>
                                 ))}
                             </div>
-                        </Col>
+                        </Col> */}
 
 
 
@@ -230,48 +342,7 @@ export default function Home() {
                             </div>
                         </Col> */}
 
-                        {/* <Col xs={24} lg={16} style={{ height: '85vh', }} className='d-flex flex-column h-sm-auto'>
-                            <div className='mb-2' style={{ flexGrow: "1" }}>
-                                <div className='card rounded-4 border-0 d-flex flex-column h-100' style={{ width: "100%", borderColor: "white", backgroundColor: "#f4f1ec" }}>
-                                    <div className='p-4 d-flex flex-column justify-content-between' style={{ flexGrow: 1 }}>
-                                        <div className='text-center'>
-                                            <Button shape="round" >Text-2-Music</Button>
-                                        </div>
-                                        <div className='d-flex justify-content-center align-items-center'>
-                                            <img src={isPlaying ? circularWaves : circle} className='img-fluid sm-audio-img' alt="Circular Waves" />
-                                        </div>
-                                        <div className="d-flex justify-content-center align-items-center">
-                                            <div className='me-2'>
-                                                <Button shape="circle" size='large' onClick={togglePlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
-                                            </div>
-                                            <div className='d-flex justify-content-center align-items-center' style={{ flex: '1 1 0%', gap: "1rem" }}>
-                                                <span className="current-time">{formatTime(currentTime)}</span>
-                                                <div style={{ width: "100%" }}>
-                                                    <div ref={containerRef} />
-                                                </div>
-                                                <span className="duration-time">{formatTime(totalDuration)}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card rounded-4 border-0 p-4 h-100 h-sm-200" style={{ backgroundColor: "#f4f1ec", overflowY: "auto" }}>
-                                {randomMusic.map((item, index) => (
-                                    <div className={`card border-0 music-card p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }} onClick={() => togglePlayPauseSong(index)}>
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div className='d-flex align-items-center'>
-                                                <Button shape="circle" className='me-2' size='large'>
-                                                    {index === currentSongIndex && isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}
-                                                </Button>
-                                                <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
-                                            </div>
-                                            <span>{item.time}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
 
-                        </Col> */}
 
 
                         {/* <Col xs={24} lg={16} style={{ height: '85vh' }} className='d-flex flex-column h-sm-auto'>
