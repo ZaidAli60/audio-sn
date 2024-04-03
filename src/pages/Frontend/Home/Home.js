@@ -144,7 +144,93 @@ export default function Home() {
                                 </div>
                             </div>
                         </Col>
-                        <Col xs={24} lg={16} style={{ height: '85vh', }} className='d-flex flex-column h-sm-auto'>
+                        <Col xs={24} lg={16} style={{ height: '85vh' }} className='d-flex flex-column h-sm-auto'>
+                            <div className='mb-2 d-flex flex-grow-1'>
+                                <div className='card rounded-4 border-0 d-flex flex-column h-100 w-100' style={{ borderColor: "white", backgroundColor: "#f4f1ec", display: 'flex' }}>
+                                    <div className='p-4 d-flex flex-column justify-content-between flex-grow-1'>
+                                        <div className='text-center'>
+                                            <Button shape="round">Text-2-Music</Button>
+                                        </div>
+                                        <div className='d-flex justify-content-center align-items-center'>
+                                            <img src={isPlaying ? circularWaves : circle} className='img-fluid sm-audio-img' alt="Circular Waves" />
+                                        </div>
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <div className='me-2'>
+                                                <Button shape="circle" size='large' onClick={togglePlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                            </div>
+                                            <div className='d-flex justify-content-center align-items-center flex-grow-1' style={{ gap: "1rem" }}>
+                                                <span className="current-time">{formatTime(currentTime)}</span>
+                                                <div style={{ width: "100%" }}>
+                                                    <div ref={containerRef} />
+                                                </div>
+                                                <span className="duration-time">{formatTime(totalDuration)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card rounded-4 border-0 p-4 flex-grow-1" style={{ backgroundColor: "#f4f1ec", overflowY: "auto", display: 'flex', flexDirection: 'column' }}>
+                                {randomMusic.map((item, index) => (
+                                    <div className={`card border-0 music-card p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }} onClick={() => togglePlayPauseSong(index)}>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className='d-flex align-items-center'>
+                                                <Button shape="circle" className='me-2' size='large'>
+                                                    {index === currentSongIndex && isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}
+                                                </Button>
+                                                <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
+                                            </div>
+                                            <span>{item.time}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Col>
+
+
+
+                        {/* <Col xs={24} lg={16} style={{ height: '85vh' }} className='d-flex flex-column h-sm-auto'>
+                            <div className='mb-2 flex-grow-1'>
+                                <div className='card rounded-4 border-0 d-flex flex-column h-100' style={{ width: "100%", borderColor: "white", backgroundColor: "#f4f1ec", display: 'flex' }}>
+                                    <div className='p-4 d-flex flex-column justify-content-between flex-grow-1'>
+                                        <div className='text-center'>
+                                            <Button shape="round">Text-2-Music</Button>
+                                        </div>
+                                        <div className='d-flex justify-content-center align-items-center'>
+                                            <img src={isPlaying ? circularWaves : circle} className='img-fluid sm-audio-img' alt="Circular Waves" />
+                                        </div>
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <div className='me-2'>
+                                                <Button shape="circle" size='large' onClick={togglePlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                            </div>
+                                            <div className='d-flex justify-content-center align-items-center flex-grow-1' style={{ gap: "1rem" }}>
+                                                <span className="current-time">{formatTime(currentTime)}</span>
+                                                <div style={{ width: "100%" }}>
+                                                    <div ref={containerRef} />
+                                                </div>
+                                                <span className="duration-time">{formatTime(totalDuration)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card rounded-4 border-0 p-4 flex-grow-1" style={{ backgroundColor: "#f4f1ec", overflowY: "auto", display: 'flex', flexDirection: 'column' }}>
+                                {randomMusic.map((item, index) => (
+                                    <div className={`card border-0 music-card p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }} onClick={() => togglePlayPauseSong(index)}>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className='d-flex align-items-center'>
+                                                <Button shape="circle" className='me-2' size='large'>
+                                                    {index === currentSongIndex && isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}
+                                                </Button>
+                                                <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
+                                            </div>
+                                            <span>{item.time}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Col> */}
+
+                        {/* <Col xs={24} lg={16} style={{ height: '85vh', }} className='d-flex flex-column h-sm-auto'>
                             <div className='mb-2' style={{ flexGrow: "1" }}>
                                 <div className='card rounded-4 border-0 d-flex flex-column h-100' style={{ width: "100%", borderColor: "white", backgroundColor: "#f4f1ec" }}>
                                     <div className='p-4 d-flex flex-column justify-content-between' style={{ flexGrow: 1 }}>
@@ -185,7 +271,54 @@ export default function Home() {
                                 ))}
                             </div>
 
-                        </Col>
+                        </Col> */}
+
+
+                        {/* <Col xs={24} lg={16} style={{ height: '85vh' }} className='d-flex flex-column h-sm-auto'>
+                            <div className='mb-2 flex-grow-1 d-flex' style={{ height: '50%' }}>
+                                <div className='card rounded-4 border-0 d-flex flex-column h-100 w-100' style={{ borderColor: "white", backgroundColor: "#f4f1ec", display: 'flex' }}>
+                                    <div className='p-4 d-flex flex-column justify-content-between flex-grow-1'>
+                                        <div className='text-center'>
+                                            <Button shape="round">Text-2-Music</Button>
+                                        </div>
+                                        <div className='d-flex justify-content-center align-items-center'>
+                                            <img src={isPlaying ? circularWaves : circle} className='img-fluid sm-audio-img' alt="Circular Waves" />
+                                        </div>
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <div className='me-2'>
+                                                <Button shape="circle" size='large' onClick={togglePlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                            </div>
+                                            <div className='d-flex justify-content-center align-items-center flex-grow-1' style={{ gap: "1rem" }}>
+                                                <span className="current-time">{formatTime(currentTime)}</span>
+                                                <div style={{ width: "100%" }}>
+                                                    <div ref={containerRef} />
+                                                </div>
+                                                <span className="duration-time">{formatTime(totalDuration)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card rounded-4 border-0 p-4 flex-grow-1" style={{ backgroundColor: "#f4f1ec", overflowY: "auto", display: 'flex', flexDirection: 'column', height: '50%' }}>
+                                {randomMusic.map((item, index) => (
+                                    <div className={`card border-0 music-card p-1 mb-1 ${index === currentSongIndex ? 'selected' : ''}`} key={index} style={{ cursor: 'pointer' }} onClick={() => togglePlayPauseSong(index)}>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className='d-flex align-items-center'>
+                                                <Button shape="circle" className='me-2' size='large'>
+                                                    {index === currentSongIndex && isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}
+                                                </Button>
+                                                <p className={`p-0 m-0 fs-6 para`}>{item.title}</p>
+                                            </div>
+                                            <span>{item.time}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Col> */}
+
+
+
+
                     </Row>
 
                     {/* Renventing How to create Music Section */}
