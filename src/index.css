@@ -1,53 +1,37 @@
-.dashboard.light {
-    background-color: #fcfcfc;
-    color: black !important;
+:root {
+    --bgColor: hsla(242, 86%, 6%, 1);
+    --bgColorLight: hsla(242, 86%, 24%, 1);
+    --textColor: hsla(242, 86%, 88%, 1);
+    --textColorDark: hsla(242, 36%, 0%, 1);
+    --paperColor: hsla(242, 86%, 44%, 1);
+    --paperColorDark: hsla(242, 86%, 34%, 1);
+    --shadowColorFaint: hsla(0, 0%, 0%, 0.2);
 }
 
-.dashboard.dark {
-    background-color: #121212;
-    color: #fcfcfc;
+::selected {
+    color: var(--textColorDark);
 }
 
-@import "./scss/bootstrap";
-@import "./scss//frontend/navbar";
-@import "./scss/dashboard";
-@import "./scss/screen-loader";
-@import "./scss/buttons";
-@import "./scss/utilities";
-@import "./scss/frontend/home";
-@import "./scss/frontend/faqs";
-@import "./scss/frontend/footer";
-@import "./scss/frontend/404page";
-@import "./scss/Authentication/Login.scss";
-
-#root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    background-color: black !important;
+    /* background: linear-gradient(135deg, var(--bgColor), var(--bgColorLight)); */
+    color: var(--textColor);
+    font-family: 'Saira', sans-serif;
+    position: relative;
 }
 
-.ant-layout {
-
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+* {
+    box-sizing: border-box;
+    transition: all 0.12s cubic-bezier(0.42, 0.54, 0.22, 1.26);
 }
 
-
-
-
-main {
-    flex: 1 0 auto;
-}
-
-@media (min-width: 1920px) {
-    .custom-xxl-padding {
-        padding-left: 10rem !important;
-        padding-right: 10rem !important;
-    }
-}
-
-canvas {
+#canvas {
     position: fixed;
     left: 0;
     top: 0;
@@ -73,6 +57,7 @@ audio {
     outline: none !important;
     box-shadow: none !important;
 }
+
 input::placeholder {
     color: white !important;
 }

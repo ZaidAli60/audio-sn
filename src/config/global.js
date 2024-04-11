@@ -1,8 +1,10 @@
 import { message } from "antd"
-import logo from "assets/images/logo.png"
+import logoDark from "assets/images/logo.png"
+import logoLight from "assets/images/logolight.png"
 
 window.appName = process.env.REACT_APP_NAME
-window.logo = logo
+window.logoDark = logoDark
+window.logoLight = logoLight
 
 
 // window.logoColor = logoColor
