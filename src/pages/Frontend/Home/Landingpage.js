@@ -32,6 +32,7 @@ function LandingPage() {
     const audioElementRef = useRef();
     const contentRef = useRef(); // Reference to the content div
     const [isPlaying, setIsPlaying] = useState(false)
+    const [currentMusic, setCurrentMusic] = useState("")
 
 
     let navigate = useNavigate()
@@ -106,24 +107,24 @@ function LandingPage() {
         const sound = new THREE.Audio(listener);
         const audioLoader = new THREE.AudioLoader();
 
-        // audioRef.current.onchange = function () {
-        //   const file = this.files[0];
-        //   const url = URL.createObjectURL(file);
-        //   audioElementRef.current.src = url;
-        //   audioLoader.load(url, (buffer) => {
-        //     sound.setBuffer(buffer);
-        //     analyser.current = new THREE.AudioAnalyser(sound, 32);
-        //     audioElementRef.current.play();
-        //   });
-        // };
+        audioRef.current.onchange = function () {
+            const file = this.files[0];
+            const url = URL.createObjectURL(file);
+            audioElementRef.current.src = url;
+            audioLoader.load(url, (buffer) => {
+                sound.setBuffer(buffer);
+                analyser.current = new THREE.AudioAnalyser(sound, 32);
+                audioElementRef.current.play();
+            });
+        };
 
-        // audioElementRef.current.onplay = function () {
-        //   sound.play();
-        // };
+        audioElementRef.current.onplay = function () {
+            sound.play();
+        };
 
-        // audioElementRef.current.onpause = function () {
-        //   sound.pause();
-        // };
+        audioElementRef.current.onpause = function () {
+            sound.pause();
+        };
 
         // Event listeners
         const handleMouseMove = (e) => {
@@ -177,14 +178,14 @@ function LandingPage() {
     }, []);
 
     // Resize handler
-    // const handleResize = () => {
-    //   camera.current.aspect = window.innerWidth / window.innerHeight;
-    //   camera.current.updateProjectionMatrix();
-    //   renderer.current.setSize(window.innerWidth, window.innerHeight);
-    //   bloomComposer.current.setSize(window.innerWidth, window.innerHeight);
-    // };
+    const handleResize = () => {
+        camera.current.aspect = window.innerWidth / window.innerHeight;
+        camera.current.updateProjectionMatrix();
+        renderer.current.setSize(window.innerWidth, window.innerHeight);
+        bloomComposer.current.setSize(window.innerWidth, window.innerHeight);
+    };
 
-    // window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize);
 
 
 
@@ -198,53 +199,57 @@ function LandingPage() {
         barWidth: "1",
         barGap: "1",
         barRadius: "1",
-        url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav",
+        url: "",
         autoPlay: false, // Disable autoplay
     });
 
+    useEffect(() => {
+        if (wavesurfer) {
+            wavesurfer.on('finish', () => {
+                setIsPlaying(false);
+            });
+        }
+        return () => {
+            wavesurfer && wavesurfer.un('finish');
+        };
+    }, [wavesurfer]);
 
-    // useEffect(() => {
-    //     // Update the Wavesurfer instance to display progress bar only
-    //     if (wavesurfer) {
-    //         // wavesurfer.setWaveColor('transparent'); // Set wave color to transparent
-    //         wavesurfer.setProgressColor('rgb(58, 91, 201)'); // Set progress color to desired color
-    //         wavesurfer.setBarWidth(1); // Set bar width
-    //         wavesurfer.setBarGap(1); // Set bar gap
-    //         wavesurfer.setBarRadius(1); // Set bar radius
-    //     }
-    // }, [wavesurfer]);
+    const togglePlayPause = () => {
+        setCurrentMusic("https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav")
+        if (wavesurfer) {
+            if (wavesurfer.isPlaying()) {
+                wavesurfer.pause();
+                setIsPlaying(false);
+            } else {
+                wavesurfer.play();
+                setIsPlaying(true);
+            }
+        }
+    };
 
     return (
         <div id="content">
-            {/* <label for="thefile" class="file"> Choose an audio file
-          <input ref={audioRef} type="file" accept="audio/*" />
-        </label>
-        <audio id="audio" controls></audio>
-        <audio id="audio" ref={audioElementRef} controls></audio>
-        <div id="out"></div> */}
             <div ref={contentRef}>
-
             </div>
-
+            <label for="thefile" class="file"> Choose an audio file
+                <input ref={audioRef} type="file" accept="audio/*" />
+            </label>
+            <audio id="audio" controls></audio>
+            <audio id="audio" ref={audioElementRef} controls></audio>
+            <div id="out"></div>
             <Navbar />
-
             <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
                 <div className='container-fluid px-xxl-3 px-lg-4'>
                     <div className='text-input d-flex justify-content-center align-items-center'>
                         <div className="card p-3 border-0" style={{ width: "50%", background: "transparent" }}>
                             <div ref={containerRef} className='mb-3'>
-                                {/* This container will be used by Wavesurfer */}
                             </div>
                             <div className='gap-3 d-flex justify-content-center align-items-center' style={{ background: "transparent" }}>
                                 <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackPrevFilled /></Button>
-                                <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                                <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }} onClick={() => togglePlayPause()}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
                                 <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackNextFilled /></Button>
                             </div>
                         </div>
-                        {/* <div class="input-group w-50">
-                          <input type="text" class="form-control fw-semibold text-light border border-end-0 border-3 rounded-0 bg-transparent input-class" placeholder="Text to Music Prompt" aria-label="Text to Music Prompt" aria-describedby="basic-addon2" />
-                           <button type='button' class="input-group-text border border-3 rounded-0 bg-transparent text-light" id="basic-addon2">GENERATE</button>
-                            </div> */}
                     </div>
                 </div>
             </div>

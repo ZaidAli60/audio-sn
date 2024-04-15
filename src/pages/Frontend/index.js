@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import NotFound from './NotFound'
-// import Navbar from 'components/frontend/Navbar'
+import Navbar from 'components/frontend/Navbar'
 import Home from './Home'
 import { Content } from 'antd/es/layout/layout'
 import { Layout } from 'antd'
@@ -15,7 +15,7 @@ export default function Index() {
     console.log('isAuthenticated', isAuthenticated)
     return (
         <Layout>
-            {/* <Navbar /> */}
+            <Navbar />
             <Content>
                 <Routes>
                     <Route index element={<Home />} />
