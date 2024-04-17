@@ -82,7 +82,24 @@ export default function Navbar() {
                     </button>
                 </div>
             </nav>
+            {/* <nav class="navbar px-xxl-5 custom-lg-padding custom-xxl-padding py-3 navbar-expand-lg position-fixed w-100" style={{ backgroundColor: "transparent" }}>
+                <div class="container-fluid px-xxl-3 px-lg-4">
+                
+                    <img src={window.logoLight} className="img-fluid" style={{ width: "130px", height: "auto" }} alt="logo" />
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
+                        </ul>
+                        <div class="d-flex gap-3">
+                            <Button style={{ background: "transparent", color: "white" }}>Try it out</Button>
+                            <Button style={{ background: "transparent", color: "white" }} onClick={() => { navigate("auth") }}>Log in</Button>
+                        </div>
+                    </div>
+                </div>
+            </nav> */}
             <Drawer
                 title={
                     <div className='d-flex justify-content-between align-items-center'>

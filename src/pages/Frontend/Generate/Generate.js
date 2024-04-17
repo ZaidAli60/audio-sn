@@ -29,6 +29,7 @@ export default function Generate() {
     const [modal2Open, setModal2Open] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false)
     const [audioData, setAudioData] = useState("")
+    const [audioURL, setAudioURL] = useState("")
     console.log('audioData', audioData)
     console.log('accessToken', accessToken)
 
@@ -70,25 +71,69 @@ export default function Generate() {
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
+    // const handleGenerate = async () => {
+    //     // const prompt = "Bring The Joy [Pop Upbeat Indie Hipster Synthpop Uplifting Happy"
+    //     const prompt = "Compose a modern pop ballad with emotive lyrics and a captivating melody"
+    //     const token = accessToken; // Assuming accessToken is an object with an accessToken property
+
+    //     // if (!token) {
+    //     //     console.log('Access token is missing.');
+    //     //     return;
+    //     // }
+
+    //     const config = { headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ6YWlkYWxpNjBnYkBnbWFpbC5jb20iLCJleHAiOjE3MTMyOTA0OTJ9.YhfAm-qacV8PNmHqu_NlSz7PvrzxpnihW8FLO2cPKwY` } }
+    //     setIsProcessing(true)
+    //     try {
+    //         const response = await axios.post(`http://85.239.241.96:8000/api/ttm_endpoint`, { prompt }, { responseType: 'blob' })
+    //         console.log('response', response)
+    //         const audioBlob = new Blob([response.data], { type: 'audio/wav' });
+    //         const url = URL.createObjectURL(audioBlob);
+    //         setAudioData(url)
+    //         console.log('response', response.data)
+    //         setIsProcessing(false)
+    //     } catch (error) {
+    //         console.log('error', error)
+    //         setIsProcessing(false)
+    //     }
+    // }
+
     const handleGenerate = async () => {
-        // const prompt = "Bring The Joy [Pop Upbeat Indie Hipster Synthpop Uplifting Happy"
-        const prompt = "Compose a modern pop ballad with emotive lyrics and a captivating melody"
-        // const token = ""
-        const config = { headers: { Authorization: `Bearer ` } }
-        setIsProcessing(true)
+        const prompt = "Compose a modern pop ballad with emotive lyrics and a captivating melody";
+        setIsProcessing(true);
         try {
-            const response = await axios.post(`${SERVER_URL}/api/ttm_endpoint`, { prompt }, { ...config, responseType: 'blob' });
-            console.log('response', response)
-            const audioBlob = new Blob([response.data], { type: 'audio/wav' });
+            const response = await axios.post(
+                'http://85.239.241.96:8000/api/ttm_endpoint',
+                { prompt },
+                { responseType: 'arraybuffer' } // Receive response as ArrayBuffer
+            );
+            const audioBlob = new Blob([response.data], { type: 'audio/wav' }); // Convert ArrayBuffer to Blob
             const url = URL.createObjectURL(audioBlob);
-            setAudioData(url)
-            console.log('response', response.data)
-            setIsProcessing(false)
+            setAudioURL(url)
+            setAudioData(audioBlob)
+            setIsProcessing(false);
         } catch (error) {
-            console.log('error', error)
-            setIsProcessing(false)
+            console.log('Error:', error);
+            setIsProcessing(false);
         }
-    }
+    };
+
+    const handleDownload = () => {
+        if (audioData instanceof Blob) { // Check if audioBlob is a Blob
+            try {
+                const url = URL.createObjectURL(audioData);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'generated_audio.wav'; // Specify the desired filename here
+                document.body.appendChild(a);
+                a.click();
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error creating download link:', error);
+            }
+        } else {
+            console.error('Audio blob is not a Blob:', audioData);
+        }
+    };
 
     return (
         <div className='bg-primary min-vh-100'>
@@ -179,7 +224,7 @@ export default function Generate() {
                                                     barWidth="1"
                                                     barGap="1"
                                                     barRadius="1"
-                                                    url={audioData}
+                                                    url={audioURL}
                                                     onReady={onReady}
                                                     onPlay={() => setIsPlaying(true)}
                                                     onPause={() => setIsPlaying(false)}
@@ -189,7 +234,7 @@ export default function Generate() {
                                         </div>
                                         <div>
                                             <Button type="text" size='large' shape='circle' onClick={() => setModal2Open(true)}><IoShareSocialOutline className='fs-5 opacity-75' /></Button>
-                                            <Button type="text" size='large' shape='circle' ><AiOutlineDownload className='fs-5 opacity-75' /></Button>
+                                            <Button type="text" size='large' shape='circle' onClick={handleDownload} ><AiOutlineDownload className='fs-5 opacity-75' /></Button>
                                             <Modal
                                                 title="Share track link"
                                                 centered

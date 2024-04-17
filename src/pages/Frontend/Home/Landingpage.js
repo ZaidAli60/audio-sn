@@ -107,16 +107,23 @@ function LandingPage() {
         const sound = new THREE.Audio(listener);
         const audioLoader = new THREE.AudioLoader();
 
-        audioRef.current.onchange = function () {
-            const file = this.files[0];
-            const url = URL.createObjectURL(file);
-            audioElementRef.current.src = url;
-            audioLoader.load(url, (buffer) => {
-                sound.setBuffer(buffer);
-                analyser.current = new THREE.AudioAnalyser(sound, 32);
-                audioElementRef.current.play();
+        audioLoader.load('https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav', function (buffer) {
+            sound.setBuffer(buffer);
+            window.addEventListener('click', function () {
+                sound.play();
             });
-        };
+        });
+
+        // audioRef.current.onchange = function () {
+        //     const file = this.files[0];
+        //     const url = URL.createObjectURL(file);
+        //     audioElementRef.current.src = url;
+        //     audioLoader.load(currentMusic, (buffer) => {
+        //         sound.setBuffer(buffer);
+        //         analyser.current = new THREE.AudioAnalyser(sound, 32);
+        //         audioElementRef.current.play();
+        //     });
+        // };
 
         audioElementRef.current.onplay = function () {
             sound.play();
@@ -178,14 +185,14 @@ function LandingPage() {
     }, []);
 
     // Resize handler
-    const handleResize = () => {
-        camera.current.aspect = window.innerWidth / window.innerHeight;
-        camera.current.updateProjectionMatrix();
-        renderer.current.setSize(window.innerWidth, window.innerHeight);
-        bloomComposer.current.setSize(window.innerWidth, window.innerHeight);
-    };
+    // const handleResize = () => {
+    //   camera.current.aspect = window.innerWidth / window.innerHeight;
+    //   camera.current.updateProjectionMatrix();
+    //   renderer.current.setSize(window.innerWidth, window.innerHeight);
+    //   bloomComposer.current.setSize(window.innerWidth, window.innerHeight);
+    // };
 
-    window.addEventListener('resize', handleResize);
+    // window.addEventListener('resize', handleResize);
 
 
 
