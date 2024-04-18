@@ -20,6 +20,7 @@ const SERVER_URL = process.env.REACT_APP_API_END_POINT
 
 export default function Generate() {
     const { accessToken } = useAuthContext()
+    const [prompt, setPrompt] = useState("")
     const [seconds, setSeconds] = useState(0);
     const [wavesurfer, setWavesurfer] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -32,6 +33,13 @@ export default function Generate() {
     const [audioURL, setAudioURL] = useState("")
     console.log('audioData', audioData)
     console.log('accessToken', accessToken)
+    // console.log('prompt', prompt)
+
+
+    // const handleChange = (e) => {
+    //     e.preventDefault();
+    //     setState({ ...state, [e.target.name]: e.target.value })
+    // }
 
     const handleDecrease = () => {
         if (seconds > 0) {
@@ -98,7 +106,7 @@ export default function Generate() {
     // }
 
     const handleGenerate = async () => {
-        const prompt = "Compose a modern pop ballad with emotive lyrics and a captivating melody";
+        // const prompt = "Compose a modern pop ballad with emotive lyrics and a captivating melody";
         setIsProcessing(true);
         try {
             const response = await axios.post(
@@ -151,6 +159,8 @@ export default function Generate() {
                                 </div>
                                 <div className='mb-0'>
                                     <TextArea
+                                        // value={state.prompt}
+                                        onChange={(e) => setPrompt(e.target.value)}
                                         placeholder="Prompt here ..."
                                         autoSize={{
                                             minRows: 3,
