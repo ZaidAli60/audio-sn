@@ -107,23 +107,23 @@ function LandingPage() {
         const sound = new THREE.Audio(listener);
         const audioLoader = new THREE.AudioLoader();
 
-        audioLoader.load('https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav', function (buffer) {
-            sound.setBuffer(buffer);
-            window.addEventListener('click', function () {
-                sound.play();
-            });
-        });
-
-        // audioRef.current.onchange = function () {
-        //     const file = this.files[0];
-        //     const url = URL.createObjectURL(file);
-        //     audioElementRef.current.src = url;
-        //     audioLoader.load(currentMusic, (buffer) => {
-        //         sound.setBuffer(buffer);
-        //         analyser.current = new THREE.AudioAnalyser(sound, 32);
-        //         audioElementRef.current.play();
+        // audioLoader.load('https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav', function (buffer) {
+        //     sound.setBuffer(buffer);
+        //     window.addEventListener('click', function () {
+        //         sound.play();
         //     });
-        // };
+        // });
+
+        audioRef.current.onchange = function () {
+            const file = this.files[0];
+            const url = URL.createObjectURL(file);
+            audioElementRef.current.src = url;
+            audioLoader.load(currentMusic, (buffer) => {
+                sound.setBuffer(buffer);
+                analyser.current = new THREE.AudioAnalyser(sound, 32);
+                audioElementRef.current.play();
+            });
+        };
 
         audioElementRef.current.onplay = function () {
             sound.play();
@@ -244,7 +244,7 @@ function LandingPage() {
             <audio id="audio" controls></audio>
             <audio id="audio" ref={audioElementRef} controls></audio>
             <div id="out"></div>
-            <Navbar />
+            {/* <Navbar /> */}
             <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
                 <div className='container-fluid px-xxl-3 px-lg-4'>
                     <div className='text-input d-flex justify-content-center align-items-center'>

@@ -19,6 +19,8 @@ $fira-code-font: 'Montserrat';
 
     .custom-btn {
         font-family: $fira-code-font !important;
+        background: linear-gradient(90deg, #26F7C5 0%, #8895FA 100%);
+        color: white;
     }
 
     .loginbtn {

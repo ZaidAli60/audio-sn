@@ -45,20 +45,20 @@ export default function Navbar() {
     return (
         <>
 
-            <nav className={`navbar px-xxl-5 custom-lg-padding custom-xxl-padding py-3 custom-navbar sticky-top  bg-primary`}>
+            <nav className={`navbar px-xxl-5 custom-lg-padding custom-xxl-padding py-3 custom-navbar sticky-top  bg-secondary`}>
                 <div className="container-fluid px-xxl-3 px-lg-4">
-                    <img src={`${window.logoDark}`} className='img-fluid me-lg-5 me-auto' style={{ width: "130px", height: "auto" }} alt="Audio" />
+                    <img src={`${window.logoLight}`} className='img-fluid me-lg-5 me-auto' style={{ width: "130px", height: "auto" }} alt="Audio" />
                     <div className="navbar-nav me-auto">
                     </div>
-                    <div className='icon-container me-2 d-none d-lg-block'>
+                    {/* <div className='icon-container me-2 d-none d-lg-block'>
                         <Button className={`custom-btn`} shape="round" style={{ backgroundColor: "#8fb9ff" }}>Try it out for free</Button>
-                    </div>
+                    </div> */}
                     <div className="d-none d-lg-block me-2">
 
 
                         {
                             !isAuthenticated ?
-                                <Button className={`custom-btn loginbtn`} shape="round" onClick={() => { navigate("auth") }}>Log in</Button>
+                                <Button className={`custom-btn loginbtn`} shape="round" size='large' onClick={() => { navigate("auth") }}>Create</Button>
                                 :
                                 <Dropdown
                                     menu={{
@@ -77,14 +77,14 @@ export default function Navbar() {
 
                         }
                     </div>
-                    <button className="navbar-toggler rounded-5 py-2 px-2" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    {/* <button className="navbar-toggler rounded-5 py-2 px-2" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <LiaBarsSolid className="navbar-toggler-icon" style={{ fontSize: "14px" }} />
-                    </button>
+                    </button> */}
                 </div>
             </nav>
             {/* <nav class="navbar px-xxl-5 custom-lg-padding custom-xxl-padding py-3 navbar-expand-lg position-fixed w-100" style={{ backgroundColor: "transparent" }}>
                 <div class="container-fluid px-xxl-3 px-lg-4">
-                
+
                     <img src={window.logoLight} className="img-fluid" style={{ width: "130px", height: "auto" }} alt="logo" />
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -117,21 +117,7 @@ export default function Navbar() {
                 className='custom-drawer'
             >
                 <div className='py-4'>
-                    {/* {selectedItem && <Menu theme='dark' mode="inline" defaultSelectedKeys={[selectedItem]} className="">
-                        {data.map((item) => (
-                            <Menu.Item
-                                key={item.key}
-                                icon={item.icon}
-                                onClick={() => {
-                                    item.onClick && item.onClick();
-                                    toggleDrawer(); // Close the drawer when a menu item is clicked
-                                }}
-                            >
-                                {item.label}
-                            </Menu.Item>
-                        ))}
-                    </Menu>} */}
-                    {/* {selectedItem && <Menu theme='dark' mode="inline" items={items} defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`} />} */}
+
                 </div>
             </Drawer>
 

@@ -1,12 +1,14 @@
 import React from 'react'
-import Home from './Home'
+import Hero from './Hero'
+// import Home from './Home'
 // import Landingpage from './Landingpage'
 
 export default function index() {
     return (
         <>
-            <Home />
+            {/* <Home /> */}
             {/* <Landingpage /> */}
+            <Hero />
         </>
     )
 }
