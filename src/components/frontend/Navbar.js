@@ -45,8 +45,8 @@ export default function Navbar() {
     return (
         <>
 
-            <nav className={`navbar px-xxl-5 custom-lg-padding custom-xxl-padding py-3 custom-navbar sticky-top  bg-secondary`}>
-                <div className="container-fluid px-xxl-3 px-lg-4">
+            <nav className={`navbar py-3 custom-navbar sticky-top  bg-secondary`}>
+                <div className="container-fluid">
                     <img src={`${window.logoLight}`} className='img-fluid me-lg-5 me-auto' style={{ width: "130px", height: "auto" }} alt="Audio" />
                     <div className="navbar-nav me-auto">
                     </div>

@@ -1,15 +1,15 @@
 // @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+// @import url('https://fonts.googleapis.com/css?family=Montserrat');
 /* Define a variable for the Fira Code font */
-$fira-code-font: 'Montserrat';
+// $fira-code-font: 'Montserrat';
 
 /* Apply the font family to the custom-navbar class */
 * {
-    font-family: $fira-code-font !important;
+    font-family: "DrukWide-Medium-Web, sans-serif";
 }
 
 .custom-navbar {
-    font-family: $fira-code-font;
+    font-family: "DrukWide-Medium-Web, sans-serif";
     transition: box-shadow 0.3s ease-in-out;
     z-index: 900 !important;
 
@@ -18,7 +18,7 @@ $fira-code-font: 'Montserrat';
     }
 
     .custom-btn {
-        font-family: $fira-code-font !important;
+        font-family: "DrukWide-Medium-Web, sans-serif" !important;
         background: linear-gradient(90deg, #26F7C5 0%, #8895FA 100%);
         color: white;
     }
@@ -69,7 +69,7 @@ $fira-code-font: 'Montserrat';
 }
 
 .custom-drawer {
-    font-family: $fira-code-font;
+    font-family: "DrukWide-Medium-Web, sans-serif";
 
 }
 
