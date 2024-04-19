@@ -1,13 +1,41 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { createNoise3D } from 'simplex-noise';
-// import './Generate1.css';
-import songFile from "assets/music/audio.mp3"
+import { Button, Input, Select, Space } from 'antd';
+import { useWavesurfer } from '@wavesurfer/react';
+import { BsFillPauseFill } from "react-icons/bs";
+import { IoPlay } from "react-icons/io5";
+import { TbPlayerTrackNextFilled } from "react-icons/tb";
+import { TbPlayerTrackPrevFilled } from "react-icons/tb";
+
+const { Option } = Select;
 
 const Generate1 = () => {
+
+    const contentRef = useRef(); // Reference to the content div
+    const [isPlaying, setIsPlaying] = useState(false)
+    // const [currentMusic, setCurrentMusic] = useState("")
+    const [duration, setDuration] = useState("")
+    const [prompt, setPrompt] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+
+
+    const handleGenerate = () => {
+
+        if (!duration) { return window.toastify("Please select duration time", "error") }
+        if (!prompt) { return window.toastify("Please enter a text prompt", "error") }
+        const data = {
+            duration,
+            prompt
+        }
+        console.log('data', data)
+    }
+
+
+    const audioInputRef = useRef(null);
     const visualiserRef = useRef(null);
     const labelRef = useRef(null);
-    let audio = useRef(new Audio(songFile)).current;
+    let audio = useRef(new Audio("https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav")).current;
     let noise = useRef(new createNoise3D()).current;
     const isVisStarted = useRef(false);
 
@@ -24,13 +52,26 @@ const Generate1 = () => {
         };
     }, []);
 
+    const setAudio = () => {
+        audio.pause();
+        const audioFile = audioInputRef.current.files[0];
+        if (audioFile && audioFile.name.includes(".mp3")) {
+            const audioURL = URL.createObjectURL(audioFile);
+            audio = new Audio(audioURL);
+            clearScene();
+            startVis();
+        } else {
+            alert("Invalid File Type!");
+        }
+    };
+
     const handleVisualiserClick = () => {
         if (audio.paused) {
             audio.play();
-            // labelRef.current.classList.add('hidden');
+            labelRef.current.classList.add('hidden');
         } else {
             audio.pause();
-            // labelRef.current.classList.remove('hidden');
+            labelRef.current.classList.remove('hidden');
         }
     };
 
@@ -59,12 +100,12 @@ const Generate1 = () => {
 
             const renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setClearColor("#ffffff");
+            renderer.setClearColor("#080808"); // Dark background color
 
             visualiserRef.current.appendChild(renderer.domElement);
             const geometry = new THREE.IcosahedronGeometry(20, 3);
             const material = new THREE.MeshLambertMaterial({
-                color: "#696969",
+                color: "#ffffff", // White color for the sphere
                 wireframe: true
             });
             const sphere = new THREE.Mesh(geometry, material);
@@ -124,6 +165,7 @@ const Generate1 = () => {
         }
     };
 
+
     // Helper functions
     function fractionate(val, minVal, maxVal) {
         return (val - minVal) / (maxVal - minVal);
@@ -144,18 +186,126 @@ const Generate1 = () => {
         return arr.reduce(function (a, b) { return Math.max(a, b); });
     }
 
+    const onChange = (value) => {
+        setDuration(value)
+        console.log(`selected ${value}`);
+    };
+
+    const onSearch = (value) => {
+        console.log('search:', value);
+    };
+
+    // Filter `option.label` match the user type `input`
+    const filterOption = (input, option) =>
+        (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+    const selectBefore = (
+        <Select
+            className="select-before"
+            placeholder="Select Duration"
+            onChange={onChange}
+            onSearch={onSearch}
+            filterOption={filterOption}
+        >
+            <Option value="30">30 s</Option>
+            <Option value="45">45 s</Option>
+            <Option value="60">60 s</Option>
+        </Select>
+    );
+
+    const containerRef = useRef(null);
+
+    const { wavesurfer } = useWavesurfer({
+        container: containerRef,
+        height: 40,
+        waveColor: "rgb(169,168,178)",
+        progressColor: "rgb(58, 91, 201)",
+        barWidth: "1",
+        barGap: "1",
+        barRadius: "1",
+        url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav",
+        autoPlay: true, // Disable autoplay
+    });
+
+    useEffect(() => {
+        if (wavesurfer) {
+            wavesurfer.on('finish', () => {
+                setIsPlaying(false);
+            });
+        }
+        return () => {
+            wavesurfer && wavesurfer.un('finish');
+        };
+    }, [wavesurfer]);
+
+    const togglePlayPause = () => {
+        if (wavesurfer) {
+            if (wavesurfer.isPlaying()) {
+                wavesurfer.pause();
+                setIsPlaying(false);
+            } else {
+                wavesurfer.play();
+                setIsPlaying(true);
+            }
+        }
+    };
+
     return (
-        <div className='bg-primary min-vh-100'>
-            <div className="container-fluid px-xxl-3 px-lg-4 py-2">
-                <div className="px-xxl-5 custom-lg-padding custom-xxl-padding py-5">
-                    <h1>Generate page</h1>
-                    <div>
-                        <div>
-                            <div id="visualiser" ref={visualiserRef} ></div>
-                            {/* <div id="label" ref={labelRef} className="label">Select file</div> */}
+        // <div className='bg-dark'>
+        //     <div className="container-fluid py-2">
+        //         <div className="py-5">
+        //             <input type="file" id="audio" accept="*" ref={audioInputRef} onChange={setAudio} />
+        //             <div id="visualiser" ref={visualiserRef} onClick={handleVisualiserClick}></div>
+        //             {/* <div id="label" ref={labelRef} className="label">Select file</div> */}
+        //             <div id='visualiser'>
+        //                 <div className='text-input d-flex justify-content-center align-items-center'>
+        //                     <div className="text-input d-flex justify-content-center align-items-center">
+        //                         <Space.Compact
+        //                             className='w-sm-75 w-50-lg'
+        //                             size='large'
+        //                         >
+        //                             <Input addonBefore={selectBefore} placeholder='Prompt here ...' />
+        //                             <Button className='custom-btn ' type="primary">Generate</Button>
+        //                         </Space.Compact>
+
+        //                     </div>
+        //                 </div>
+        //                 <div>
+        //                     <div ref={containerRef} className='mb-3'>
+        //                     </div>
+        //                     <div className='gap-3 d-flex justify-content-center align-items-center' style={{ background: "transparent" }}>
+        //                         <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackPrevFilled /></Button>
+        //                         <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }} onClick={() => togglePlayPause()}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+        //                         <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackNextFilled /></Button>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </div>
+
+        //     </div>
+        // </div>
+
+        <div className='bg-dark min-vh-100'>
+            <div className="container-fluid py-2 h-100 d-flex flex-column justify-content-center align-items-center">
+                {/* <input type="file" id="audio" accept="*" ref={audioInputRef} onChange={setAudio} /> */}
+                <div className='h-50'>
+                    <div id="visualiser" className='py-5' ref={visualiserRef} ></div>
+                </div>
+                <div className='text-input w-100 d-flex flex-column justify-content-center align-items-center mt-3'>
+                    <div className='mb-5 w-sm-75 w-50-lg'>
+                        <div ref={containerRef} className='mb-3'></div>
+                        <div className='gap-3 d-flex justify-content-center align-items-center' style={{ background: "transparent" }}>
+                            <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackPrevFilled /></Button>
+                            <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }} onClick={() => togglePlayPause()}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                            <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackNextFilled /></Button>
                         </div>
                     </div>
+                    <Space.Compact className='w-sm-75 w-50-lg' size='large'>
+                        <Input addonBefore={selectBefore} onChange={(e) => setPrompt(e.target.value)} placeholder='Prompt here ...' />
+                        <Button className='custom-btn' type="primary" onClick={handleGenerate}>Generate</Button>
+                    </Space.Compact>
                 </div>
+
             </div>
         </div>
     );

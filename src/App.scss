@@ -47,102 +47,66 @@ main {
     }
 }
 
-// #visualiser {
-//     width: 100%;
-//     /* Make the visualizer container 100% width */
-//     height: 50vh;
-//     /* Set initial height to 50% of the viewport height */
-//     background-color: #fff;
-//     /* Set background color */
-//     margin-bottom: 20px;
-//     /* Add some bottom margin */
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-// }
 
-// .hidden {
-//     display: none;
-//     /* Hide the label when needed */
-// }
+canvas {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
 
-// canvas {
+// .audio {
 //     position: fixed;
-//     left: 0;
-//     top: 0;
+//     left: 10px;
+//     bottom: 20px;
+//     width: calc(100% - 20px);
+// }
+
+.text-input {
+    position: fixed;
+    left: 10px;
+    bottom: 20px;
+    width: calc(100% - 20px);
+}
+
+// #visualiser canvas {
+//     display: block;
 //     width: 100%;
 //     height: 100%;
 // }
 
-// audio {
-//     position: fixed;
-//     left: 10px;
-//     bottom: 20px;
-//     width: calc(100% - 20px);
-// }
-
-// .text-input {
-//     position: fixed;
-//     left: 10px;
-//     bottom: 20px;
-//     width: calc(100% - 20px);
-// }
-
-// .input-class {
-//     outline: none !important;
-//     box-shadow: none !important;
-// }
-
-// input::placeholder {
-//     color: white !important;
-// }
-
-// audio.active {
-//     bottom: 10px;
-// }
-
-// #thefile {
-//     width: 0.1px;
-//     height: 0.1px;
-//     opacity: 0;
-//     overflow: hidden;
-//     position: absolute;
-//     z-index: 1;
-// }
-
-// label.file {
-//     display: inline-block;
-//     position: absolute;
-//     left: 30%;
-//     top: 10%;
-//     transform: translate3d(-50%, -50%, 0);
-//     padding: 1rem 2rem;
-//     border-radius: 4px;
-
-//     background: var(--paperColor);
-//     color: var(--textColor);
-//     font-size: 1.25em;
-//     font-weight: 700;
-//     box-shadow: 0 20px 60px var(--shadowColorFaint);
-
-//     cursor: pointer;
-// }
 
 
-// label.file:hover {
-//     background: var(--paperColorDark);
-//     transform: translate3d(-50%, -55%, 0);
-// }
+@media (min-width: 992px) {
 
-// label.file:active {
-//     background: var(--paperColorDark);
-//     transform: translate3d(-50%, -45%, 0);
-// }
+    /* Large screens and above */
+    .w-50-lg {
+        width: 50%;
+    }
+}
 
-// label.file.normal {
-//     transform: translate3d(10%, 50%, 0);
-//     padding: 0.2rem 2rem;
-//     font-size: 1rem;
-//     top: 0;
-//     left: 0;
-// }
+.ant-input {
+    background: transparent;
+    color: white;
+}
+
+.ant-input::placeholder {
+    color: #323743;
+    /* Change the color to your desired color */
+}
+
+.ant-select-selection-placeholder {
+    color: #323743 !important;
+}
+
+.ant-select-selection-item {
+    color: white;
+
+}
+
+.custom-btn {
+    font-family: "DrukWide-Medium-Web, sans-serif" !important;
+    background: linear-gradient(90deg, #26F7C5 0%, #8895FA 100%);
+    color: white;
+}
