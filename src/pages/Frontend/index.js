@@ -6,7 +6,7 @@ import Home from './Home'
 import { Content } from 'antd/es/layout/layout'
 import { Layout } from 'antd'
 // import Footer from 'components/frontend/footer/Footer'
-import Generate from './Generate/Generate1'
+import Generate from './Generate/Generate'
 import { useAuthContext } from 'context/AuthContext'
 import { Navigate } from 'react-router-dom'
 

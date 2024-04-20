@@ -1,294 +1,308 @@
-import React, { useRef, useState } from 'react'
-import { GoClockFill } from "react-icons/go";
-import { RiNumbersFill } from "react-icons/ri";
-import { Col, Row, Input, Typography, Button, Modal } from 'antd'
-import { InfoCircleOutlined } from '@ant-design/icons'
+import React, { useRef, useEffect, useState } from 'react';
+import * as THREE from 'three';
+import { createNoise3D } from 'simplex-noise';
+import { Button, Input, Select, Space } from 'antd';
+import { useWavesurfer } from '@wavesurfer/react';
 import { BsFillPauseFill } from "react-icons/bs";
 import { IoPlay } from "react-icons/io5";
-import { IoShareSocialOutline } from "react-icons/io5";
-import { AiOutlineDownload } from "react-icons/ai";
-import WavesurferPlayer from '@wavesurfer/react';
-import audio4 from "assets/music/deep-future-garage-royalty-free-music-163081.mp3"
-import circularWaves from "assets/images/circular-wave.gif"
-import circle from "assets/images/circle.png"
+import { TbPlayerTrackNextFilled } from "react-icons/tb";
+import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import axios from 'axios';
-import { useAuthContext } from 'context/AuthContext';
 
-const { Title, Text } = Typography
-const { TextArea } = Input;
-const SERVER_URL = process.env.REACT_APP_API_END_POINT
+const { Option } = Select;
 
-export default function Generate() {
-    const { accessToken } = useAuthContext()
+const Generate = () => {
+
+    const contentRef = useRef(); // Reference to the content div
+    const [isPlaying, setIsPlaying] = useState(false)
+    // const [currentMusic, setCurrentMusic] = useState("")
+    const [duration, setDuration] = useState("")
     const [prompt, setPrompt] = useState("")
-    const [seconds, setSeconds] = useState(0);
-    const [wavesurfer, setWavesurfer] = useState(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [duration, setDuration] = useState(0);
-    const timerRef = useRef(null);
-    const [modal2Open, setModal2Open] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false)
     const [audioData, setAudioData] = useState("")
-    const [audioURL, setAudioURL] = useState("")
-    console.log('audioData', audioData)
-    console.log('accessToken', accessToken)
-    // console.log('prompt', prompt)
+    const [audioURL, setAudioURL] = useState("https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav")
 
-
-    // const handleChange = (e) => {
-    //     e.preventDefault();
-    //     setState({ ...state, [e.target.name]: e.target.value })
-    // }
-
-    const handleDecrease = () => {
-        if (seconds > 0) {
-            setSeconds(seconds - 1);
-        }
-    };
-
-    const handleIncrease = () => {
-        setSeconds(seconds + 1);
-    };
-
-    const onReady = (ws) => {
-        setWavesurfer(ws);
-        setIsPlaying(false);
-        setCurrentTime(0);
-        setDuration(ws.getDuration());
-    };
-    const onPlayPause = () => {
-        if (wavesurfer) {
-            wavesurfer.playPause();
-            setIsPlaying(!isPlaying);
-            if (!isPlaying) {
-                startTimer();
-            } else {
-                clearInterval(timerRef.current);
-            }
-        }
-    };
-    const startTimer = () => {
-        timerRef.current = setInterval(() => {
-            setCurrentTime(wavesurfer.getCurrentTime());
-        }, 1000);
-    };
-    const formatTime = (timeInSeconds) => {
-        const minutes = Math.floor(timeInSeconds / 60);
-        const seconds = Math.floor(timeInSeconds % 60);
-        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    };
-
-    // const handleGenerate = async () => {
-    //     // const prompt = "Bring The Joy [Pop Upbeat Indie Hipster Synthpop Uplifting Happy"
-    //     const prompt = "Compose a modern pop ballad with emotive lyrics and a captivating melody"
-    //     const token = accessToken; // Assuming accessToken is an object with an accessToken property
-
-    //     // if (!token) {
-    //     //     console.log('Access token is missing.');
-    //     //     return;
-    //     // }
-
-    //     const config = { headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ6YWlkYWxpNjBnYkBnbWFpbC5jb20iLCJleHAiOjE3MTMyOTA0OTJ9.YhfAm-qacV8PNmHqu_NlSz7PvrzxpnihW8FLO2cPKwY` } }
-    //     setIsProcessing(true)
-    //     try {
-    //         const response = await axios.post(`http://85.239.241.96:8000/api/ttm_endpoint`, { prompt }, { responseType: 'blob' })
-    //         console.log('response', response)
-    //         const audioBlob = new Blob([response.data], { type: 'audio/wav' });
-    //         const url = URL.createObjectURL(audioBlob);
-    //         setAudioData(url)
-    //         console.log('response', response.data)
-    //         setIsProcessing(false)
-    //     } catch (error) {
-    //         console.log('error', error)
-    //         setIsProcessing(false)
-    //     }
-    // }
 
     const handleGenerate = async () => {
-        // const prompt = "Compose a modern pop ballad with emotive lyrics and a captivating melody";
+        if (!duration) {
+            return window.toastify("Please select duration time", "error");
+        }
+        if (!prompt) {
+            return window.toastify("Please enter a text prompt", "error");
+        }
+
+        const data = {
+            duration: Number(duration), // Convert duration to number
+            prompt
+        };
+
+        console.log('data', data);
         setIsProcessing(true);
+
         try {
             const response = await axios.post(
                 'http://85.239.241.96:8000/api/ttm_endpoint',
-                { prompt },
+                data, // Pass data object
                 { responseType: 'arraybuffer' } // Receive response as ArrayBuffer
             );
+
             const audioBlob = new Blob([response.data], { type: 'audio/wav' }); // Convert ArrayBuffer to Blob
             const url = URL.createObjectURL(audioBlob);
-            setAudioURL(url)
-            setAudioData(audioBlob)
-            setIsProcessing(false);
+            console.log('url', url);
+            setAudioURL(url);
+            setAudioData(audioBlob);
+            setIsProcessing(false); // Set loading to false on success
         } catch (error) {
             console.log('Error:', error);
-            setIsProcessing(false);
+            window.toastify("Something went wrong", "error");
+            setIsProcessing(false); // Set loading to false on error
+        }
+    }
+
+    const audioInputRef = useRef(null);
+    const visualiserRef = useRef(null);
+    const labelRef = useRef(null);
+    let audio = useRef(new Audio("https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav")).current;
+    let noise = useRef(new createNoise3D()).current;
+    const isVisStarted = useRef(false);
+
+    useEffect(() => {
+        if (!isVisStarted.current) {
+            startVis();
+            isVisStarted.current = true;
+        }
+
+        // Cleanup function to pause and reset audio when component unmounts
+        return () => {
+            audio.pause();
+            audio.currentTime = 0;
+        };
+    }, []);
+
+    const setAudio = () => {
+        audio.pause();
+        const audioFile = audioInputRef.current.files[0];
+        if (audioFile && audioFile.name.includes(".mp3")) {
+            const audioURL = URL.createObjectURL(audioFile);
+            audio = new Audio(audioURL);
+            clearScene();
+            startVis();
+        } else {
+            alert("Invalid File Type!");
         }
     };
 
-    const handleDownload = () => {
-        if (audioData instanceof Blob) { // Check if audioBlob is a Blob
-            try {
-                const url = URL.createObjectURL(audioData);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'generated_audio.wav'; // Specify the desired filename here
-                document.body.appendChild(a);
-                a.click();
-                URL.revokeObjectURL(url);
-            } catch (error) {
-                console.error('Error creating download link:', error);
-            }
+    const handleVisualiserClick = () => {
+        if (audio.paused) {
+            audio.play();
+            labelRef.current.classList.add('hidden');
         } else {
-            console.error('Audio blob is not a Blob:', audioData);
+            audio.pause();
+            labelRef.current.classList.remove('hidden');
+        }
+    };
+
+    const clearScene = () => {
+        const canvas = visualiserRef.current.firstElementChild;
+        if (canvas) {
+            visualiserRef.current.removeChild(canvas);
+        }
+    };
+
+    const startVis = () => {
+        try {
+            const context = new AudioContext();
+            const src = context.createMediaElementSource(audio);
+            const analyser = context.createAnalyser();
+            src.connect(analyser);
+            analyser.connect(context.destination);
+            analyser.fftSize = 512;
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 100;
+            scene.add(camera);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor("#080808"); // Dark background color
+
+            visualiserRef.current.appendChild(renderer.domElement);
+            const geometry = new THREE.IcosahedronGeometry(20, 3);
+            const material = new THREE.MeshLambertMaterial({
+                color: "#ffffff", // White color for the sphere
+                wireframe: true
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+
+            const light = new THREE.DirectionalLight("#ffffff", 0.8);
+            light.position.set(0, 50, 100);
+            scene.add(light);
+            scene.add(sphere);
+
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+
+            function render() {
+                analyser.getByteFrequencyData(dataArray);
+
+                const lowerHalf = dataArray.slice(0, (dataArray.length / 2) - 1);
+                const upperHalf = dataArray.slice((dataArray.length / 2) - 1, dataArray.length - 1);
+
+                const lowerMax = max(lowerHalf);
+                const upperAvg = avg(upperHalf);
+
+                const lowerMaxFr = lowerMax / lowerHalf.length;
+                const upperAvgFr = upperAvg / upperHalf.length;
+
+                sphere.rotation.x += 0.001;
+                sphere.rotation.y += 0.003;
+                sphere.rotation.z += 0.005;
+
+                WarpSphere(sphere, modulate(Math.pow(lowerMaxFr, 0.8), 0, 1, 0, 8), modulate(upperAvgFr, 0, 1, 0, 4));
+                requestAnimationFrame(render);
+                renderer.render(scene, camera);
+            }
+
+            function WarpSphere(mesh, bassFr, treFr) {
+                if (!mesh.geometry || !mesh.geometry.vertices) return; // Add defensive checks
+                mesh.geometry.vertices.forEach(function (vertex, i) {
+                    var offset = mesh.geometry.parameters.radius;
+                    var amp = 5;
+                    var time = window.performance.now();
+                    vertex.normalize();
+                    var rf = 0.00001;
+                    var distance = (offset + bassFr) + noise.noise3D(vertex.x + time * rf * 4, vertex.y + time * rf * 6, vertex.z + time * rf * 7) * amp * treFr * 2;
+                    vertex.multiplyScalar(distance);
+                });
+                mesh.geometry.verticesNeedUpdate = true;
+                mesh.geometry.normalsNeedUpdate = true;
+                mesh.geometry.computeVertexNormals();
+                mesh.geometry.computeFaceNormals();
+            }
+
+            render();
+        } catch (error) {
+            console.error("Error starting visualization:", error);
+        }
+    };
+
+
+    // Helper functions
+    function fractionate(val, minVal, maxVal) {
+        return (val - minVal) / (maxVal - minVal);
+    }
+
+    function modulate(val, minVal, maxVal, outMin, outMax) {
+        var fr = fractionate(val, minVal, maxVal);
+        var delta = outMax - outMin;
+        return outMin + (fr * delta);
+    }
+
+    function avg(arr) {
+        var total = arr.reduce(function (sum, b) { return sum + b; });
+        return (total / arr.length);
+    }
+
+    function max(arr) {
+        return arr.reduce(function (a, b) { return Math.max(a, b); });
+    }
+
+    const onChange = (value) => {
+        setDuration(value)
+        console.log(`selected ${value}`);
+    };
+
+    const onSearch = (value) => {
+        console.log('search:', value);
+    };
+
+    // Filter `option.label` match the user type `input`
+    const filterOption = (input, option) =>
+        (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+    const selectBefore = (
+        <Select
+            className="select-before"
+            placeholder="Select Duration"
+            onChange={onChange}
+            onSearch={onSearch}
+            filterOption={filterOption}
+        >
+            <Option value="30">30 s</Option>
+            <Option value="45">45 s</Option>
+            <Option value="60">60 s</Option>
+        </Select>
+    );
+
+    const containerRef = useRef(null);
+
+    const { wavesurfer } = useWavesurfer({
+        container: containerRef,
+        height: 40,
+        waveColor: "rgb(169,168,178)",
+        progressColor: "rgb(58, 91, 201)",
+        barWidth: "1",
+        barGap: "1",
+        barRadius: "1",
+        url: audioURL,
+        autoPlay: true, // Disable autoplay
+    });
+
+    useEffect(() => {
+        if (wavesurfer) {
+            wavesurfer.on('finish', () => {
+                setIsPlaying(false);
+            });
+        }
+        return () => {
+            wavesurfer && wavesurfer.un('finish');
+        };
+    }, [wavesurfer]);
+
+    const togglePlayPause = () => {
+        if (wavesurfer) {
+            if (wavesurfer.isPlaying()) {
+                wavesurfer.pause();
+                setIsPlaying(false);
+            } else {
+                wavesurfer.play();
+                setIsPlaying(true);
+            }
         }
     };
 
     return (
-        <div className='bg-primary min-vh-100'>
-            <div className="container-fluid px-xxl-3 px-lg-4 py-2">
-                <div className="px-xxl-5 custom-lg-padding custom-xxl-padding py-5">
-                    <Row gutter={[16, 16]}>
-                        <Col xs={24} md={24} lg={10} xxl={8}>
-                            <div className="card rounded-4 border-0 p-4 h-100">
-                                <div className='d-flex justify-content-between mb-2'>
-                                    <Text>Prompt</Text>
-                                    <div>
-                                        <span className='me-2'>guide</span>
-                                        <InfoCircleOutlined />
-                                    </div>
-                                </div>
-                                <div className='mb-0'>
-                                    <TextArea
-                                        // value={state.prompt}
-                                        onChange={(e) => setPrompt(e.target.value)}
-                                        placeholder="Prompt here ..."
-                                        autoSize={{
-                                            minRows: 3,
-                                            maxRows: 5,
-                                        }}
-                                    />
-                                </div>
-                                <div className="d-flex justify-content-between align-items-center py-4">
-                                    <div className='d-flex align-items-center gap-2'>
-                                        <GoClockFill className='fs-5' />
-                                        <p className='mb-0'>Duration <span className="d-none d-md-inline">(max. 45s)</span></p>
-                                    </div>
-                                    <div className="d-flex align-items-center gap-2">
-                                        <Button shape='circle' size='small' onClick={handleDecrease}>
-                                            <span className="btn-icon">
-                                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1.34315 3.34314L7 9L12.6569 3.34315" stroke="currentColor"></path>
-                                                </svg>
-                                            </span>
-                                        </Button>
-                                        <Input style={{ width: '70px' }} disabled value={0} />
-                                        <span className="text-muted">m</span>
-                                        <Input variant="filled" style={{ width: '70px' }} value={seconds} />
-                                        <span className="text-muted">s</span>
-                                        <Button shape='circle' size='small' onClick={handleIncrease}>
-                                            <span className="btn-icon">
-                                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M12.6569 8.84338L7 3.18652L1.34314 8.84338" stroke="currentColor"></path>
-                                                </svg>
-                                            </span>
-                                        </Button>
-                                    </div>
-                                </div>
-                                <hr className='p-0 m-0' />
-                                <div className="d-flex justify-content-between align-items-center py-4">
-                                    <div className='d-flex align-items-center gap-2'>
-                                        <RiNumbersFill className='fs-5' />
-                                        <p className='mb-0'>Number of results <span className="d-none d-md-inline">(max.5)</span></p>
-                                    </div>
-                                    <div className="d-flex align-items-center">
-                                        <Input variant="filled" style={{ width: '70px' }} value={5} />
-                                    </div>
-                                </div>
-                                <hr className='p-0 m-0' />
-                                <div className='pt-3 d-flex justify-content-end'>
-                                    <Button type='primary' loading={isProcessing} size='large' shape="round" onClick={() => handleGenerate()}>Generate</Button>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col xs={24} md={24} lg={14} xxl={16}>
-                            <div className='mb-3'>
-                                <div className="card rounded-4 border-0 p-4 h-100">
-                                    <div className='d-flex gap-3 mb-1'>
-                                        <div >
-                                            <img src={`${isPlaying ? circularWaves : circle}`} className='img-fluid' alt="Circular Waves" />
-                                        </div>
-                                        <div>
-                                            <Title level={4}>Deep Future</Title>
-                                            <p>Deep Future Garage (Royalty Free Music)</p>
-                                        </div>
-                                    </div>
-                                    <div className='d-flex justify-content-center align-items-center'>
-                                        <div className='d-flex justify-content-center align-items-center me-4' style={{ flex: '1 1 0%', gap: "1rem" }}>
-                                            <Button shape="circle" size='large' onClick={onPlayPause}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
-                                            <span className="current-time">{formatTime(currentTime)}</span>
-                                            <div style={{ width: "100%" }}>
-                                                <WavesurferPlayer
-                                                    height={30}
-                                                    waveColor="rgb(169,168,178)"
-                                                    progressColor="rgb(200, 0, 200)"
-                                                    barWidth="1"
-                                                    barGap="1"
-                                                    barRadius="1"
-                                                    url={audioURL}
-                                                    onReady={onReady}
-                                                    onPlay={() => setIsPlaying(true)}
-                                                    onPause={() => setIsPlaying(false)}
-                                                />
-                                            </div>
-                                            <span className="duration-time">  {formatTime(duration)}</span>
-                                        </div>
-                                        <div>
-                                            <Button type="text" size='large' shape='circle' onClick={() => setModal2Open(true)}><IoShareSocialOutline className='fs-5 opacity-75' /></Button>
-                                            <Button type="text" size='large' shape='circle' onClick={handleDownload} ><AiOutlineDownload className='fs-5 opacity-75' /></Button>
-                                            <Modal
-                                                title="Share track link"
-                                                centered
-                                                open={modal2Open}
-                                                onOk={() => setModal2Open(false)}
-                                                onCancel={() => setModal2Open(false)}
-                                                footer={null}
-                                            >
-                                                <p>some contents...</p>
-                                                <p>some contents...</p>
-                                                <p>some contents...</p>
-                                            </Modal>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className="card rounded-4 border-0 p-4 h-100">
-                                    <div className="badge text-bg-primary mb-4" style={{ width: "70px" }}>History</div>
-                                    <div className='d-flex justify-content-between align-items-center'>
-                                        <div className='d-flex align-items-center gap-3'>
-                                            <Button shape="circle" size='large' onClick={onPlayPause}>
-                                                {isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}
-                                            </Button>
-                                            <div>
-                                                <Title level={5}>Deep Future Garage (Royalty Free Music)</Title>
-                                                <span className="opacity-75"> {formatTime(duration)} / 1 day ago</span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <Button type="text" size='large' shape='circle' onClick={() => setModal2Open(true)}>
-                                                <IoShareSocialOutline className='fs-5 opacity-75' />
-                                            </Button>
-                                            <Button type="text" size='large' shape='circle'>
-                                                <AiOutlineDownload className='fs-5 opacity-75' />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
+
+        <div className='bg-dark min-vh-100'>
+            <div className="container-fluid py-2 h-100 d-flex flex-column justify-content-center align-items-center">
+                {/* <input type="file" id="audio" accept="*" ref={audioInputRef} onChange={setAudio} /> */}
+                <div className='h-50'>
+                    <div id="visualiser" className='py-5' ref={visualiserRef} ></div>
                 </div>
+                <div className='text-input w-100 d-flex flex-column justify-content-center align-items-center mt-3'>
+                    <div className='mb-5 w-sm-75 w-50-lg'>
+                        <div ref={containerRef} className='mb-3'></div>
+                        <div className='gap-3 d-flex justify-content-center align-items-center' style={{ background: "transparent" }}>
+                            <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackPrevFilled /></Button>
+                            <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }} onClick={() => togglePlayPause()}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                            <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackNextFilled /></Button>
+                        </div>
+                    </div>
+                    <Space.Compact className='w-sm-75 w-50-lg' size='large'>
+                        <Input addonBefore={selectBefore} onChange={(e) => setPrompt(e.target.value)} placeholder='Prompt here ...' />
+                        <Button className='custom-btn' type='primary' loading={isProcessing} onClick={handleGenerate}>Generate</Button>
+                    </Space.Compact>
+                </div>
+
             </div>
         </div>
-    )
-}
+    );
+};
+
+export default Generate;
