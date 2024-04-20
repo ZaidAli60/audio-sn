@@ -7,6 +7,7 @@ import { BsFillPauseFill } from "react-icons/bs";
 import { IoPlay } from "react-icons/io5";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { TbPlayerTrackPrevFilled } from "react-icons/tb";
+import axios from 'axios';
 
 const { Option } = Select;
 
@@ -17,19 +18,47 @@ const Generate1 = () => {
     // const [currentMusic, setCurrentMusic] = useState("")
     const [duration, setDuration] = useState("")
     const [prompt, setPrompt] = useState("")
-    const [isLoading, setIsLoading] = useState(false)
+    const [isProcessing, setIsProcessing] = useState(false)
+    const [audioData, setAudioData] = useState("")
+    const [audioURL, setAudioURL] = useState("https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav")
 
 
-    const handleGenerate = () => {
-
-        if (!duration) { return window.toastify("Please select duration time", "error") }
-        if (!prompt) { return window.toastify("Please enter a text prompt", "error") }
-        const data = {
-            duration,
-            prompt
+    const handleGenerate = async () => {
+        if (!duration) {
+            return window.toastify("Please select duration time", "error");
         }
-        console.log('data', data)
+        if (!prompt) {
+            return window.toastify("Please enter a text prompt", "error");
+        }
+
+        const data = {
+            duration: Number(duration), // Convert duration to number
+            prompt
+        };
+
+        console.log('data', data);
+        setIsProcessing(true);
+
+        try {
+            const response = await axios.post(
+                'http://85.239.241.96:8000/api/ttm_endpoint',
+                data, // Pass data object
+                { responseType: 'arraybuffer' } // Receive response as ArrayBuffer
+            );
+
+            const audioBlob = new Blob([response.data], { type: 'audio/wav' }); // Convert ArrayBuffer to Blob
+            const url = URL.createObjectURL(audioBlob);
+            console.log('url', url);
+            setAudioURL(url);
+            setAudioData(audioBlob);
+            setIsProcessing(false); // Set loading to false on success
+        } catch (error) {
+            console.log('Error:', error);
+            window.toastify("Something went wrong", "error");
+            setIsProcessing(false); // Set loading to false on error
+        }
     }
+
 
 
     const audioInputRef = useRef(null);
@@ -223,7 +252,7 @@ const Generate1 = () => {
         barWidth: "1",
         barGap: "1",
         barRadius: "1",
-        url: "https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav",
+        url: audioURL,
         autoPlay: true, // Disable autoplay
     });
 
@@ -302,7 +331,7 @@ const Generate1 = () => {
                     </div>
                     <Space.Compact className='w-sm-75 w-50-lg' size='large'>
                         <Input addonBefore={selectBefore} onChange={(e) => setPrompt(e.target.value)} placeholder='Prompt here ...' />
-                        <Button className='custom-btn' type="primary" onClick={handleGenerate}>Generate</Button>
+                        <Button className='custom-btn' type='primary' loading={isProcessing} onClick={handleGenerate}>Generate</Button>
                     </Space.Compact>
                 </div>
 
