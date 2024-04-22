@@ -10,7 +10,7 @@ import { TbPlayerTrackPrevFilled } from "react-icons/tb";
 import axios from 'axios';
 
 const { Option } = Select;
-
+const SERVER_URL = process.env.REACT_APP_API_END_POINT
 const Generate = () => {
 
     const contentRef = useRef(); // Reference to the content div
@@ -21,7 +21,15 @@ const Generate = () => {
     const [isProcessing, setIsProcessing] = useState(false)
     const [audioData, setAudioData] = useState("")
     const [audioURL, setAudioURL] = useState("https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav")
+    // const [data, setData] = useState(null);
+    // console.log('data', data)
 
+    // useEffect(() => {
+    //     fetch("http://api.bittaudio.ai/api/health_check")  // Assumes your React app is served from the same host as the FastAPI backend
+    //         .then((response) => response.json())
+    //         .then((data) => setData(data))
+    //         .catch((error) => console.error("Error fetching data:", error));
+    // }, []);
 
     const handleGenerate = async () => {
         if (!duration) {
@@ -32,31 +40,41 @@ const Generate = () => {
         }
 
         const data = {
-            duration: Number(duration), // Convert duration to number
+            duration: 15, // Convert duration to number
             prompt
         };
 
         console.log('data', data);
         setIsProcessing(true);
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCcm9rZW5TdWJuZXRAZ21haWwuY29tIiwiZXhwIjoyMzEzMjUxNTU1fQ.culT9hdkRopQ7cuxShNzmUUC7dGOf-_lvvSv7KOR6dg"
+        const config = { headers: { Authorization: `Bearer ${token}` } }
 
         try {
+            console.log('Sending request...');
             const response = await axios.post(
-                'http://85.239.241.96:8000/api/ttm_endpoint',
-                data, // Pass data object
-                { responseType: 'arraybuffer' } // Receive response as ArrayBuffer
+                `http://api.bittaudio.ai/api/ttm_endpoint`,
+                // `http://144.91.69.154:8000/api/ttm_endpoint`,
+                data,
+                config,
+                { responseType: 'arraybuffer' }
             );
+            console.log('Received response:', response);
 
-            const audioBlob = new Blob([response.data], { type: 'audio/wav' }); // Convert ArrayBuffer to Blob
+            const audioBlob = new Blob([response.data], { type: 'audio/wav' });
             const url = URL.createObjectURL(audioBlob);
             console.log('url', url);
             setAudioURL(url);
             setAudioData(audioBlob);
-            setIsProcessing(false); // Set loading to false on success
+            setIsProcessing(false);
         } catch (error) {
-            console.log('Error:', error);
+            console.log('Error occurred:', error);
+            if (error.message === "Network Error") {
+                console.error("Network issue detected. Check server endpoint and connectivity.");
+            }
             window.toastify("Something went wrong", "error");
-            setIsProcessing(false); // Set loading to false on error
+            setIsProcessing(false);
         }
+
     }
 
     const audioInputRef = useRef(null);

@@ -59,8 +59,6 @@ const Generate1 = () => {
         }
     }
 
-
-
     const audioInputRef = useRef(null);
     const visualiserRef = useRef(null);
     const labelRef = useRef(null);
@@ -280,39 +278,6 @@ const Generate1 = () => {
     };
 
     return (
-        // <div className='bg-dark'>
-        //     <div className="container-fluid py-2">
-        //         <div className="py-5">
-        //             <input type="file" id="audio" accept="*" ref={audioInputRef} onChange={setAudio} />
-        //             <div id="visualiser" ref={visualiserRef} onClick={handleVisualiserClick}></div>
-        //             {/* <div id="label" ref={labelRef} className="label">Select file</div> */}
-        //             <div id='visualiser'>
-        //                 <div className='text-input d-flex justify-content-center align-items-center'>
-        //                     <div className="text-input d-flex justify-content-center align-items-center">
-        //                         <Space.Compact
-        //                             className='w-sm-75 w-50-lg'
-        //                             size='large'
-        //                         >
-        //                             <Input addonBefore={selectBefore} placeholder='Prompt here ...' />
-        //                             <Button className='custom-btn ' type="primary">Generate</Button>
-        //                         </Space.Compact>
-
-        //                     </div>
-        //                 </div>
-        //                 <div>
-        //                     <div ref={containerRef} className='mb-3'>
-        //                     </div>
-        //                     <div className='gap-3 d-flex justify-content-center align-items-center' style={{ background: "transparent" }}>
-        //                         <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackPrevFilled /></Button>
-        //                         <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }} onClick={() => togglePlayPause()}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
-        //                         <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackNextFilled /></Button>
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //         </div>
-
-        //     </div>
-        // </div>
 
         <div className='bg-dark min-vh-100'>
             <div className="container-fluid py-2 h-100 d-flex flex-column justify-content-center align-items-center">
