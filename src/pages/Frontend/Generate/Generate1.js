@@ -58,8 +58,10 @@ const Generate1 = () => {
         if (audio) {
             if (audio.paused) {
                 audio.play();
+                setIsPlaying(true)
             } else {
                 audio.pause();
+                setIsPlaying(false)
             }
         }
     };
