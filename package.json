@@ -19,8 +19,8 @@
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
     "sass": "^1.66.1",
-    "simplex-noise": "^4.0.1",
-    "three": "^0.163.0",
+    "simplex-noise": "^2.3.0",
+    "three": "^0.102.1",
     "wavesurfer-react": "^3.0.2",
     "wavesurfer.js": "^7.7.4",
     "web-vitals": "^2.1.4"

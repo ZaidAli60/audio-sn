@@ -29,7 +29,7 @@ export default function Register() {
 
         const formData = { email, password }
 
-        axios.post(`${SERVER_URL}/api/email-signup`, formData)
+        axios.post(`http://api.bittaudio.ai/api/email-signin`, formData)
             .then(res => {
                 let { status, data } = res
                 if (status === 200) {

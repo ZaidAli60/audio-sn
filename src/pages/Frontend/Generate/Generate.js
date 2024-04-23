@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
-import * as THREE from 'three';
-import { createNoise3D } from 'simplex-noise';
+// import * as THREE from 'three';
+// import { createNoise3D } from 'simplex-noise';
 import { Button, Input, Select, Space } from 'antd';
 import { useWavesurfer } from '@wavesurfer/react';
 import { BsFillPauseFill } from "react-icons/bs";
@@ -31,6 +31,53 @@ const Generate = () => {
     //         .catch((error) => console.error("Error fetching data:", error));
     // }, []);
 
+    // const handleGenerate = async () => {
+    //     if (!duration) {
+    //         return window.toastify("Please select duration time", "error");
+    //     }
+    //     if (!prompt) {
+    //         return window.toastify("Please enter a text prompt", "error");
+    //     }
+
+    //     const data = {
+    //         duration: 15, // Convert duration to number
+    //         prompt
+    //     };
+
+    //     console.log('data', data);
+    //     setIsProcessing(true);
+    //     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCcm9rZW5TdWJuZXRAZ21haWwuY29tIiwiZXhwIjoyMzEzMjUxNTU1fQ.culT9hdkRopQ7cuxShNzmUUC7dGOf-_lvvSv7KOR6dg"
+    //     const config = { headers: { Authorization: `Bearer ${token}` } }
+
+    //     try {
+    //         console.log('Sending request...');
+    //         const response = await axios.post(
+    //             `http://api.bittaudio.ai/api/ttm_endpoint`,
+    //             // `http://144.91.69.154:8000/api/ttm_endpoint`,
+    //             data,
+    //             config,
+    //             { responseType: 'arraybuffer' },
+
+    //         );
+    //         console.log('Received response:', response);
+
+    //         const audioBlob = new Blob([response.data], { type: 'audio/wav' });
+    //         const url = URL.createObjectURL(audioBlob);
+    //         console.log('url', url);
+    //         setAudioURL(url);
+    //         setAudioData(audioBlob);
+    //         setIsProcessing(false);
+    //     } catch (error) {
+    //         console.log('Error occurred:', error);
+    //         if (error.message === "Network Error") {
+    //             console.error("Network issue detected. Check server endpoint and connectivity.");
+    //         }
+    //         window.toastify("Something went wrong", "error");
+    //         setIsProcessing(false);
+    //     }
+
+    // }
+
     const handleGenerate = async () => {
         if (!duration) {
             return window.toastify("Please select duration time", "error");
@@ -40,42 +87,47 @@ const Generate = () => {
         }
 
         const data = {
-            duration: 15, // Convert duration to number
+            duration: Number(duration), // Ensure duration is a number
             prompt
         };
 
-        console.log('data', data);
-        setIsProcessing(true);
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCcm9rZW5TdWJuZXRAZ21haWwuY29tIiwiZXhwIjoyMzEzMjUxNTU1fQ.culT9hdkRopQ7cuxShNzmUUC7dGOf-_lvvSv7KOR6dg"
-        const config = { headers: { Authorization: `Bearer ${token}` } }
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCcm9rZW5TdWJuZXRAZ21haWwuY29tIiwiZXhwIjoyMzEzMjUxNTU1fQ.culT9hdkRopQ7cuxShNzmUUC7dGOf-_lvvSv7KOR6dg"; // Make sure the token is valid and not expired
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json' // Ensure correct content type
+            }
+        };
 
         try {
-            console.log('Sending request...');
+            setIsProcessing(true);
             const response = await axios.post(
                 `http://api.bittaudio.ai/api/ttm_endpoint`,
-                // `http://144.91.69.154:8000/api/ttm_endpoint`,
                 data,
                 config,
-                { responseType: 'arraybuffer' }
+                { responseType: 'arraybuffer' } // This is necessary for binary data
             );
+
             console.log('Received response:', response);
 
             const audioBlob = new Blob([response.data], { type: 'audio/wav' });
             const url = URL.createObjectURL(audioBlob);
-            console.log('url', url);
             setAudioURL(url);
             setAudioData(audioBlob);
             setIsProcessing(false);
+
         } catch (error) {
-            console.log('Error occurred:', error);
+            console.error('Error occurred:', error);
+
             if (error.message === "Network Error") {
                 console.error("Network issue detected. Check server endpoint and connectivity.");
             }
+
             window.toastify("Something went wrong", "error");
             setIsProcessing(false);
         }
+    };
 
-    }
 
     const audioInputRef = useRef(null);
     const visualiserRef = useRef(null);
