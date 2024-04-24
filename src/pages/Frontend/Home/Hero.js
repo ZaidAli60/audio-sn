@@ -16,7 +16,7 @@ export default function Hero() {
                 Your browser does not support the video tag.
             </video>
             <div className="position-relative z-index-1 text-center text-white">
-                <h1 className='text-uppercase text-bold' style={{ fontWeight: "bold", fontSize: "xxx-large" }}>create music with <br />AI</h1>
+                <h1 className='text-uppercase text-bold' style={{ fontWeight: "bold", letterSpacing: "3px" }}>create music with <br />AI</h1>
                 <p className='fs-5'>Powered by Bittensor</p>
                 <p className='fs-5'>Subnet X</p>
                 <Button size='large' type='primary' shape='round' className='text-dark custom-btn' onClick={() => navigate("/generate")} ><span className='me-1'>Create</span> <FaMusic /></Button>

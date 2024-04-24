@@ -3,13 +3,12 @@
 /* Define a variable for the Fira Code font */
 // $fira-code-font: 'Montserrat';
 
+
 /* Apply the font family to the custom-navbar class */
-* {
-    font-family: "DrukWide-Medium-Web, sans-serif";
-}
+
 
 .custom-navbar {
-    font-family: "DrukWide-Medium-Web, sans-serif";
+
     transition: box-shadow 0.3s ease-in-out;
     z-index: 900 !important;
 
@@ -18,7 +17,7 @@
     }
 
     .custom-btn {
-        font-family: "DrukWide-Medium-Web, sans-serif" !important;
+
         background: linear-gradient(90deg, #26F7C5 0%, #8895FA 100%);
         color: white;
         border: 0px;
@@ -66,11 +65,6 @@
     .ant-drawer-close {
         color: white !important;
     }
-
-}
-
-.custom-drawer {
-    font-family: "DrukWide-Medium-Web, sans-serif";
 
 }
 

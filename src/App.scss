@@ -8,6 +8,7 @@
     color: #fcfcfc;
 }
 
+// @import url('https://db.onlinewebfonts.com/c/5796fb1b44e3c87b7f3d5ff57994f7b3?family=Druk+Wide+Web+Medium+Regular');
 @import "./scss/bootstrap";
 @import "./scss//frontend/navbar";
 @import "./scss/dashboard";
@@ -19,6 +20,10 @@
 @import "./scss/frontend/footer";
 @import "./scss/frontend/404page";
 @import "./scss/Authentication/Login.scss";
+
+* {
+    font-family: "Druk Wide Web Medium Regular";
+}
 
 #root {
     display: flex;
@@ -106,7 +111,12 @@ canvas {
 }
 
 .custom-btn {
+    font-family: "Druk Wide Web Medium Regular";
     background: linear-gradient(90deg, #26F7C5 0%, #8895FA 100%);
     color: white;
     border: 0px;
+}
+
+.custom-btn span {
+    font-size: 14px;
 }

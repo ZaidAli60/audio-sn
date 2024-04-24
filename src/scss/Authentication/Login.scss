@@ -12,7 +12,6 @@
 
     .google-button {
         font-size: 14px;
-        font-weight: 600;
         background-color: white;
         padding: 12px;
         width: 100%;
@@ -29,7 +28,6 @@
 
     .facebook-button {
         font-size: 14px;
-        font-weight: 600;
         background-color: #1877f2;
         padding: 12px;
         width: 100%;
@@ -53,7 +51,6 @@
         .floating-label {
             color: #838282;
             font-size: 15px;
-            font-weight: 600;
             position: absolute;
             pointer-events: none;
             left: 15px;
@@ -80,7 +77,7 @@
                 border: 1px solid #26f7c5;
                 outline: none;
 
-                ~ .floating-label {
+                ~.floating-label {
                     top: -8px;
                     font-size: 13px;
                     color: #26f7c5;
@@ -94,7 +91,7 @@
             transition: 0.5s;
         }
 
-        .floating-input:not(:placeholder-shown) ~ .floating-label {
+        .floating-input:not(:placeholder-shown)~.floating-label {
             top: -8px;
             font-size: 13px;
         }
