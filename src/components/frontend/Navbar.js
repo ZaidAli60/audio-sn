@@ -45,7 +45,7 @@ export default function Navbar() {
     return (
         <>
 
-            <nav className={`navbar py-3 custom-navbar sticky-top  bg-secondary`}>
+            <nav className={`navbar py-2 custom-navbar sticky-top  bg-secondary`}>
                 <div className="container-fluid">
                     <img src={`${window.logoLight}`} className='img-fluid me-lg-5 me-auto' style={{ width: "130px", height: "auto" }} alt="Audio" />
                     <div className="navbar-nav me-auto">
@@ -56,7 +56,8 @@ export default function Navbar() {
                     <div className="d-none d-lg-block me-2">
 
 
-                        {
+                        <Button className={`custom-btn`} type='primary' shape="round" size='large'>Try Now</Button>
+                        {/* {
                             !isAuthenticated ?
                                 <Button className={`custom-btn loginbtn`} shape="round" size='large' onClick={() => { navigate("auth") }}>Create</Button>
                                 :
@@ -75,7 +76,7 @@ export default function Navbar() {
 
                                 </Dropdown>
 
-                        }
+                        } */}
                     </div>
                     {/* <button className="navbar-toggler rounded-5 py-2 px-2" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <LiaBarsSolid className="navbar-toggler-icon" style={{ fontSize: "14px" }} />

@@ -21,12 +21,13 @@
         font-family: "DrukWide-Medium-Web, sans-serif" !important;
         background: linear-gradient(90deg, #26F7C5 0%, #8895FA 100%);
         color: white;
+        border: 0px;
     }
 
-    .loginbtn {
-        background-color: transparent;
-        border-color: rgb(39 38 43);
-    }
+    // .loginbtn {
+    //     background-color: transparent;
+    //     border-color: rgb(39 38 43);
+    // }
 }
 
 .ant-modal-root {

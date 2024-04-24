@@ -105,7 +105,7 @@ const Generate = () => {
                 `http://api.bittaudio.ai/api/ttm_endpoint`,
                 data,
                 config,
-                { responseType: 'arraybuffer' } // This is necessary for binary data
+                { responseType: 'blob' } // This is necessary for binary data
             );
 
             console.log('Received response:', response);
