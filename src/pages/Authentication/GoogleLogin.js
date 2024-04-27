@@ -13,7 +13,6 @@ export default function Google() {
                 console.log('response', res)
                 let { data, status } = res;
                 if (status === 200) {
-
                     localStorage.setItem("jwt", JSON.stringify({ token: data.access_token }));
                     readUserProfile(data);
                 }

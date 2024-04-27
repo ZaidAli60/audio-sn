@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
 import video from 'assets/video/vid_sub.mp4'
 import axios from 'axios';
+import { Button } from 'antd';
 
 const SERVER_URL = process.env.REACT_APP_API_END_POINT
 const initialState = { email: "", }
 
 export default function ForgotPassword() {
     const [state, setState] = useState(initialState);
+    const [isProcessing, setIsProcessing] = useState(false)
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -23,7 +25,7 @@ export default function ForgotPassword() {
         // email = email.trim()
         // if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
 
-        // setIsProcessing(true)
+        setIsProcessing(true)
         console.log('state', state)
         axios.post(`${SERVER_URL}/api/forgot-password`, { email })
             .then(res => {
@@ -32,12 +34,13 @@ export default function ForgotPassword() {
                 if (status === 200) {
                     window.toastify(data.message, "success")
                 }
+                setIsProcessing(false)
             })
             .catch(err => {
                 window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
             })
             .finally(() => {
-                // setIsProcessing(false)
+                setIsProcessing(false)
             })
     }
     return (
@@ -45,7 +48,7 @@ export default function ForgotPassword() {
             <div className="mb-0 d-flex overflow-hidden max-vh-100">
                 <div className="bg-black min-vh-100 text-white p-2 p-md-5 d-flex align-items-center left-signin" style={{ width: '500px', height: '100vh' }}>
                     <div className='w-100'>
-                        <h4 className='fw-bold'>Forgot Password
+                        <h4>Forgot Password
                         </h4>
                         <p className='m-0 p-0 mb-4' style={{ color: '#90998b' }}>Enter your email to reset your password.</p>
                         <div className='input-form'>
@@ -53,10 +56,11 @@ export default function ForgotPassword() {
                                 <input className='floating-input' value={state.email} onChange={handleChange} name='email' type='text' placeholder=' ' />
                                 <label className='floating-label'>Email</label>
                             </div>
+                            <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleResetPassword} loading={isProcessing}>Reset Password</Button>
 
-                            <button onClick={handleResetPassword} style={{ backgroundColor: '#26f7c5', letterSpacing: '1px', fontSize: '12px' }} className='w-100 border-0 py-3 text-uppercase fw-bold text rounded-5 my-3'>
+                            {/* <button onClick={handleResetPassword} style={{ backgroundColor: '#26f7c5', letterSpacing: '1px', fontSize: '12px' }} className='w-100 border-0 py-3 text-uppercase fw-bold text rounded-5 my-3'>
                                 Reset password
-                            </button>
+                            </button> */}
                             <Link to="/auth" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'><FiArrowLeft size={20} className='me-2' />Return to Log in</Link>
                         </div>
                     </div>

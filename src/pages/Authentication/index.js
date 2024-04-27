@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Login from './Login'
 import ForgotPassword from './ForgotPassword'
 import Register from './Register'
+import RestPassword from './RestPassword'
 
 export default function index() {
     return (
@@ -11,6 +12,7 @@ export default function index() {
                 <Route index element={<Login />} />
                 <Route path='register' element={<Register />} />
                 <Route path='forgot-password' element={<ForgotPassword />} />
+                <Route path='rest-password' element={<RestPassword />} />
             </Route>
         </Routes>
     )
