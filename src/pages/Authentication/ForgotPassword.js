@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Button } from 'antd';
 
 const SERVER_URL = process.env.REACT_APP_API_END_POINT
-const initialState = { email: "", }
+const initialState = { email: "" }
 
 export default function ForgotPassword() {
     const [state, setState] = useState(initialState);
@@ -19,21 +19,16 @@ export default function ForgotPassword() {
 
     const handleResetPassword = e => {
         e.preventDefault()
-
         let { email } = state
-
-        // email = email.trim()
-        // if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
-
         setIsProcessing(true)
-        console.log('state', state)
+
         axios.post(`${SERVER_URL}/api/forgot-password`, { email })
             .then(res => {
-                console.log('res', res)
                 let { data, status } = res
                 if (status === 200) {
                     window.toastify(data.message, "success")
                 }
+                setState({})
                 setIsProcessing(false)
             })
             .catch(err => {
@@ -43,6 +38,7 @@ export default function ForgotPassword() {
                 setIsProcessing(false)
             })
     }
+
     return (
         <div className='login'>
             <div className="mb-0 d-flex overflow-hidden max-vh-100">
@@ -57,10 +53,6 @@ export default function ForgotPassword() {
                                 <label className='floating-label'>Email</label>
                             </div>
                             <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleResetPassword} loading={isProcessing}>Reset Password</Button>
-
-                            {/* <button onClick={handleResetPassword} style={{ backgroundColor: '#26f7c5', letterSpacing: '1px', fontSize: '12px' }} className='w-100 border-0 py-3 text-uppercase fw-bold text rounded-5 my-3'>
-                                Reset password
-                            </button> */}
                             <Link to="/auth" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'><FiArrowLeft size={20} className='me-2' />Return to Log in</Link>
                         </div>
                     </div>

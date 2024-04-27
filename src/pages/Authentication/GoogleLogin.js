@@ -8,7 +8,7 @@ export default function Google() {
     const { dispatch } = useAuthContext();
 
     const handleOnSuccess = response => {
-        axios.post(`http://api.bittaudio.ai/api/google-signin`, { id_token: response.credential })
+        axios.post(`${SERVER_URL}/api/google-signin`, { id_token: response.credential })
             .then(res => {
                 console.log('response', res)
                 let { data, status } = res;

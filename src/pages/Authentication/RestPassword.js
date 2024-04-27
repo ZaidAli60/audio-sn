@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-// import { Link } from 'react-router-dom'
-// import { FiArrowLeft } from "react-icons/fi";
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { FiArrowLeft } from "react-icons/fi";
 import video from 'assets/video/vid_sub.mp4'
 import axios from 'axios';
 import { Button } from 'antd';
-import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SERVER_URL = process.env.REACT_APP_API_END_POINT
 const initialState = { newPassword: "", confirmPassword: "", }
@@ -13,29 +13,28 @@ export default function RestPassword() {
     const [state, setState] = useState(initialState);
     const [isProcessing, setIsProcessing] = useState(false)
     const [showPassword, setShowPassword] = useState('password')
-
+    const [token, setToken] = useState("")
 
     const handleChange = (e) => {
         e.preventDefault();
         setState({ ...state, [e.target.name]: e.target.value })
     }
 
-    // const readData = async () => {
+    const readData = async () => {
+        let query = new URLSearchParams(window.location.search)
+        let oobCode = query.get("token")
+        setToken(oobCode)
+    }
 
-    //     let query = new URLSearchParams(window.location.search)
-    //     let oobCode = query.get("oobCode")
-    //     setOobCode(oobCode)
+    useEffect(() => {
+        readData()
+    }, [])
 
-    // }
-
-    // useEffect(() => {
-    //     readData()
-    // }, [])
 
     const handleResetPassword = e => {
         e.preventDefault()
 
-        let { newPassword, confirmPassword } = state
+        let { newPassword, confirmPassword } = state;
 
 
         if (!newPassword) {
@@ -47,33 +46,31 @@ export default function RestPassword() {
         if (confirmPassword !== newPassword) {
             return window.toastify("Password dosen't match", "error")
         }
-        const formData = {
-            newPassword,
-            confirmPassword
-        }
 
-
-        console.log('formData', formData)
-        // email = email.trim()
-        // if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
-
-        // setIsProcessing(true)
-        return
-        // axios.post(`${SERVER_URL}/api/forgot-password`, { email })
-        //     .then(res => {
-        //         console.log('res', res)
-        //         let { data, status } = res
-        //         if (status === 200) {
-        //             window.toastify(data.message, "success")
-        //         }
-        //     })
-        //     .catch(err => {
-        //         window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
-        //     })
-        //     .finally(() => {
-        //         // setIsProcessing(false)
-        //     })
+        setIsProcessing(true)
+        axios.post(`${SERVER_URL}/api/reset-password`, { token, confirmPassword }, { headers: { 'Content-Type': 'application/json' } })
+            .then(res => {
+                let { data, status } = res
+                if (status === 200) {
+                    window.toastify(data.message, "success")
+                }
+                setState(initialState)
+                setIsProcessing(false)
+            })
+            .catch(err => {
+                // console.log('err', err)
+                if (err?.response.status === 400) {
+                    window.toastify("Password reset token has expired. Send Forgot Password request again.", "error")
+                } else {
+                    window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
+                }
+                setIsProcessing(false)
+            })
+            .finally(() => {
+                setIsProcessing(false)
+            })
     }
+
     return (
         <div className='login'>
             <div className="mb-0 d-flex overflow-hidden max-vh-100">
@@ -82,10 +79,6 @@ export default function RestPassword() {
                         <h4>Rest Password </h4>
                         <p className='m-0 p-0 mb-4' style={{ color: '#90998b' }}>Reset the password of your Soundtracks account.</p>
                         <div className='input-form'>
-                            {/* <div className='floating-label-content'>
-                                <input className='floating-input' value={state.newPassword} onChange={handleChange} name='newPassword' placeholder=' ' />
-                                <label className='floating-label'>New Password</label>
-                            </div> */}
                             <div className='floating-label-content'>
                                 <input className='floating-input' value={state.newPassword} onChange={handleChange} name='newPassword' type={showPassword} placeholder=' ' />
                                 <label className='floating-label'>
@@ -137,10 +130,7 @@ export default function RestPassword() {
                                 )}
                             </div>
                             <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleResetPassword} loading={isProcessing}>Rest Password</Button>
-                            {/* <button onClick={handleResetPassword} style={{ backgroundColor: '#26f7c5', letterSpacing: '1px', fontSize: '12px' }} className='w-100 border-0 py-3 text-uppercase fw-bold text rounded-5 my-3'>
-                                Reset password
-                            </button> */}
-                            {/* <Link to="/auth" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'><FiArrowLeft size={20} className='me-2' />Return to Log in</Link> */}
+                            <Link to="/auth" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'><FiArrowLeft size={20} className='me-2' />Return to Log in</Link>
                         </div>
                     </div>
                 </div>

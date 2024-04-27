@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useAuthContext } from 'context/AuthContext';
 import { Link } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
-import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button, Divider } from 'antd';
 import video from 'assets/video/vid_sub.mp4'
 import axios from 'axios';
@@ -15,7 +15,6 @@ export default function Register() {
     const [showPassword, setShowPassword] = useState('password')
     const [state, setState] = useState(initialState);
     const [isProcessing, setIsProcessing] = useState(false)
-
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -31,7 +30,7 @@ export default function Register() {
 
         const formData = { email, password }
         setIsProcessing(true)
-        axios.post(`http://api.bittaudio.ai/api/email-signup`, formData)
+        axios.post(`${SERVER_URL}/api/email-signup`, formData)
             .then(res => {
                 let { status, data } = res
                 if (status === 200) {

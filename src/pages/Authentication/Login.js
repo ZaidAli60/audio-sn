@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthContext } from 'context/AuthContext';
-import { FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button, Divider } from 'antd';
 import video from 'assets/video/vid_sub.mp4'
 import GoogleLogin from './GoogleLogin';
@@ -30,7 +29,7 @@ export default function Login() {
 
         setIsProcessing(true)
         if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
-        axios.post(`http://api.bittaudio.ai/api/email-signin`, { email, password })
+        axios.post(`${SERVER_URL}/api/email-signin`, { email, password })
             .then(res => {
                 let { status, data } = res
                 if (status === 200) {
@@ -41,10 +40,8 @@ export default function Login() {
                 setIsProcessing(false)
             })
             .catch(err => {
-                // console.log('err', err)
-                // console.log('err', err.status)
+
                 const { response } = err
-                // window.toastify(err.response?.data?.error || "Something went wrong while signing in", "error")
                 if (response.data.detail === "400: OooPS...User not found. Please sign up first.") {
                     window.toastify("Ooops....User not found as it does not exists. Please sign up first.", "error")
                 } else {
@@ -61,20 +58,6 @@ export default function Login() {
                     <div className='w-100'>
                         <h4 >Login</h4>
                         <p className='m-0 p-0 mb-4' style={{ color: '#90998b' }}>Don't have an account? <Link to="register" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'>Don't have an account?</Link></p>
-                        {/* <div className="social-button my-3">
-                            <button className='google-button'>
-                                <FcGoogle size={25} className='position-absolute' />
-                                <span className='mx-auto'>
-                                    Sign in with Google
-                                </span>
-                            </button>
-                            <button className='facebook-button'>
-                                <FaFacebook size={25} className='position-absolute' />
-                                <span className='mx-auto'>
-                                    Continue with Facebook
-                                </span>
-                            </button>
-                        </div> */}
                         {/* <GoogleLogin logo_alignment='center' onSuccess={handleOnSuccess} onError={handleOnError} /> */}
                         <GoogleLogin />
                         <Divider className='text-white border-white'>OR</Divider>
@@ -109,9 +92,6 @@ export default function Login() {
                                 )}
                             </div>
                             <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleSubmit} loading={isProcessing}>Log In</Button>
-                            {/* <button onClick={handleSubmit} style={{ backgroundColor: '#26f7c5', letterSpacing: '1px', fontSize: '12px', fontWeight: '900' }} className='w-100 border-0 py-3 text-uppercase fw-bold text rounded-5 my-3'>
-                                Log In
-                            </button> */}
                             <Link to="forgot-password" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'>Forgot password?</Link>
                         </div>
                     </div>
