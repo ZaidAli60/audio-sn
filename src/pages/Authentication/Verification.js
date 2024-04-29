@@ -1,38 +1,58 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FiArrowLeft } from "react-icons/fi";
 import video from 'assets/video/vid_sub.mp4'
 import axios from 'axios';
 import { Button } from 'antd';
+import { useAuthContext } from 'context/AuthContext';
 
 const SERVER_URL = process.env.REACT_APP_API_END_POINT
-const initialState = { email: "" }
+const initialState = { verification_code: "" }
 
 export default function Verification() {
+    const { currentUser, dispatch } = useAuthContext()
     const [state, setState] = useState(initialState);
     const [isProcessing, setIsProcessing] = useState(false)
+    const [token, setToken] = useState("")
+    console.log('currentUser', currentUser)
+    const readData = async () => {
+        let query = new URLSearchParams(window.location.search)
+        let oobCode = query.get("token")
+        setToken(oobCode)
+    }
+
+    useEffect(() => {
+        readData()
+    }, [])
 
     const handleChange = (e) => {
         e.preventDefault();
         setState({ ...state, [e.target.name]: e.target.value })
     }
 
-    const handleResetPassword = e => {
+    const handleVerification = e => {
         e.preventDefault()
-        let { email } = state
+        let { verification_code } = state
         setIsProcessing(true)
 
-        axios.post(`${SERVER_URL}/api/forgot-password`, { email })
+        axios.post(`${SERVER_URL}/api/verification`, { verification_code, token })
             .then(res => {
                 let { data, status } = res
                 if (status === 200) {
                     window.toastify(data.message, "success")
                 }
-                setState({})
+                setState(initialState)
+                dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
                 setIsProcessing(false)
             })
             .catch(err => {
-                window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
+                console.log('err', err)
+                if (err?.response?.data.detail === "Invalid token") {
+                    window.toastify("Invalid token", "error")
+                } else {
+                    window.toastify("Verification code is incorrect", "error")
+                }
+                // window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
             })
             .finally(() => {
                 setIsProcessing(false)
@@ -49,10 +69,10 @@ export default function Verification() {
                         <p className='m-0 p-0 mb-4' style={{ color: '#90998b' }}>Enter your verification code.</p>
                         <div className='input-form'>
                             <div className='floating-label-content'>
-                                <input className='floating-input' value={state.email} onChange={handleChange} name='email' type='text' placeholder=' ' />
+                                <input className='floating-input' value={state.verification_code} onChange={handleChange} name='verification_code' type='text' placeholder=' ' />
                                 <label className='floating-label'>Code</label>
                             </div>
-                            <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleResetPassword} loading={isProcessing}>Verify</Button>
+                            <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleVerification} loading={isProcessing}>Verify</Button>
                             <Link to="/auth" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'><FiArrowLeft size={20} className='me-2' />Return to Log in</Link>
                         </div>
                     </div>

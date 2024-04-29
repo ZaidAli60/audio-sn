@@ -27,6 +27,7 @@ export default function AuthContextProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState)
     const [isAppLoading, setIsAppLoding] = useState(true)
     const [accessToken, setAccessToken] = useState("");
+    const [currentUser, setCurrentUser] = useState("")
 
     console.log('state', state)
     // console.log('accessToken', accessToken)
@@ -54,27 +55,35 @@ export default function AuthContextProvider({ children }) {
 
     const readUserProfile = useCallback(data => {
         const { token } = data;
-        // console.log('token', token)
+        const { user } = state
+
+        console.log('user', user)
         const config = { headers: { Authorization: `Bearer ${token}` } }
-        axios.get(`${SERVER_URL}/api/auth/user`, config)
-            .then(res => {
-                console.log('resData', res)
-                let { data, status } = res
-                if (status === 200) {
-                    let user = { ...data, roles: ["superAdmin"] }
-                    console.log('user', user)
-                    dispatch({ type: "SET_LOGGED_IN", payload: { user } })
-                    getUser(data)
-                }
-            })
-            .catch(err => {
-                console.error('err', err)
-                localStorage.removeItem("jwt")
-                // setIsAppLoding(false)
-            })
-            .finally(() => {
-                setIsAppLoding(false)
-            })
+        if (user?.user_info?.email_status === "Verified") {
+
+            axios.get(`${SERVER_URL}/api/auth/user`, config)
+                .then(res => {
+                    console.log('resData', res)
+                    let { data, status } = res
+                    if (status === 200) {
+                        let user = { ...data, roles: ["superAdmin"] }
+                        console.log('user', user)
+                        setCurrentUser(user)
+                        dispatch({ type: "SET_LOGGED_IN", payload: { user } })
+                        getUser(data)
+                    }
+                })
+                .catch(err => {
+                    console.error('err', err)
+                    localStorage.removeItem("jwt")
+                    // setIsAppLoding(false)
+                })
+                .finally(() => {
+                    setIsAppLoding(false)
+                })
+        } else {
+            console.log('Email is not Verfied')
+        }
     }, [getUser])
 
     const handleLogout = () => {
@@ -115,7 +124,7 @@ export default function AuthContextProvider({ children }) {
 
 
     return (
-        <AuthContext.Provider value={{ ...state, dispatch, accessToken, readUserProfile, handleLogout }}>
+        <AuthContext.Provider value={{ ...state, dispatch, accessToken, readUserProfile, currentUser, handleLogout }}>
             {children}
         </AuthContext.Provider>
     )

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAuthContext } from 'context/AuthContext';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button, Divider } from 'antd';
@@ -15,6 +15,7 @@ export default function Register() {
     const [showPassword, setShowPassword] = useState('password')
     const [state, setState] = useState(initialState);
     const [isProcessing, setIsProcessing] = useState(false)
+    // let navigate = useNavigate()
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -35,8 +36,11 @@ export default function Register() {
                 let { status, data } = res
                 if (status === 200) {
                     localStorage.setItem("jwt", JSON.stringify({ token: data.access_token }));
-                    dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
-                    window.toastify("Your account has been created successfully", "success")
+                    // dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
+                    dispatch({ payload: { user: { ...data, roles: ["superAdmin"] } } })
+                    // navigate("/auth/verification")
+                    setState(initialState)
+                    window.toastify("Signup successful! Please check your email for verification.", "success")
                 }
                 setIsProcessing(false)
             })

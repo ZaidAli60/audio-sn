@@ -34,15 +34,20 @@ export default function Login() {
                 let { status, data } = res
                 if (status === 200) {
                     localStorage.setItem("jwt", JSON.stringify({ token: data.access_token }));
-                    dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
-                    window.toastify("Login successfully", "success")
+                    dispatch({ payload: { user: { ...data, roles: ["superAdmin"] } } })
+                    if (data?.user_info?.email_status === "Verified") {
+                        dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
+                        window.toastify("Login successfully", "success")
+                    } else {
+                        window.toastify("You have not verified yet. Please verify your email first and then Sign in.", "error")
+                    }
                 }
                 setIsProcessing(false)
             })
             .catch(err => {
-
+                // console.log('err', err)
                 const { response } = err
-                if (response.data.detail === "400: OooPS...User not found. Please sign up first.") {
+                if (response?.data?.detail === "400: OooPS...User not found. Please sign up first.") {
                     window.toastify("Ooops....User not found as it does not exists. Please sign up first.", "error")
                 } else {
                     window.toastify("Ooops.....Incorrect password. Please try again.", "error")
