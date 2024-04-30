@@ -28,10 +28,11 @@ export default function ForgotPassword() {
                 if (status === 200) {
                     window.toastify(data.message, "success")
                 }
-                setState({})
+                setState(initialState)
                 setIsProcessing(false)
             })
             .catch(err => {
+                console.log('err', err)
                 window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
             })
             .finally(() => {

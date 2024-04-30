@@ -34,9 +34,10 @@ export default function Login() {
                 let { status, data } = res
                 if (status === 200) {
                     localStorage.setItem("jwt", JSON.stringify({ token: data.access_token }));
-                    dispatch({ payload: { user: { ...data, roles: ["superAdmin"] } } })
                     if (data?.user_info?.email_status === "Verified") {
-                        dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
+                        const isSuperAdmin = data.user_info.roles.includes("superAdmin")
+                        const isCustomer = data.user_info.roles.includes("customer")
+                        dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data }, isCustomer, isSuperAdmin } })
                         window.toastify("Login successfully", "success")
                     } else {
                         window.toastify("You have not verified yet. Please verify your email first and then Sign in.", "error")

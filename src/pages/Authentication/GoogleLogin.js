@@ -10,7 +10,7 @@ export default function Google() {
     const handleOnSuccess = response => {
         axios.post(`${SERVER_URL}/api/google-signin`, { id_token: response.credential })
             .then(res => {
-                console.log('response', res)
+                // console.log('response', res)
                 let { data, status } = res;
                 if (status === 200) {
                     localStorage.setItem("jwt", JSON.stringify({ token: data.access_token }));
@@ -30,7 +30,10 @@ export default function Google() {
                 let { data, status } = res
                 if (status === 200) {
                     // let googleData = doc.userData
-                    dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
+                    const isSuperAdmin = data.userData.roles.includes("superAdmin")
+                    const isCustomer = data.userData.roles.includes("customer")
+                    // dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, ytd: 20000000, roles: ["superAdmin"] } } })
+                    dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data }, isSuperAdmin, isCustomer } })
                     window.toastify("Login successful", "success")
                 }
             })

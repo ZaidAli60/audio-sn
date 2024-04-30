@@ -12,7 +12,6 @@ import { Navigate } from 'react-router-dom'
 
 export default function Index() {
     const { isAuthenticated } = useAuthContext()
-    console.log('isAuthenticated', isAuthenticated)
     return (
         <Layout>
             <Navbar />

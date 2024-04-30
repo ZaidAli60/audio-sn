@@ -47,15 +47,20 @@ export default function Navbar() {
 
             <nav className={`navbar py-2 custom-navbar sticky-top  bg-secondary`}>
                 <div className="container-fluid">
-                    <img src={`${window.logoLight}`} className='img-fluid me-lg-5 me-auto' style={{ width: "130px", height: "auto" }} alt="Audio" />
+                    <img src={`${window.logoLight}`} className='img-fluid me-lg-5 me-auto' style={{ width: "130px", height: "auto", cursor: "pointer" }} alt="Audio" onClick={() => navigate("/")} />
                     <div className="navbar-nav me-auto">
                     </div>
                     {/* <div className='icon-container me-2 d-none d-lg-block'>
                         <Button className={`custom-btn`} shape="round" style={{ backgroundColor: "#8fb9ff" }}>Try it out for free</Button>
                     </div> */}
                     <div className="d-none d-lg-block me-2">
+                        {/* 
+                        {
 
+                            (isSuperAdmin || isCustomer) &&
+                            <Link to="dashboard" className='text-gray-400 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-md font-medium'>Dashboard</Link>
 
+                        } */}
                         {
                             !isAuthenticated ?
                                 <Button className={`custom-btn `} type='primary' shape="round" size='large' onClick={() => { navigate("auth") }} >Try Now</Button>

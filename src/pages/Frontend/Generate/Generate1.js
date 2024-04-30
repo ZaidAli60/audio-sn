@@ -121,7 +121,6 @@ const Generate1 = () => {
             wireframe: true,
         });
         const sphere = new THREE.Mesh(geometry, material);
-        console.log(sphere);
         const light = new THREE.DirectionalLight('#ffffff', 0.8);
         light.position.set(0, 50, 100);
         scene.add(light);

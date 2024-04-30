@@ -10,11 +10,11 @@ const SERVER_URL = process.env.REACT_APP_API_END_POINT
 const initialState = { verification_code: "" }
 
 export default function Verification() {
-    const { currentUser, dispatch } = useAuthContext()
+    const { dispatch } = useAuthContext()
     const [state, setState] = useState(initialState);
     const [isProcessing, setIsProcessing] = useState(false)
     const [token, setToken] = useState("")
-    console.log('currentUser', currentUser)
+
     const readData = async () => {
         let query = new URLSearchParams(window.location.search)
         let oobCode = query.get("token")
@@ -39,14 +39,16 @@ export default function Verification() {
             .then(res => {
                 let { data, status } = res
                 if (status === 200) {
+                    localStorage.setItem("jwt", JSON.stringify({ token: data.access_token }));
+                    const isSuperAdmin = data.user_info.roles.includes("superAdmin")
+                    const isCustomer = data.user_info.roles.includes("customer")
+                    dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data }, isCustomer, isSuperAdmin } })
+                    setState(initialState)
+                    setIsProcessing(false)
                     window.toastify(data.message, "success")
                 }
-                setState(initialState)
-                dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
-                setIsProcessing(false)
             })
             .catch(err => {
-                console.log('err', err)
                 if (err?.response?.data.detail === "Invalid token") {
                     window.toastify("Invalid token", "error")
                 } else {

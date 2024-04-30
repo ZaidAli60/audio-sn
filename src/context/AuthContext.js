@@ -7,11 +7,10 @@ const AuthContext = createContext()
 const initialState = { isAuthenticated: false, user: {} }
 
 const reducer = (state, { type, payload }) => {
-
     switch (type) {
         case "SET_LOGGED_IN":
-            const { user } = payload
-            return { ...state, isAuthenticated: true, user }
+            const { user, isSuperAdmin, isCustomer } = payload
+            return { ...state, isAuthenticated: true, user, isSuperAdmin, isCustomer }
         case "SET_PROFILE":
             return { ...state, ...payload }
         case "SET_LOGGED_OUT":
@@ -27,14 +26,13 @@ export default function AuthContextProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, initialState)
     const [isAppLoading, setIsAppLoding] = useState(true)
     const [accessToken, setAccessToken] = useState("");
-    const [currentUser, setCurrentUser] = useState("")
 
-    console.log('state', state)
+    // console.log('state', state)
     // console.log('accessToken', accessToken)
-    console.log('isAppLoading', isAppLoading)
+    // console.log('isAppLoading', isAppLoading)
 
     const getUser = useCallback((user) => {
-        console.log('user', user)
+        // console.log('user', user)
         // const config = { headers: { Authorization: `Bearer ${doc.access_token}` } }
         // axios.get(`http://38.80.122.248:40337/react/read/${user.id}`)
         //     .then(res => {
@@ -55,35 +53,34 @@ export default function AuthContextProvider({ children }) {
 
     const readUserProfile = useCallback(data => {
         const { token } = data;
-        const { user } = state
+        // const { user } = state
 
-        console.log('user', user)
         const config = { headers: { Authorization: `Bearer ${token}` } }
-        if (user?.user_info?.email_status === "Verified") {
 
-            axios.get(`${SERVER_URL}/api/auth/user`, config)
-                .then(res => {
-                    console.log('resData', res)
-                    let { data, status } = res
-                    if (status === 200) {
-                        let user = { ...data, roles: ["superAdmin"] }
-                        console.log('user', user)
-                        setCurrentUser(user)
-                        dispatch({ type: "SET_LOGGED_IN", payload: { user } })
+        axios.get(`${SERVER_URL}/api/auth/user`, config)
+            .then(res => {
+                let { data, status } = res
+                if (status === 200) {
+                    let user = { ...data }
+                    if (user?.userData?.email_status === "Verified") {
+                        const isSuperAdmin = user.userData.roles.includes("superAdmin")
+                        const isCustomer = user.userData.roles.includes("customer")
+                        dispatch({ type: "SET_LOGGED_IN", payload: { user, isSuperAdmin, isCustomer } })
                         getUser(data)
                     }
-                })
-                .catch(err => {
-                    console.error('err', err)
-                    localStorage.removeItem("jwt")
-                    // setIsAppLoding(false)
-                })
-                .finally(() => {
-                    setIsAppLoding(false)
-                })
-        } else {
-            console.log('Email is not Verfied')
-        }
+                    else {
+                        console.log('Email is not Verfied')
+                    }
+                }
+            })
+            .catch(err => {
+                console.error('err', err)
+                localStorage.removeItem("jwt")
+                // setIsAppLoding(false)
+            })
+            .finally(() => {
+                setIsAppLoding(false)
+            })
     }, [getUser])
 
     const handleLogout = () => {
@@ -124,7 +121,7 @@ export default function AuthContextProvider({ children }) {
 
 
     return (
-        <AuthContext.Provider value={{ ...state, dispatch, accessToken, readUserProfile, currentUser, handleLogout }}>
+        <AuthContext.Provider value={{ ...state, dispatch, accessToken, readUserProfile, handleLogout }}>
             {children}
         </AuthContext.Provider>
     )

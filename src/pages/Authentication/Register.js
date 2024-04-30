@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAuthContext } from 'context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button, Divider } from 'antd';
@@ -15,7 +15,6 @@ export default function Register() {
     const [showPassword, setShowPassword] = useState('password')
     const [state, setState] = useState(initialState);
     const [isProcessing, setIsProcessing] = useState(false)
-    // let navigate = useNavigate()
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -29,7 +28,8 @@ export default function Register() {
         if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
         if (password.length < 8) { return window.toastify("Password must be minimum 8 characters long.", "error") }
 
-        const formData = { email, password }
+        const formData = { email, password, email_status: "unverified", roles: ["customer"], status: "active" }
+
         setIsProcessing(true)
         axios.post(`${SERVER_URL}/api/email-signup`, formData)
             .then(res => {
@@ -37,7 +37,7 @@ export default function Register() {
                 if (status === 200) {
                     localStorage.setItem("jwt", JSON.stringify({ token: data.access_token }));
                     // dispatch({ type: "SET_LOGGED_IN", payload: { user: { ...data, roles: ["superAdmin"] } } })
-                    dispatch({ payload: { user: { ...data, roles: ["superAdmin"] } } })
+                    dispatch({ payload: { user: { ...data } } })
                     // navigate("/auth/verification")
                     setState(initialState)
                     window.toastify("Signup successful! Please check your email for verification.", "success")
@@ -45,6 +45,7 @@ export default function Register() {
                 setIsProcessing(false)
             })
             .catch(err => {
+                // console.log('err', err)
                 const { response } = err
                 if (response?.status === 400) {
                     window.toastify("User already exists. Please sign in instead.", "error")
