@@ -393,6 +393,8 @@ const Generate1 = () => {
         >
             <Option value="15">15 s</Option>
             <Option value="30">30 s</Option>
+            <Option value="45">45 s</Option>
+            <Option value="60">60 s</Option>
             {/* <Option value="45">45 s</Option>
             <Option value="60">60 s</Option> */}
         </Select>
