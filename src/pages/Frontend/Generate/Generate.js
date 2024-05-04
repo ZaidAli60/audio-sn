@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { Select } from 'antd';
+import React, { useState } from 'react';
 import axios from 'axios';
 import AudioVisualizer from "../../../components/AudioVisualizer/AudioVisualizer";
 import '../../../index.css'
@@ -7,11 +6,8 @@ import Dropdown from "../../../components/Dropdown/Dropdown";
 import audioFile from "assets/music/7.mp3"
 
 
-const { Option } = Select;
-
 const Generate = () => {
-    const contentRef = useRef(); // Reference to the content div
-    // const [currentMusic, setCurrentMusic] = useState("")
+
     const [duration, setDuration] = useState("15")
     const [prompt, setPrompt] = useState("")
     const [selectedOption, setSelectedOption] = useState(null)
@@ -56,11 +52,6 @@ const Generate = () => {
         }
     }
 
-
-    // let audio = useRef(new Audio("https://res.cloudinary.com/dufkxmegs/video/upload/v1711744591/TTM_5_ziuor0.wav")).current;
-
-
-
     const inputHandler = (e) => {
         e.target.parentNode.dataset.value = e.target.value
         setPrompt(e.target.value)
@@ -73,7 +64,6 @@ const Generate = () => {
         { value: 60, label: '1 min' }
     ]
     const handleSelect = (value) => setSelectedOption(value)
-
 
     return (
         <div className='bg-black min-vh-100'>

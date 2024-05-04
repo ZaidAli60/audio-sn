@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Button, Drawer, Dropdown } from 'antd'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import { data } from "pages/Dashboard/SidebarItems"
 // import { LiaBarsSolid } from 'react-icons/lia'
 import { useAuthContext } from 'context/AuthContext';
@@ -12,6 +12,7 @@ export default function Navbar() {
     const [drawerVisible, setDrawerVisible] = useState(false);
     const [isNavbarShadowed, setIsNavbarShadowed] = useState(false);
     console.log('selectedItem', selectedItem)
+    console.log('isNavbarShadowed', isNavbarShadowed)
 
     let navigate = useNavigate()
 

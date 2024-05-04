@@ -29,7 +29,7 @@ export default function AuthContextProvider({ children }) {
 
     // console.log('state', state)
     // console.log('accessToken', accessToken)
-    // console.log('isAppLoading', isAppLoading)
+    console.log('isAppLoading', isAppLoading)
 
     const getUser = useCallback((user) => {
         // console.log('user', user)
@@ -74,7 +74,9 @@ export default function AuthContextProvider({ children }) {
                 }
             })
             .catch(err => {
-                console.error('err', err)
+                // console.error('err', err)
+                const { response } = err
+                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
                 localStorage.removeItem("jwt")
                 // setIsAppLoding(false)
             })
