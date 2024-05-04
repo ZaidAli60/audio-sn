@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import { items } from "./SidebarItems"
-// import Header from "components/dashboard/Header"
-import Routes from "../Routes"
+import Header from "components/dashboard/Header"
+import Routes from "./Routes"
 import { useSidebarContext } from '../../context/SideBarContext';
 // import logo from "assets/images/logo1.png"
 // import { useThemeContext } from 'context/ThemeContext';
@@ -26,7 +26,7 @@ export default function Dashboard() {
 
     return (
         <>
-            {/* <Header /> */}
+            <Header />
             <Layout hasSider >
                 <div >
                     <Sider breakpoint="xl" width={280}

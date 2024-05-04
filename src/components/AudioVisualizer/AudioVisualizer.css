@@ -1,0 +1,94 @@
+.audio-visualizer__controlers,
+.audio-visualizer__leftside,
+.audio-visualizer__time-wrap,
+.audio-visualizer__leftside {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.audio-visualizer__controlers {
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.audio-visualizer__button {
+    width: 40px;
+    height: 40px;
+    background: rgba(80, 80, 80, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+.audio-visualizer__leftside,
+.audio-visualizer__rightside{
+    gap: 6px;
+}
+
+.audio-visualizer__time {
+    width: 50px;
+    color: white;
+    text-align: center;
+}
+
+.audio-visualizer__slider-volume {
+    width: 115px;
+}
+
+/* Стили для слайдера времени */
+.audio-visualizer__slider-timeline {
+    width: 500px;
+}
+
+.slider-custom__rail {
+    background: #bbb;
+    border-radius: 2px;
+}
+
+
+@media (min-width: 760px) and (max-width: 1024px) {
+    .audio-visualizer__controlers {
+        width: 90%;
+    }
+    .audio-visualizer__time-wrap {
+        width: 50%;
+        gap: 10px;
+    }
+    .audio-visualizer__slider-timeline {
+        /*width: auto;*/
+    }
+    .audio-visualizer__slider-volume {
+        width: 75px;
+    }
+}
+
+@media (max-width: 767px) {
+    .audio-visualizer__controlers {
+        width: 95%;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .audio-visualizer__time-wrap {
+        order: 1;
+        width: 100%;
+    }
+
+    .audio-visualizer__slider-timeline {
+        width: 200px;
+    }
+
+    .audio-visualizer__slider-volume {
+        width: 50px;
+    }
+
+    .audio-visualizer__leftside,
+    .audio-visualizer__rightside{
+        order: 2
+    }
+}

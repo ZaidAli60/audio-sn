@@ -12,7 +12,7 @@ export default function PrivateRoute(props) {
     if (!isAuthenticated)
         return <Navigate to="/" state={{ from: location }} replace />
 
-    if (!allowedRoles.length || user.user_info.roles.find(role => allowedRoles.includes(role)))
+    if (!allowedRoles.length || user?.userData.roles.find(role => allowedRoles.includes(role)))
         return <Component />
     return <InsufficientPermission />
 }

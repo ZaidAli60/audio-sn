@@ -38,7 +38,9 @@ export default function Google() {
                 }
             })
             .catch(err => {
-                console.error('err', err)
+                // console.error('err', err)
+                const { response } = err
+                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
                 localStorage.removeItem("jwt")
                 // setIsAppLoding(false)
             })

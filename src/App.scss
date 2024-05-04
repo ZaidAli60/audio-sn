@@ -8,7 +8,7 @@
     color: #fcfcfc;
 }
 
-// @import url('https://db.onlinewebfonts.com/c/5796fb1b44e3c87b7f3d5ff57994f7b3?family=Druk+Wide+Web+Medium+Regular');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "./scss/bootstrap";
 @import "./scss//frontend/navbar";
 @import "./scss/dashboard";
@@ -21,14 +21,14 @@
 @import "./scss/frontend/404page";
 @import "./scss/Authentication/Login.scss";
 
-* {
-    font-family: "Druk Wide Web Medium Regular";
-}
-
 #root {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+
+* {
+    font-family: "Poppins", sans-serif;
 }
 
 .ant-layout {
@@ -111,12 +111,7 @@ canvas {
 }
 
 .custom-btn {
-    font-family: "Druk Wide Web Medium Regular";
+    font-family: "DrukWide-Medium-Web, sans-serif" !important;
     background: linear-gradient(90deg, #26F7C5 0%, #8895FA 100%);
     color: white;
-    border: 0px;
-}
-
-.custom-btn span {
-    font-size: 14px;
 }

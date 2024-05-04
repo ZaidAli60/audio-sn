@@ -32,8 +32,9 @@ export default function ForgotPassword() {
                 setIsProcessing(false)
             })
             .catch(err => {
-                console.log('err', err)
-                window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
+                // console.log('err', err)
+                const { response } = err
+                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
             })
             .finally(() => {
                 setIsProcessing(false)
@@ -53,7 +54,7 @@ export default function ForgotPassword() {
                                 <input className='floating-input' value={state.email} onChange={handleChange} name='email' type='text' placeholder=' ' />
                                 <label className='floating-label'>Email</label>
                             </div>
-                            <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleResetPassword} loading={isProcessing}>Reset Password</Button>
+                            <Button type="primary" className="w-100" style={{ fontWeight: '500', fontSize: '18px' }} size='large' shape='round' onClick={handleResetPassword} loading={isProcessing}>Reset Password</Button>
                             <Link to="/auth" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'><FiArrowLeft size={20} className='me-2' />Return to Log in</Link>
                         </div>
                     </div>

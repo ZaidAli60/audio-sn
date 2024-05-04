@@ -47,12 +47,13 @@ export default function Register() {
             .catch(err => {
                 // console.log('err', err)
                 const { response } = err
-                if (response?.status === 400) {
-                    window.toastify("User already exists. Please sign in instead.", "error")
-                } else {
-                    localStorage.removeItem("jwt")
-                    window.toastify(err?.response?.data?.error || "Something went wrong while creating your account, please try again", "error")
-                }
+                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
+                // if (response?.status === 400) {
+                //     window.toastify("User already exists. Please sign in instead.", "error")
+                // } else {
+                //     localStorage.removeItem("jwt")
+                //     window.toastify(err?.response?.data?.error || "Something went wrong while creating your account, please try again", "error")
+                // }
                 setIsProcessing(false)
             })
     }
@@ -106,7 +107,7 @@ export default function Register() {
                                     />
                                 )}
                             </div>
-                            <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleSubmit} loading={isProcessing}>Start for free</Button>
+                            <Button type="primary" className="w-100" style={{ fontWeight: '500', fontSize: '18px', }} size='large' shape='round' onClick={handleSubmit} loading={isProcessing}>Start for free</Button>
                             {/* <button onClick={handleSubmit} style={{ backgroundColor: '#26f7c5', letterSpacing: '1px', fontSize: '12px', fontWeight: '900' }} className='w-100 border-0 py-3 text-uppercase fw-bold text rounded-5 my-3'>
                                 Start for free
                             </button> */}

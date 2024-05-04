@@ -1,13 +1,11 @@
 import { Button } from 'antd'
 import React from 'react'
-import { FaMusic } from "react-icons/fa6";
-import { Typography } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import WaveSoundL from '../../../assets/images/wave-sound-left.svg'
+import WaveSoundR from '../../../assets/images/wave-sound-right.svg'
+import { useNavigate } from 'react-router-dom'
 
-const { Title } = Typography;
 
 export default function Hero() {
-
     let navigate = useNavigate()
     return (
         <div className={`home dashboard bg-dark min-vh-100 position-relative d-flex justify-content-center align-items-center`}>
@@ -15,11 +13,29 @@ export default function Hero() {
                 <source src="https://www.loudly.com/wp-content/uploads/2023/10/api_lp_rev.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
-            <div className="position-relative z-index-1 text-center text-white">
-                <h1 className='text-uppercase text-bold' style={{ fontWeight: "bold", letterSpacing: "3px" }}>create music with <br />AI</h1>
-                <p className='fs-5'>Powered by Bittensor</p>
-                <p className='fs-5'>Subnet X</p>
-                <Button size='large' type='primary' shape='round' className='text-dark custom-btn' onClick={() => navigate("/generate")} ><span className='me-1'>Create</span> <FaMusic /></Button>
+            <div className="position-relative z-index-1 text-center text-white d-flex flex-column">
+                <div className='text-uppercase' style={{ fontWeight: '700', fontSize: '60px' }}>create music</div>
+                <div style={{ fontWeight: '500', fontSize: '24px', marginBottom: 25 }}>with</div>
+                <div style={{ fontWeight: '700', fontSize: '46px', border: '1px solid #fff', borderRadius: 12, margin: '0 auto', marginBottom: 25, padding: '5px 20px' }}>AI</div>
+                <div style={{ fontWeight: '500', fontSize: '24px', marginBottom: 5 }}>Powered by Bittensor</div>
+                <div style={{ fontWeight: '700', fontSize: '16px', marginBottom: 25 }}>Subnet X</div>
+                <Button style={{
+                    background: '#299898',
+                    fontWeight: '500',
+                    fontSize: '18px',
+                    margin: '0 auto',
+                    padding: '14px 24px',
+                    gap: 8
+                }}
+                    size='large' type='primary'
+                    className="d-flex justify-content-center align-items-center text-white"
+                    onClick={() => navigate('/generate')}
+                >
+                    <img src={WaveSoundL} alt="" />
+                    <span>Create</span>
+                    <img src={WaveSoundR} alt="" />
+
+                </Button>
             </div>
         </div>
     )

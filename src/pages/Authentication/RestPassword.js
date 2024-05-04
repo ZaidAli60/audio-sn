@@ -59,11 +59,13 @@ export default function RestPassword() {
             })
             .catch(err => {
                 // console.log('err', err)
-                if (err?.response.status === 400) {
-                    window.toastify("Password reset token has expired. Send Forgot Password request again.", "error")
-                } else {
-                    window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
-                }
+                const { response } = err
+                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
+                // if (err?.response.status === 400) {
+                //     window.toastify("Password reset token has expired. Send Forgot Password request again.", "error")
+                // } else {
+                //     window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
+                // }
                 setIsProcessing(false)
             })
             .finally(() => {
@@ -129,7 +131,7 @@ export default function RestPassword() {
                                     />
                                 )}
                             </div>
-                            <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleResetPassword} loading={isProcessing}>Rest Password</Button>
+                            <Button type="primary" className="w-100" style={{ fontWeight: '500', fontSize: '18px' }} size='large' shape='round' onClick={handleResetPassword} loading={isProcessing}>Rest Password</Button>
                             <Link to="/auth" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'><FiArrowLeft size={20} className='me-2' />Return to Log in</Link>
                         </div>
                     </div>

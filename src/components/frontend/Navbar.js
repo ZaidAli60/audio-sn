@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Button, Drawer, Dropdown } from 'antd'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import { data } from "pages/Dashboard/SidebarItems"
-import { LiaBarsSolid } from 'react-icons/lia'
+// import { LiaBarsSolid } from 'react-icons/lia'
 import { useAuthContext } from 'context/AuthContext';
 import { UserOutlined } from "@ant-design/icons"
 
@@ -12,6 +12,7 @@ export default function Navbar() {
     const [drawerVisible, setDrawerVisible] = useState(false);
     const [isNavbarShadowed, setIsNavbarShadowed] = useState(false);
     console.log('selectedItem', selectedItem)
+
     let navigate = useNavigate()
 
     useEffect(() => {
@@ -54,16 +55,16 @@ export default function Navbar() {
                         <Button className={`custom-btn`} shape="round" style={{ backgroundColor: "#8fb9ff" }}>Try it out for free</Button>
                     </div> */}
                     <div className="d-none d-lg-block me-2">
-                        {/* 
-                        {
+
+                        {/* {
 
                             (isSuperAdmin || isCustomer) &&
-                            <Link to="dashboard" className='text-gray-400 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-md font-medium'>Dashboard</Link>
+                            <Link to="dashboard" className='text-white text-decoration-none me-2'>Dashboard</Link>
 
                         } */}
                         {
                             !isAuthenticated ?
-                                <Button className={`custom-btn `} type='primary' shape="round" size='large' onClick={() => { navigate("auth") }} >Try Now</Button>
+                                <Button type='primary' style={{ fontWeight: '500', fontSize: '18px', }} shape="round" size='large' onClick={() => { navigate("auth") }} >Try Now</Button>
                                 :
                                 <Dropdown
                                     menu={{

@@ -48,11 +48,12 @@ export default function Login() {
             .catch(err => {
                 // console.log('err', err)
                 const { response } = err
-                if (response?.data?.detail === "400: OooPS...User not found. Please sign up first.") {
-                    window.toastify("Ooops....User not found as it does not exists. Please sign up first.", "error")
-                } else {
-                    window.toastify("Ooops.....Incorrect password. Please try again.", "error")
-                }
+                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
+                // if (response?.data?.detail === "400: OooPS...User not found. Please sign up first.") {
+                //     window.toastify("Ooops....User not found as it does not exists. Please sign up first.", "error")
+                // } else {
+                //     window.toastify("Ooops.....Incorrect password. Please try again.", "error")
+                // }
                 setIsProcessing(false)
             })
     }
@@ -97,7 +98,7 @@ export default function Login() {
                                     />
                                 )}
                             </div>
-                            <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleSubmit} loading={isProcessing}>Log In</Button>
+                            <Button type="primary" className='w-100' style={{ fontWeight: '500', fontSize: '18px' }} size='large' shape='round' onClick={handleSubmit} loading={isProcessing}>Log In</Button>
                             <Link to="forgot-password" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'>Forgot password?</Link>
                         </div>
                     </div>

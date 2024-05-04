@@ -49,12 +49,13 @@ export default function Verification() {
                 }
             })
             .catch(err => {
-                if (err?.response?.data.detail === "Invalid token") {
-                    window.toastify("Invalid token", "error")
-                } else {
-                    window.toastify("Verification code is incorrect", "error")
-                }
-                // window.toastify(err.response?.data?.error || "Something went wrong, please try again", "error")
+                // if (err?.response?.data.detail === "Invalid token") {
+                //     window.toastify("Invalid token", "error")
+                // } else {
+                //     window.toastify("Verification code is incorrect", "error")
+                // }
+                const { response } = err
+                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
             })
             .finally(() => {
                 setIsProcessing(false)
@@ -74,7 +75,7 @@ export default function Verification() {
                                 <input className='floating-input' value={state.verification_code} onChange={handleChange} name='verification_code' type='text' placeholder=' ' />
                                 <label className='floating-label'>Code</label>
                             </div>
-                            <Button type="primary" className="custom-btn w-100" size='large' shape='round' onClick={handleVerification} loading={isProcessing}>Verify</Button>
+                            <Button type="primary" className="w-100" style={{ fontWeight: '500', fontSize: '18px' }} size='large' shape='round' onClick={handleVerification} loading={isProcessing}>Verify</Button>
                             <Link to="/auth" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'><FiArrowLeft size={20} className='me-2' />Return to Log in</Link>
                         </div>
                     </div>

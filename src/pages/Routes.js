@@ -6,7 +6,6 @@ import { useAuthContext } from 'context/AuthContext'
 // import PrivateRoute from 'components/PrivateRoute'
 // import Dashboard from './Dashboard'
 
-
 export default function Index() {
     const { isAuthenticated } = useAuthContext()
     return (
