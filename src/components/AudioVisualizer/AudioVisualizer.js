@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from "react"
 import Sketch from "react-p5"
 import "p5/lib/addons/p5.sound"
-import p5 from 'p5'
 import { Button, Slider } from "antd"
 import { PlayIcon, PauseIcon, PrevIcon, NextIcon, DownloadIcon, VolumeIcon } from '../../assets/images/player-icons'
 import formatTime from "../../outils/formatTime"
 import './AudioVisualizer.css'
 
-const AudioVisualizer = ({ audioURL }) => {
+const AudioVisualizer = ({ audioURL, handleDownload, isAutoPlay, setIsAutoPlay }) => {
+
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(1)
     const [previousVolume, setPreviousVolume] = useState(1)
     const [currentTime, setCurrentTime] = useState(0)
     const [duration, setDuration] = useState(0)
+    const [isP5Ready, setIsP5Ready] = useState(false);
 
     const pRef = useRef()
     const songRef = useRef(null)
@@ -20,39 +21,6 @@ const AudioVisualizer = ({ audioURL }) => {
     const waveRef = useRef([])
     const particlesRef = useRef([])
 
-
-    // useEffect(() => {
-    //     const song = songRef.current
-    //     if (song) {
-    //         const handleSongEnd = () => {
-    //             let isSameTime = Math.round(song.currentTime()) === Math.round(song.duration())
-    //             if (isSameTime) {
-    //                 setIsPlaying(false)
-    //             }
-    //         }
-    //         song.onended(handleSongEnd)
-    //         return () => song.off('ended', handleSongEnd)
-    //     }
-    // }, [songRef.current])
-
-
-    // useEffect(() => {
-    //     togglePlay()
-    // }, [isPlaying])
-
-
-    // const togglePlay = () => {
-    //     if (songRef.current) {
-    //         if (isPlaying) {
-    //             songRef.current.play()
-    //             pRef.current.loop()
-    //         }
-    //         if (!isPlaying) {
-    //             songRef.current.pause()
-    //             pRef.current.noLoop()
-    //         }
-    //     }
-    // }
 
     const togglePlay = () => {
         const song = songRef.current;
@@ -91,7 +59,7 @@ const AudioVisualizer = ({ audioURL }) => {
                 song.off("ended", handleSongEnd); // Detach event listener
             }
         };
-    }, [songRef.current]);
+    }, [songRef.current, audioURL]);
 
     useEffect(() => {
         togglePlay(); // Toggle play when isPlaying changes
@@ -102,12 +70,6 @@ const AudioVisualizer = ({ audioURL }) => {
             setDuration(songRef.current.duration());
         });
     };
-
-    // const setup = (p, canvasParentRef) => {
-    //     pRef.current = p; // Correct initialization
-    //     p.createCanvas(p.windowWidth, p.windowHeight).parent(canvasParentRef);
-    //     p.angleMode(p.DEGREES);
-    // };
 
     const toggleVolume = () => {
         const newVolume = !volume ? previousVolume : 0
@@ -132,19 +94,60 @@ const AudioVisualizer = ({ audioURL }) => {
         }
     }
 
-    // const preload = (p) => {
-    //     songRef.current = p.loadSound(audioURL, () => {
-    //         setDuration(songRef.current.duration())
-    //     })
-    // }
-
     const setup = (p, canvasParentRef) => {
-        pRef.current = p
-        p.createCanvas(p.windowWidth, p.windowHeight).parent(canvasParentRef)
-        p.angleMode(p.DEGREES)
-        fftRef.current = new window.p5.FFT()
+        pRef.current = p; // Ensure pRef points to the p5 instance
+        p.createCanvas(p.windowWidth, p.windowHeight).parent(canvasParentRef);
+        p.angleMode(p.DEGREES);
+
+        // Initialize FFT for audio analysis
+        fftRef.current = new window.p5.FFT() // Initialize Fast Fourier Transform
         p.noLoop()
-    }
+        setIsP5Ready(true); // Indicate that p5 is ready
+    };
+
+    useEffect(() => {
+        if (!isP5Ready) {
+            return; // Don't run this effect until p5 is ready
+        }
+
+        if (songRef.current) {
+            songRef.current.stop(); // Stop the current song if it's playing
+        }
+
+        // Load the new audio file
+        songRef.current = pRef.current.loadSound(audioURL, () => {
+            setDuration(songRef.current.duration());
+            setCurrentTime(0);
+            if (isAutoPlay) {
+                songRef.current.play();
+                setIsPlaying(true); // Start playing after loading
+            }
+            // setIsPlaying(true); // Auto-play when new audio is loaded
+            // songRef.current.play();
+            // if (!firstTime) { // Check if it's not the first time
+            //     // Load the new audio file
+            //     songRef.current = pRef.current.loadSound(audioURL, () => {
+            //         setDuration(songRef.current.duration());
+            //         setCurrentTime(0);
+            //         setIsPlaying(true); // Start playing after loading
+            //     });
+            // } else {
+            //     // For the first time, just load the audio, no auto-play
+            //     songRef.current = pRef.current.loadSound(audioURL, () => {
+            //         setDuration(songRef.current.duration());
+            //         setCurrentTime(0);
+            //         setFirstTime(false); // Set flag to false after first load
+            //     });
+            // }
+        });
+
+        return () => {
+            if (songRef.current) {
+                songRef.current.stop(); // Cleanup on unmount or audioURL change
+            }
+        };
+    }, [audioURL, isP5Ready, isAutoPlay]);
+
 
     const draw = (p) => {
         p.background("rgba(0,0,0, 1)")
@@ -277,7 +280,7 @@ const AudioVisualizer = ({ audioURL }) => {
                             <div className='audio-visualizer__time text-white text-center'>{formatTime(duration)}</div>
                         </div>
                         <div className='audio-visualizer__leftside'>
-                            <Button size='large' style={ButtonStyles}>
+                            <Button size='large' style={ButtonStyles} onClick={() => handleDownload()} >
                                 <img src={DownloadIcon} alt="" />
                             </Button>
                             <Button size='large' style={ButtonStyles} onClick={toggleVolume}>
@@ -298,3 +301,8 @@ const AudioVisualizer = ({ audioURL }) => {
 }
 
 export default AudioVisualizer
+
+
+
+
+
