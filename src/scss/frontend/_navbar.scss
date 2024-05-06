@@ -27,47 +27,75 @@
     //     background-color: transparent;
     //     border-color: rgb(39 38 43);
     // }
-}
 
-.ant-modal-root {
-    .ant-modal-mask {
-        z-index: 1110;
-    }
-
-    .ant-modal-wrap {
-        z-index: 1110;
-    }
-}
-
-.account-modal {
-    .ant-modal {
-        border-radius: 6px !important;
-    }
-
-    .ant-modal-content {
-        background-color: #202020 !important;
-        color: white;
-
-        .ant-modal-close-x {
-            color: white;
-        }
-
-        .ant-modal-header {
-            .ant-modal-title {
-                background-color: #202020;
-                color: white;
-            }
-        }
-    }
-}
-
-.dashboard.dark {
-    .ant-drawer-close {
-        color: white !important;
-    }
 
 }
 
-.ant-drawer {
-    z-index: 1100 !important;
+.ant-dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background: rgba(41, 152, 152, 1) !important;
+
+    row-gap: 5px !important;
 }
+
+.ant-dropdown-menu .ant-dropdown-menu-item:hover {
+    background: rgba(0, 0, 0, 0.15) !important;
+}
+
+.ant-dropdown-menu-item {
+    color: #fff !important;
+}
+
+.ant-avatar {
+    cursor: pointer;
+}
+
+.ant-avatar:hover svg,
+.ant-avatar.ant-dropdown-open svg {
+    fill: rgba(41, 152, 152, 1);
+}
+
+// .ant-modal-root {
+//     .ant-modal-mask {
+//         z-index: 1110;
+//     }
+
+//     .ant-modal-wrap {
+//         z-index: 1110;
+//     }
+// }
+
+// .account-modal {
+//     .ant-modal {
+//         border-radius: 6px !important;
+//     }
+
+//     .ant-modal-content {
+//         background-color: #202020 !important;
+//         color: white;
+
+//         .ant-modal-close-x {
+//             color: white;
+//         }
+
+//         .ant-modal-header {
+//             .ant-modal-title {
+//                 background-color: #202020;
+//                 color: white;
+//             }
+//         }
+//     }
+// }
+
+// .dashboard.dark {
+//     .ant-drawer-close {
+//         color: white !important;
+//     }
+
+// }
+
+// .ant-drawer {
+//     z-index: 1100 !important;
+// }

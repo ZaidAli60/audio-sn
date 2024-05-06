@@ -47,7 +47,7 @@ export default function Navbar() {
     return (
         <>
 
-            <nav className={`navbar py-2 custom-navbar sticky-top  bg-secondary`}>
+            <nav className={`navbar py-2 custom-navbar fixed-top`}>
                 <div className="container-fluid">
                     <img src={`${window.logoLight}`} className='img-fluid me-lg-5 me-auto' style={{ width: "130px", height: "auto", cursor: "pointer" }} alt="Audio" onClick={() => navigate("/")} />
                     <div className="navbar-nav me-auto">

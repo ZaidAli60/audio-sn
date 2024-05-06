@@ -1,4 +1,4 @@
-/*Prompt*/
+/* Prompt
 .prompt {
     width: 1000px;
     padding: 16px;
@@ -9,23 +9,10 @@
     backdrop-filter: blur(3px);
 }
 
-/*Prompt button*/
 .prompt__buttons-wrap {
     margin: 0 0 0 auto;
 }
 
-/* .prompt__button {
-    padding: 10px 24px;
-    background: rgba(41, 152, 152, 1);
-    color: #fff;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-} */
-
-
-
-/*Prompt textarea*/
 .input-sizer {
     display: inline-grid;
     vertical-align: top;
@@ -63,7 +50,7 @@
 }
 
 .input-sizer textarea {
-    /*min-height: 40px;*/
+    
 }
 
 .input-sizer::after {
@@ -94,5 +81,127 @@
 
     .prompt__button {
         padding: 8px 15px;
+    }
+} */
+
+
+/*Prompt*/
+.prompt {
+    width: 1000px;
+    padding: 16px;
+    border: 2px solid rgba(80, 80, 80, 1);
+    border-radius: 12px;
+    bottom: 100px;
+    position: fixed;
+    backdrop-filter: blur(3px);
+}
+
+/*Prompt button*/
+.prompt__buttons-wrap {
+    margin: 0 0 0 auto;
+}
+
+.prompt__button {
+    padding: 10px 24px;
+    background: rgba(41, 152, 152, 1);
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+
+
+/*Prompt textarea*/
+.input-sizer {
+    display: inline-grid;
+    vertical-align: top;
+    align-items: center;
+    /*position: relative;*/
+    max-height: 75px;
+    overflow: scroll;
+    min-width: 65%;
+
+}
+
+.input-sizer.stacked {
+    align-items: stretch;
+}
+
+.input-sizer.stacked::after,
+.input-sizer.stacked input,
+.input-sizer.stacked textarea {
+    grid-area: 2/1;
+}
+
+.input-sizer::after,
+.input-sizer input,
+.input-sizer textarea {
+    color: #fff;
+    font-size: 16px;
+    width: auto;
+    grid-area: 1/2;
+    margin: 0;
+    resize: none;
+    background: none;
+    appearance: none;
+    border: none;
+    outline: none;
+}
+
+.input-sizer.stacked textarea {
+    overflow: hidden;
+    resize: none;
+    /*min-height: 40px;*/
+}
+
+.input-sizer.stacked,
+.input-sizer.stacked textarea {
+    grid-area: 2 / 1;
+    /*scrollbar-width: none; !* Для Firefox *!*/
+    /*-ms-overflow-style: none; !* Для IE и Edge *!*/
+}
+
+.input-sizer.stacked::-webkit-scrollbar,
+.input-sizer.stacked textarea::-webkit-scrollbar {
+    /*display: none; !* Для Chrome, Safari и Opera *!*/
+}
+
+.input-sizer::after {
+    content: attr(data-value) " ";
+    visibility: hidden;
+    white-space: pre-wrap;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .prompt {
+        width: 90%;
+        border: 1px solid rgba(80, 80, 80, 1);
+        padding: 10px;
+    }
+
+    .input-sizer {
+        min-width: 60%;
+    }
+}
+
+@media (max-width: 767px) {
+    .prompt {
+        width: 95%;
+        border-radius: 8px;
+        padding: 8px;
+        bottom: 130px;
+    }
+
+    .prompt__button {
+        padding: 8px 15px;
+    }
+
+    .input-sizer {
+        min-width: 100%;
+    }
+
+    .text-uppercase {
+        line-height: 60px;
     }
 }
