@@ -7,6 +7,7 @@ import audioFile from "assets/music/7.mp3"
 import { Button } from 'antd';
 
 const SERVER_URL = process.env.REACT_APP_API_END_POINT
+const AUTHORIZATION_TOKEN = process.env.REACT_APP_AUTHORIZATION_TOKEN
 
 const Generate = () => {
 
@@ -74,7 +75,7 @@ const Generate = () => {
         setIsProcessing(true) // start loading
 
         const myHeaders = {
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCcm9rZW5TdWJuZXRAZ21haWwuY29tIiwiZXhwIjoyMzEzMjUxNTU1fQ.culT9hdkRopQ7cuxShNzmUUC7dGOf-_lvvSv7KOR6dg",
+            "Authorization": `Bearer ${AUTHORIZATION_TOKEN}`,
             "Content-Type": "application/json",
         };
 
@@ -92,7 +93,7 @@ const Generate = () => {
 
             const audioBlob = new Blob([response.data], { type: 'audio/wav' });
             const url = URL.createObjectURL(audioBlob);
-            console.log('url', url)
+            // console.log('url', url)
             setAudioURL(url)
             setIsAutoPlay(true)
             // setAudio(new Audio(url)); // Create and set a new Audio object
