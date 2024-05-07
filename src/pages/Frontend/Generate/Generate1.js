@@ -121,6 +121,7 @@ const Generate1 = () => {
             wireframe: true,
         });
         const sphere = new THREE.Mesh(geometry, material);
+        console.log(sphere);
         const light = new THREE.DirectionalLight('#ffffff', 0.8);
         light.position.set(0, 50, 100);
         scene.add(light);
@@ -393,8 +394,6 @@ const Generate1 = () => {
         >
             <Option value="15">15 s</Option>
             <Option value="30">30 s</Option>
-            <Option value="45">45 s</Option>
-            <Option value="60">60 s</Option>
             {/* <Option value="45">45 s</Option>
             <Option value="60">60 s</Option> */}
         </Select>
