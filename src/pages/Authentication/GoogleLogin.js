@@ -40,7 +40,7 @@ export default function Google() {
             .catch(err => {
                 // console.error('err', err)
                 const { response } = err
-                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
+                window.toastify(response?.data?.detail || "Service temporarily unavailable. Please try again later.", "error")
                 localStorage.removeItem("jwt")
                 // setIsAppLoding(false)
             })

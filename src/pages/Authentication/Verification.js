@@ -55,7 +55,7 @@ export default function Verification() {
                 //     window.toastify("Verification code is incorrect", "error")
                 // }
                 const { response } = err
-                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
+                window.toastify(response?.data?.detail || "Service temporarily unavailable. Please try again later.", "error")
             })
             .finally(() => {
                 setIsProcessing(false)

@@ -45,9 +45,9 @@ export default function Register() {
                 setIsProcessing(false)
             })
             .catch(err => {
-                // console.log('err', err)
+                console.log('err', err)
                 const { response } = err
-                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
+                window.toastify(response?.data?.detail || "Service temporarily unavailable. Please try again later.", "error")
                 // if (response?.status === 400) {
                 //     window.toastify("User already exists. Please sign in instead.", "error")
                 // } else {

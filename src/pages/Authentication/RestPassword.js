@@ -60,7 +60,7 @@ export default function RestPassword() {
             .catch(err => {
                 // console.log('err', err)
                 const { response } = err
-                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
+                window.toastify(response?.data?.detail || "Service temporarily unavailable. Please try again later.", "error")
                 // if (err?.response.status === 400) {
                 //     window.toastify("Password reset token has expired. Send Forgot Password request again.", "error")
                 // } else {

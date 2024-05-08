@@ -48,7 +48,7 @@ export default function Login() {
             .catch(err => {
                 // console.log('err', err)
                 const { response } = err
-                window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
+                window.toastify(response?.data?.detail || "Service temporarily unavailable. Please try again later.", "error")
                 // if (response?.data?.detail === "400: OooPS...User not found. Please sign up first.") {
                 //     window.toastify("Ooops....User not found as it does not exists. Please sign up first.", "error")
                 // } else {
