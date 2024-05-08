@@ -52,10 +52,18 @@
     background-color: #50505066;
 }
 
+.disabled {
+    color: gray;
+    /* Change color to indicate it's disabled */
+    pointer-events: none;
+    /* Prevent clicks */
+}
+
 @media (max-width: 1024px) {
     .dropdown-header {
         padding: 8px;
     }
+
     .dropdown-list li {
         padding: 8px 8px 8px 13px;
     }

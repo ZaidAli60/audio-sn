@@ -71,7 +71,6 @@ const Generate = () => {
             duration: Number(duration), // Convert duration to number
             prompt
         };
-
         setIsProcessing(true) // start loading
 
         const myHeaders = {
@@ -133,10 +132,14 @@ const Generate = () => {
     //     setPrompt(e.target.value)
     // }
 
+    // const options = [
+    //     { value: 15, label: '15 s' },
+    //     { value: 30, label: '30 s' },
+    // ]
     const options = [
-        { value: 15, label: '15 s' },
-        { value: 30, label: '30 s' },
-    ]
+        // { value: 15, label: '15 s', disabled: true },
+        { value: 30, label: '30 s', disabled: true }, // Disabled the 30 s option
+    ];
     const handleSelect = (value) => {
         setSelectedOption(value)
     }
@@ -146,12 +149,12 @@ const Generate = () => {
             <AudioVisualizer audioURL={audioURL} handleDownload={handleDownload} isAutoPlay={isAutoPlay} setIsAutoPlay={setIsAutoPlay} />
             <div className='w-100 d-flex flex-column justify-content-center align-items-center'>
                 <div className="prompt d-flex justify-content-between flex-wrap gap-3">
-                    <div className="input-sizer stacked">
+                    <div className="input-sizer stacked" style={{ overflow: "hidden" }}>
                         <textarea className="prompt__textarea" name='prompt' value={prompt} onChange={(e) => setPrompt(e.target.value)} rows="1" placeholder='Prompt here...'></textarea>
                     </div>
                     <div className='prompt__buttons-wrap d-flex justify-content-end gap-2 align-items-center'>
                         <div className="d-flex gap-3 justify-content-between align-items-center">
-                            <Dropdown options={options} defaultSelectedValue={options[0]} selectedValue={selectedOption} onSelect={handleSelect} openDirection={'up'} />
+                            <Dropdown options={options} defaultSelectedValue={selectedOption} selectedValue={selectedOption} onSelect={handleSelect} openDirection={'up'} />
                             <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing} onClick={handleGenerate}>Generate</Button>
                         </div>
                     </div>
