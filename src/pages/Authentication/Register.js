@@ -30,12 +30,13 @@ export default function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { email, password } = state;
+        const { email, password, checkbox } = state;
 
         if (!window.isEmail(email)) { return window.toastify("Please enter a valid email address", "error") }
         if (password.length < 8) { return window.toastify("Password must be minimum 8 characters long.", "error") }
+        if (!checkbox) { return window.toastify("Please accept our terms and privacy policy to proceed.", "error") }
 
-        const formData = { email, password, email_status: "unverified", roles: ["customer"], status: "active" }
+        const formData = { email, password, email_status: "unverified", roles: ["customer"], status: "active", checkbox }
 
         setIsProcessing(true)
         axios.post(`${SERVER_URL}/api/email-signup`, formData)
