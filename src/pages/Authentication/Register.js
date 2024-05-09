@@ -3,12 +3,12 @@ import { useAuthContext } from 'context/AuthContext';
 import { Link } from 'react-router-dom'
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Button, Divider } from 'antd';
+import { Button, Checkbox, Divider } from 'antd';
 import video from 'assets/video/vid_sub.mp4'
 import axios from 'axios';
 
 const SERVER_URL = process.env.REACT_APP_API_END_POINT
-const initialState = { email: "", password: "", }
+const initialState = { email: "", password: "", checkbox: false }
 
 export default function Register() {
     const { dispatch } = useAuthContext()
@@ -16,9 +16,16 @@ export default function Register() {
     const [state, setState] = useState(initialState);
     const [isProcessing, setIsProcessing] = useState(false)
 
+    // console.log('state', state)
+
     const handleChange = (e) => {
         e.preventDefault();
         setState({ ...state, [e.target.name]: e.target.value })
+    }
+
+    const onCheckboxChange = e => {
+        const { checked } = e.target
+        setState(s => ({ ...s, checkbox: checked }))
     }
 
     const handleSubmit = (e) => {
@@ -107,10 +114,13 @@ export default function Register() {
                                     />
                                 )}
                             </div>
+                            <div style={{ marginBottom: "20px" }}>
+                                <Checkbox checked={state.checkbox} name='checkbox' onChange={onCheckboxChange} className={`${!state.checkbox ? 'custom-checkbox' : ''} text-white`}>
+
+                                    <span style={{ color: '#90998b' }}> I accept the <Link className='text-primary' to="/terms-privacy">Terms & Privacy Policy</Link> of the platform.</span>
+                                </Checkbox>
+                            </div>
                             <Button type="primary" className="w-100" style={{ fontWeight: '500', fontSize: '18px', }} size='large' shape='round' onClick={handleSubmit} loading={isProcessing}>Start for free</Button>
-                            {/* <button onClick={handleSubmit} style={{ backgroundColor: '#26f7c5', letterSpacing: '1px', fontSize: '12px', fontWeight: '900' }} className='w-100 border-0 py-3 text-uppercase fw-bold text rounded-5 my-3'>
-                                Start for free
-                            </button> */}
                             <p style={{ color: '#90998b' }}>No Credit Card required.</p>
                         </div>
                     </div>

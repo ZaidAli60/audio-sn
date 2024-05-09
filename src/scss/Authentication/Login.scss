@@ -6,7 +6,7 @@
     }
 
     .hover-text:hover {
-        color: #26f7c5 !important;
+        color: #299898 !important;
         transition: 0.5s;
     }
 
@@ -74,13 +74,13 @@
             box-sizing: border-box;
 
             &:focus {
-                border: 1px solid #26f7c5;
+                border: 1px solid #299898;
                 outline: none;
 
                 ~.floating-label {
                     top: -8px;
                     font-size: 13px;
-                    color: #26f7c5;
+                    color: #299898;
                     font-weight: normal;
                 }
             }
@@ -112,4 +112,47 @@
         // position: absolute;
         inset: 0px;
     }
+
+    // .ant-checkbox-inner {
+    //     // background-color: transparent;
+    // }
+
+    // .ant-checkbox {
+    //     .ant-checkbox-checked {
+    //         .ant-checkbox-inner {
+    //             background-color: #299898 !important;
+    //         }
+    //     }
+    // }
+    // background-color: transparent;
+
+    // .ant-checkbox .ant-checkbox-inner {
+    //     background-color: unset;
+    // }
+    /* App.css */
+    // .custom-checkbox .ant-checkbox-inner {
+    //     background-color: lightgreen;
+    //     /* Change to your desired color */
+    //     border-color: lightgreen;
+    //     /* Ensure border matches background */
+    // }
+
+    // .custom-checkbox .ant-checkbox-checked .ant-checkbox-inner {
+    //     background-color: lightgreen;
+    //     /* Change to your desired color */
+    //     border-color: lightgreen;
+    //     /* Ensure border matches background */
+    // }
+
+    // .custom-checkbox .ant-checkbox-checked::after {
+    //     border-color: white;
+    //     /* Color of the checkmark */
+    // }
+
+    .custom-checkbox {
+        .ant-checkbox .ant-checkbox-inner {
+            background-color: transparent !important;
+        }
+    }
+
 }

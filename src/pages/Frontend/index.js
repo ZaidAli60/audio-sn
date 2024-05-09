@@ -9,6 +9,7 @@ import { Layout } from 'antd'
 import Generate from './Generate/Generate'
 import { useAuthContext } from 'context/AuthContext'
 import { Navigate } from 'react-router-dom'
+import Terms from './Terms&Condition/Terms'
 
 export default function Index() {
     const { isAuthenticated } = useAuthContext()
@@ -19,6 +20,7 @@ export default function Index() {
                 <Routes>
                     <Route index element={<Home />} />
                     <Route path='/generate' element={!isAuthenticated ? <Navigate to="/auth" replace /> : <Generate />} />
+                    <Route path='/terms-privacy' element={<Terms />} />
                     {/* <Route path='/generate' element={<Generate />} /> */}
                     {/* <Route path='/generate' element={<Generate />} /> */}
                     <Route path='*' element={<NotFound />} />
