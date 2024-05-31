@@ -59,6 +59,7 @@
     /* Prevent clicks */
 }
 
+
 @media (max-width: 1024px) {
     .dropdown-header {
         padding: 8px;

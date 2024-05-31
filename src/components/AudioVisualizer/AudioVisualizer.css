@@ -61,6 +61,13 @@
     border-radius: 2px;
 }
 
+/* .generate-btn {
+    span {
+        color: #299898;
+        border-color: #299898;
+    }
+} */
+
 
 @media (min-width: 760px) and (max-width: 1024px) {
     .audio-visualizer__controlers {

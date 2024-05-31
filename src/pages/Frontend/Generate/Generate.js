@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AudioVisualizer from "../../../components/AudioVisualizer/AudioVisualizer";
 import '../../../index.css'
@@ -16,7 +16,11 @@ const Generate = () => {
     const [isProcessing, setIsProcessing] = useState(false)
     const [audioURL, setAudioURL] = useState(audioFile)
     const [isAutoPlay, setIsAutoPlay] = useState(false)
-
+    // const [cooldown, setCooldown] = useState(0);
+    const [cooldown, setCooldown] = useState(() => {
+        const savedCooldown = localStorage.getItem('cooldown');
+        return savedCooldown ? parseInt(savedCooldown, 10) : 0;
+    });
 
     // const handleGenerate = async () => {
 
@@ -97,8 +101,18 @@ const Generate = () => {
             setIsAutoPlay(true)
             // setAudio(new Audio(url)); // Create and set a new Audio object
             setPrompt("")
+            // setCooldown(300);
             setIsProcessing(false) // Reset loading state
+            const nextCooldown = 300; // Set cooldown to 5 minutes (300 seconds)
+            const cooldownExpiration = Date.now() + nextCooldown * 1000;
+            localStorage.setItem('cooldownExpiration', cooldownExpiration);
+            setCooldown(nextCooldown);
         } catch (error) {
+            // setCooldown(300);
+            // const nextCooldown = 300; // Set cooldown to 5 minutes (300 seconds)
+            // const cooldownExpiration = Date.now() + nextCooldown * 1000;
+            // localStorage.setItem('cooldownExpiration', cooldownExpiration);
+            // setCooldown(nextCooldown);
             console.log('Error occurred:', error);
             setIsAutoPlay(false)
             if (error.message === "Network Error") {
@@ -127,6 +141,38 @@ const Generate = () => {
         }
     };
 
+    // useEffect(() => {
+    //     if (cooldown > 0) {
+    //         const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [cooldown]);
+
+
+
+    useEffect(() => {
+        if (cooldown > 0) {
+            const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+            localStorage.setItem('cooldown', cooldown - 1);
+            return () => clearTimeout(timer);
+        } else {
+            localStorage.removeItem('cooldown');
+        }
+    }, [cooldown]);
+
+    useEffect(() => {
+        const cooldownExpiration = localStorage.getItem('cooldownExpiration');
+        if (cooldownExpiration) {
+            const remainingTime = Math.floor((cooldownExpiration - Date.now()) / 1000);
+            if (remainingTime > 0) {
+                setCooldown(remainingTime);
+            } else {
+                localStorage.removeItem('cooldownExpiration');
+            }
+        }
+    }, []);
+
+
     // const inputHandler = (e) => {
     //     e.target.parentNode.dataset.value = e.target.value
     //     setPrompt(e.target.value)
@@ -153,9 +199,10 @@ const Generate = () => {
                         <textarea className="prompt__textarea" name='prompt' value={prompt} onChange={(e) => setPrompt(e.target.value)} rows="1" placeholder='Prompt here...'></textarea>
                     </div>
                     <div className='prompt__buttons-wrap d-flex justify-content-end gap-2 align-items-center'>
-                        <div className="d-flex gap-3 justify-content-between align-items-center">
+                        <div className="d-flex gap-3 justify-content-between align-items-center generate-btn">
                             <Dropdown options={options} defaultSelectedValue={selectedOption} selectedValue={selectedOption} onSelect={handleSelect} openDirection={'up'} />
-                            <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing} onClick={handleGenerate}>Generate</Button>
+                            <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing} disabled={cooldown > 0} onClick={handleGenerate}>{cooldown > 0 ? `Wait ${Math.floor(cooldown / 60)}:${('0' + (cooldown % 60)).slice(-2)}` : 'Generate'}</Button>
+                            {/* <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing} disabled onClick={handleGenerate}>Generate</Button> */}
                         </div>
                     </div>
                 </div>

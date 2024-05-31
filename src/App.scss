@@ -115,3 +115,13 @@ canvas {
     background: linear-gradient(90deg, #26F7C5 0%, #8895FA 100%);
     color: white;
 }
+
+/* Ensure this CSS is loaded after Ant Design's CSS */
+.ant-btn-primary:disabled,
+.ant-btn-primary.ant-btn-disabled {
+    background-color: #299898;
+    /* Replace with your desired background color */
+    color: whitesmoke;
+    border-color: #299898;
+    box-shadow: none;
+}
