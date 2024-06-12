@@ -52,7 +52,17 @@ export default function Google() {
     }
 
     return (
-        <GoogleLogin logo_alignment='center' onSuccess={handleOnSuccess} onError={handleOnError} />
+        <GoogleLogin onSuccess={handleOnSuccess} onError={handleOnError}
+            text="continue_with"
+            theme="outline"
+            width={400}
+            size='large'
+            containerProps={{
+                style: {
+                    width: "100% !important",
+                },
+            }}
+        />
     );
 }
 

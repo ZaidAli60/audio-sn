@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useAuthContext } from 'context/AuthContext';
 import { Link } from 'react-router-dom'
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button, Checkbox, Divider } from 'antd';
 import video from 'assets/video/vid_sub.mp4'
 import axios from 'axios';
+import GoogleLogin from './GoogleLogin';
 
 const SERVER_URL = process.env.REACT_APP_API_END_POINT
 const initialState = { email: "", password: "", checkbox: false }
@@ -74,15 +75,8 @@ export default function Register() {
 
                         <h4 >Create Account</h4>
                         <p className='m-0 p-0 mb-4' style={{ color: '#90998b' }}>Already have an account? <Link to="/auth" style={{ color: '#90998b' }} className='text-decoration-underline hover-text'>Log In</Link></p>
-                        <div className="social-button my-3">
-
-                            <button className='google-button '>
-                                <FcGoogle size={25} className='position-absolute ' />
-                                <span className='mx-auto'>
-                                    Sign in with Google
-                                </span>
-                            </button>
-
+                        <div className=" my-3" style={{ width: "100%" }}>
+                            <GoogleLogin />
                         </div>
                         <Divider className='text-white border-white'>OR</Divider>
                         <div className='input-form'>

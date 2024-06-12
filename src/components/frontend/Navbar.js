@@ -47,25 +47,18 @@ export default function Navbar() {
     return (
         <>
 
-            <nav className={`navbar py-2 custom-navbar fixed-top`}>
+            {/* <nav className={`navbar py-2 custom-navbar fixed-top`}>
                 <div className="container-fluid">
                     <img src={`${window.logoLight}`} className='img-fluid me-lg-5 me-auto' style={{ width: "130px", height: "auto", cursor: "pointer" }} alt="Audio" onClick={() => navigate("/")} />
                     <div className="navbar-nav me-auto">
                     </div>
-                    {/* <div className='icon-container me-2 d-none d-lg-block'>
+                    <div className='icon-container me-2 d-none d-lg-block'>
                         <Button className={`custom-btn`} shape="round" style={{ backgroundColor: "#8fb9ff" }}>Try it out for free</Button>
-                    </div> */}
+                    </div>
                     <div className="d-none d-lg-block me-2">
-
-                        {/* {
-
-                            (isSuperAdmin || isCustomer) &&
-                            <Link to="dashboard" className='text-white text-decoration-none me-2'>Dashboard</Link>
-
-                        } */}
                         {
                             !isAuthenticated ?
-                                <Button type='primary' style={{ fontWeight: '500', fontSize: '18px', }} shape="round" size='large' onClick={() => { navigate("auth") }} >Try Now</Button>
+                                <Button type='primary' style={{ fontWeight: '500', fontSize: '18px', }} shape="round" size='large' onClick={() => { navigate("auth/register") }} >Try Now</Button>
                                 :
                                 <Dropdown
                                     menu={{
@@ -84,9 +77,53 @@ export default function Navbar() {
 
                         }
                     </div>
-                    {/* <button className="navbar-toggler rounded-5 py-2 px-2" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <button className="navbar-toggler rounded-5 py-2 px-2" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <LiaBarsSolid className="navbar-toggler-icon" style={{ fontSize: "14px" }} />
-                    </button> */}
+                    </button>
+                </div>
+            </nav> */}
+            <nav className={`navbar py-2 custom-navbar fixed-top`}>
+                <div className="container-fluid">
+                    <img
+                        src={`${window.logoLight}`}
+                        className='img-fluid me-lg-5 me-auto'
+                        style={{ width: "130px", height: "auto", cursor: "pointer" }}
+                        alt="Audio"
+                        onClick={() => navigate("/")}
+                    />
+                    <div className="navbar-nav me-auto"></div>
+                    <div className='icon-container me-2'>
+                        {
+                            !isAuthenticated ?
+                                <Button
+                                    type='primary'
+                                    style={{ fontWeight: '500', fontSize: '18px' }}
+                                    shape="round"
+                                    size='large'
+                                    onClick={() => { navigate("auth/register") }}
+                                >
+                                    Try Now
+                                </Button>
+                                :
+                                <Dropdown
+                                    menu={{
+                                        items: [
+                                            // { label: "My Profile", onClick: () => { } },
+                                            { label: "Logout", onClick: () => { handleLogout() } },
+                                        ]
+                                    }}
+                                    placement="bottom"
+                                    trigger={['click']}
+                                >
+                                    <Avatar
+                                        size="large"
+                                        icon={user?.userData?.picture ? null : <UserOutlined />}
+                                        src={user?.userData?.picture}
+                                    />
+                                </Dropdown>
+                        }
+                    </div>
+
                 </div>
             </nav>
             {/* <nav class="navbar px-xxl-5 custom-lg-padding custom-xxl-padding py-3 navbar-expand-lg position-fixed w-100" style={{ backgroundColor: "transparent" }}>

@@ -19,7 +19,7 @@ export default function Index() {
             <Content>
                 <Routes>
                     <Route index element={<Home />} />
-                    <Route path='/generate' element={!isAuthenticated ? <Navigate to="/auth" replace /> : <Generate />} />
+                    <Route path='/generate' element={!isAuthenticated ? <Navigate to="/auth/register" replace /> : <Generate />} />
                     <Route path='/terms-privacy' element={<Terms />} />
                     {/* <Route path='/generate' element={<Generate />} /> */}
                     {/* <Route path='/generate' element={<Generate />} /> */}
