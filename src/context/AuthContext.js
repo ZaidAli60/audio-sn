@@ -56,7 +56,6 @@ export default function AuthContextProvider({ children }) {
         // const { user } = state
 
         const config = { headers: { Authorization: `Bearer ${token}` } }
-
         axios.get(`${SERVER_URL}/api/auth/user`, config)
             .then(res => {
                 let { data, status } = res
@@ -67,6 +66,7 @@ export default function AuthContextProvider({ children }) {
                         const isCustomer = user.userData.roles.includes("customer")
                         dispatch({ type: "SET_LOGGED_IN", payload: { user, isSuperAdmin, isCustomer } })
                         getUser(data)
+                        setIsAppLoding(false)
                     }
                     else {
                         console.log('Email is not Verfied')
@@ -78,11 +78,11 @@ export default function AuthContextProvider({ children }) {
                 const { response } = err
                 window.toastify(response?.data?.detail || "Something went wrong, please try again", "error")
                 localStorage.removeItem("jwt")
-                // setIsAppLoding(false)
-            })
-            .finally(() => {
                 setIsAppLoding(false)
             })
+        // .finally(() => {
+        //     setIsAppLoding(false)
+        // })
     }, [getUser])
 
     const handleLogout = () => {
@@ -123,7 +123,7 @@ export default function AuthContextProvider({ children }) {
 
 
     return (
-        <AuthContext.Provider value={{ ...state, dispatch, accessToken, readUserProfile, handleLogout }}>
+        <AuthContext.Provider value={{ ...state, dispatch, accessToken, readUserProfile, handleLogout, isAppLoading }}>
             {children}
         </AuthContext.Provider>
     )
