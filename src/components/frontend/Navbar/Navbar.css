@@ -1,0 +1,24 @@
+.ant-dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background: rgba(41, 152, 152, 1) !important;
+
+    row-gap: 5px!important;
+}
+
+.ant-dropdown-menu .ant-dropdown-menu-item:hover {
+    background: rgba(0, 0, 0, 0.15) !important;
+}
+
+.ant-dropdown-menu-item {
+    color: #fff!important;
+}
+
+.ant-avatar {
+    cursor: pointer;
+}
+
+.ant-avatar:hover svg, .ant-avatar.ant-dropdown-open svg{
+    fill: rgba(41, 152, 152, 1);
+}

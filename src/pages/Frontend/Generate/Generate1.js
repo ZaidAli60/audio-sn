@@ -341,46 +341,54 @@ const Generate1 = () => {
 
 
 
-    // const containerRef = useRef(null);
+    const containerRef = useRef(null);
 
-    // const { wavesurfer } = useWavesurfer({
-    //     container: containerRef,
-    //     height: 40,
-    //     waveColor: "rgb(169,168,178)",
-    //     progressColor: "rgb(58, 91, 201)",
-    //     barWidth: "1",
-    //     barGap: "1",
-    //     barRadius: "1",
-    //     url: audioURL,
-    //     autoPlay: false, // Disable autoplay
-    // });
+    const { wavesurfer } = useWavesurfer({
+        container: containerRef,
+        dragToSeek: true,
+        height: 30,
+        waveColor: "rgb(169,168,178)",
+        progressColor: "rgb(41, 152, 152, 1)",
+        barWidth: "1",
+        barGap: "1",
+        barRadius: "1",
+        url: audioFile,
+        cursorWidth: 7,
+        interact: true,
+        autoPlay: false, // Disable autoplay
+        // mediaControls: true,
+    });
 
-    // useEffect(() => {
-    //     if (wavesurfer) {
-    //         wavesurfer.on('finish', () => {
-    //             setIsPlaying(false);
-    //         });
-    //     }
-    //     return () => {
-    //         wavesurfer && wavesurfer.un('finish');
-    //     };
-    // }, [wavesurfer]);
+    useEffect(() => {
+        if (wavesurfer) {
+            wavesurfer.on('finish', () => {
+                setIsPlaying(false);
+            });
+        }
+        return () => {
+            wavesurfer && wavesurfer.un('finish');
+        };
+    }, [wavesurfer]);
 
-    // const togglePlayPause = () => {
-    //     if (wavesurfer) {
-    //         if (wavesurfer.isPlaying()) {
-    //             wavesurfer.pause();
-    //             setIsPlaying(false);
-    //         } else {
-    //             wavesurfer.play();
-    //             setIsPlaying(true);
-    //         }
-    //     }
-    // };
+    const togglePlayPause = () => {
+        if (wavesurfer) {
+            if (wavesurfer.isPlaying()) {
+                wavesurfer.pause();
+                setIsPlaying(false);
+            } else {
+                wavesurfer.play();
+                setIsPlaying(true);
+            }
+        }
+    };
 
     const onChange = (value) => {
         setDuration(value)
     };
+
+
+
+
     const filterOption = (input, option) =>
         (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
@@ -415,10 +423,14 @@ const Generate1 = () => {
                 </div>
                 <div className='text-input w-100 d-flex flex-column justify-content-center align-items-center mt-3'>
                     <div className='mb-4 w-sm-75 w-50-lg'>
-                        {/* <div ref={containerRef} className='mb-3'></div> */}
+                        <div ref={containerRef} className='mb-3'></div>
+                        <div>
+
+                        </div>
+
                         <div className='gap-3 d-flex justify-content-center align-items-center' style={{ background: "transparent" }}>
                             {/* <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackPrevFilled /></Button> */}
-                            <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }} onClick={() => toggleAudio()}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
+                            <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }} onClick={() => togglePlayPause()}>{isPlaying ? <BsFillPauseFill style={{ fontSize: "14px" }} /> : <IoPlay style={{ fontSize: "14px" }} />}</Button>
                             {/* <Button shape="circle" size='large' style={{ background: "transparent", color: "white" }}><TbPlayerTrackNextFilled /></Button> */}
                         </div>
                     </div>

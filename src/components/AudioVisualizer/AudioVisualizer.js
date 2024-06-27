@@ -1,19 +1,21 @@
 import React, { useEffect, useRef, useState } from "react"
 import Sketch from "react-p5"
 import "p5/lib/addons/p5.sound"
+import p5 from 'p5'
 import { Button, Slider } from "antd"
-import { PlayIcon, PauseIcon, PrevIcon, NextIcon, DownloadIcon, VolumeIcon } from '../../assets/images/player-icons'
+import { PlayIcon, PauseIcon, PrevIcon, NextIcon, DownloadIcon, VolumeIcon, MutedIcon } from '../../assets/images/player-icons'
 import formatTime from "../../outils/formatTime"
 import './AudioVisualizer.css'
 
-const AudioVisualizer = ({ audioURL, handleDownload, isAutoPlay, setIsAutoPlay }) => {
-
+const AudioVisualizer = ({ audioURL }) => {
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(1)
+    const [tmpVolume, setTmpVolume] = useState(volume)
+    const [visibleVolume, setVisibleVolume] = useState(volume)
     const [previousVolume, setPreviousVolume] = useState(1)
     const [currentTime, setCurrentTime] = useState(0)
     const [duration, setDuration] = useState(0)
-    const [isP5Ready, setIsP5Ready] = useState(false);
+    const [clicked, setClicked] = useState(false)
 
     const pRef = useRef()
     const songRef = useRef(null)
@@ -21,55 +23,47 @@ const AudioVisualizer = ({ audioURL, handleDownload, isAutoPlay, setIsAutoPlay }
     const waveRef = useRef([])
     const particlesRef = useRef([])
 
+    useEffect(() => {
+        const song = songRef.current
+        const handleSongEnd = () => {
+            if (song) {
+                let isSameTime = Math.round(song.currentTime()) === Math.round(song.duration())
+                if (isSameTime || song.currentTime() >= song.duration()) {
+                    setCurrentTime(0)
+                    setIsPlaying(false)
+                }
+            }
+        }
+        song?.onended(handleSongEnd)
+        // return () => song?.off('ended', handleSongEnd)
+    }, [songRef.current])
+
+    useEffect(() => {
+        togglePlay()
+    }, [isPlaying])
 
     const togglePlay = () => {
-        const song = songRef.current;
-        const p5Instance = pRef.current;
-
-        if (song && p5Instance) {
-            if (isPlaying) {
-                song.play();
-                if (p5Instance.loop) {
-                    p5Instance.loop(); // Ensure p5Instance is valid
-                }
-            } else {
-                song.pause();
-                if (p5Instance.noLoop) {
-                    p5Instance.noLoop(); // Ensure noLoop is valid
-                }
-            }
-        }
-    };
-
-    const handleSongEnd = () => {
         if (songRef.current) {
-            setIsPlaying(false);
-        }
-    };
-
-    useEffect(() => {
-        const song = songRef.current;
-
-        if (song && song.on) {
-            song.on("ended", handleSongEnd); // Attach event listener
-        }
-
-        return () => {
-            if (song && song.off) {
-                song.off("ended", handleSongEnd); // Detach event listener
+            if (isPlaying) {
+                let isSameTime = Math.round(currentTime) === Math.round(duration)
+                if (isSameTime) {
+                    setCurrentTime(0);
+                    songRef.current.play()
+                    pRef.current.loop()
+                } else {
+                    songRef.current.play()
+                    songRef.current.jump(currentTime)
+                    pRef.current.loop()
+                }
             }
-        };
-    }, [songRef.current, audioURL]);
-
-    useEffect(() => {
-        togglePlay(); // Toggle play when isPlaying changes
-    }, [isPlaying]);
-
-    const preload = (p) => {
-        songRef.current = p.loadSound(audioURL, () => {
-            setDuration(songRef.current.duration());
-        });
-    };
+            if (!isPlaying) {
+                songRef.current.pause()
+                if (typeof pRef.current.noLoop !== 'undefined') {
+                    pRef.current.noLoop()
+                }
+            }
+        }
+    }
 
     const toggleVolume = () => {
         const newVolume = !volume ? previousVolume : 0
@@ -80,7 +74,12 @@ const AudioVisualizer = ({ audioURL, handleDownload, isAutoPlay, setIsAutoPlay }
         }
     }
 
-    const handleVolumeChange = (value) => {
+    const handleVolumeChange = async (value, isVisible = true) => {
+        if (isVisible) {
+            setVisibleVolume(value)
+        } else {
+
+        }
         songRef.current.setVolume(value)
         setVolume(value)
         if (value) {
@@ -88,72 +87,74 @@ const AudioVisualizer = ({ audioURL, handleDownload, isAutoPlay, setIsAutoPlay }
         }
     }
 
-    const handleSliderChange = (value) => {
+    const getAllMethodsAndProperties = (obj) => {
+        let methodsAndProperties = [];
+        let currentObj = obj;
+
+        do {
+            const currentObjNames = Object.getOwnPropertyNames(currentObj);
+            methodsAndProperties = methodsAndProperties.concat(currentObjNames);
+            currentObj = Object.getPrototypeOf(currentObj);
+        } while (currentObj !== null);
+
+        methodsAndProperties = methodsAndProperties.filter((name, index, self) =>
+            index === self.indexOf(name) && name !== "constructor" && typeof obj[name] !== "function"
+        );
+
+        return methodsAndProperties;
+    }
+
+    const handleSliderChange = async (value) => {
         if (songRef.current) {
-            songRef.current.jump(value)
+            if (!isPlaying) {
+                setCurrentTime(value);
+            } else {
+                if (volume) {
+                    setTmpVolume(volume);
+                    await handleVolumeChange(0, false)
+                } else {
+                    await handleVolumeChange(0, false)
+                }
+                let isSameTime = Math.round(value) === Math.round(duration);
+                if (!isSameTime && value < duration) {
+                    songRef.current.jump(value)
+                }
+            }
         }
     }
 
+    const afterHandleSliderChange = async (value) => {
+        if (tmpVolume) {
+            await handleVolumeChange(tmpVolume, true)
+        }
+    }
+
+    const preload = (p) => {
+        songRef.current = p.loadSound(audioURL, () => {
+            setDuration(songRef.current.duration())
+        })
+    }
+
     const setup = (p, canvasParentRef) => {
-        pRef.current = p; // Ensure pRef points to the p5 instance
-        p.createCanvas(p.windowWidth, p.windowHeight).parent(canvasParentRef);
-        p.angleMode(p.DEGREES);
-
-        // Initialize FFT for audio analysis
-        fftRef.current = new window.p5.FFT() // Initialize Fast Fourier Transform
+        pRef.current = p
+        p.createCanvas(p.windowWidth, p.windowHeight).parent(canvasParentRef)
+        p.angleMode(p.DEGREES)
+        fftRef.current = new window.p5.FFT()
         p.noLoop()
-        setIsP5Ready(true); // Indicate that p5 is ready
-    };
+        window.addEventListener('resize', handleResize);
+    }
 
-    useEffect(() => {
-        if (!isP5Ready) {
-            return; // Don't run this effect until p5 is ready
+    function handleResize() {
+        if (pRef.current) {
+            pRef.current.resizeCanvas(pRef.current.windowWidth, pRef.current.windowHeight);
         }
-
-        if (songRef.current) {
-            songRef.current.stop(); // Stop the current song if it's playing
-        }
-
-        // Load the new audio file
-        songRef.current = pRef.current.loadSound(audioURL, () => {
-            setDuration(songRef.current.duration());
-            setCurrentTime(0);
-            if (isAutoPlay) {
-                songRef.current.play();
-                setIsPlaying(true); // Start playing after loading
-            }
-            // setIsPlaying(true); // Auto-play when new audio is loaded
-            // songRef.current.play();
-            // if (!firstTime) { // Check if it's not the first time
-            //     // Load the new audio file
-            //     songRef.current = pRef.current.loadSound(audioURL, () => {
-            //         setDuration(songRef.current.duration());
-            //         setCurrentTime(0);
-            //         setIsPlaying(true); // Start playing after loading
-            //     });
-            // } else {
-            //     // For the first time, just load the audio, no auto-play
-            //     songRef.current = pRef.current.loadSound(audioURL, () => {
-            //         setDuration(songRef.current.duration());
-            //         setCurrentTime(0);
-            //         setFirstTime(false); // Set flag to false after first load
-            //     });
-            // }
-        });
-
-        return () => {
-            if (songRef.current) {
-                songRef.current.stop(); // Cleanup on unmount or audioURL change
-            }
-        };
-    }, [audioURL, isP5Ready, isAutoPlay]);
-
+    }
 
     const draw = (p) => {
         p.background("rgba(0,0,0, 1)")
         p.stroke(255)
         p.strokeWeight(0.5)
-        let heightForTranslate = p.height < 440 ? 30 : 70
+        let heightForTranslate = p.height < 440 ? 80 : 80
         p.translate(p.width / 2, p.height / 2 - heightForTranslate)
 
         fftRef.current.analyze()
@@ -198,7 +199,9 @@ const AudioVisualizer = ({ audioURL, handleDownload, isAutoPlay, setIsAutoPlay }
             p.endShape()
         }
         if (songRef.current) {
-            setCurrentTime(songRef.current.currentTime())
+            if (isPlaying) {
+                setCurrentTime(songRef.current.currentTime())
+            }
         }
     }
     class Particle {
@@ -250,20 +253,32 @@ const AudioVisualizer = ({ audioURL, handleDownload, isAutoPlay, setIsAutoPlay }
         border: 'none'
     }
 
+    const handleDownload = () => {
+        setClicked(true);
+        const link = document.createElement('a');
+        link.href = audioURL;
+        link.download = 'audio.mp3';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setClicked(false);
+    }
+
+
     return (
         <div className='audio-visualizer w-100 d-flex flex-column justify-content-center align-items-center'>
             <Sketch setup={setup} draw={draw} preload={preload} ref={pRef} />
             <div className='mb-5 w-sm-75 w-50-lg'>
-                <div className='bg-black gap-3 d-flex justify-content-center align-items-center fixed-bottom py-4'>
+                <div className='gap-3 d-flex justify-content-center align-items-center fixed-bottom py-4'>
                     <div className='audio-visualizer__controlers'>
                         <div className='audio-visualizer__leftside'>
-                            <Button size='large' style={ButtonStyles}>
+                            <Button className="audio-visualizer__button" size='large' style={ButtonStyles}>
                                 <img src={PrevIcon} alt="" />
                             </Button>
-                            <Button size='large' style={ButtonStyles} onClick={() => setIsPlaying(!isPlaying)}>
+                            <Button className="audio-visualizer__button" size='large' style={ButtonStyles} onClick={() => setIsPlaying(!isPlaying)}>
                                 <img src={isPlaying ? PauseIcon : PlayIcon} alt="" />
                             </Button>
-                            <Button size='large' style={ButtonStyles}>
+                            <Button className="audio-visualizer__button" size='large' style={ButtonStyles}>
                                 <img src={NextIcon} alt="" />
                             </Button>
                         </div>
@@ -275,23 +290,24 @@ const AudioVisualizer = ({ audioURL, handleDownload, isAutoPlay, setIsAutoPlay }
                                 step={0.0001}
                                 railStyle={{ background: "#bbb", borderRadius: 2 }}
                                 onChange={handleSliderChange}
+                                onChangeComplete={afterHandleSliderChange}
                                 value={currentTime}
                                 max={duration} />
                             <div className='audio-visualizer__time text-white text-center'>{formatTime(duration)}</div>
                         </div>
                         <div className='audio-visualizer__leftside'>
-                            <Button size='large' style={ButtonStyles} onClick={() => handleDownload()} >
+                            <Button className="audio-visualizer__button" size='large' onClick={handleDownload}>
                                 <img src={DownloadIcon} alt="" />
                             </Button>
-                            <Button size='large' style={ButtonStyles} onClick={toggleVolume}>
-                                <img src={volume ? VolumeIcon : VolumeIcon} alt="" />
+                            <Button className="audio-visualizer__button" size='large' style={ButtonStyles} onClick={toggleVolume}>
+                                <img src={volume ? VolumeIcon : MutedIcon} alt="" />
                             </Button>
                             <Slider
                                 className="audio-visualizer__slider-volume"
                                 tooltip={{ open: false }}
                                 min={0} max={1} step={0.01}
                                 railStyle={{ background: "#bbb", borderRadius: 2 }}
-                                onChange={handleVolumeChange} value={volume} />
+                                onChange={handleVolumeChange} value={visibleVolume} />
                         </div>
                     </div>
                 </div>
@@ -301,8 +317,3 @@ const AudioVisualizer = ({ audioURL, handleDownload, isAutoPlay, setIsAutoPlay }
 }
 
 export default AudioVisualizer
-
-
-
-
-
