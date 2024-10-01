@@ -29,7 +29,7 @@ export default function AuthContextProvider({ children }) {
 
     // console.log('state', state)
     // console.log('accessToken', accessToken)
-    console.log('isAppLoading', isAppLoading)
+    // console.log('isAppLoading', isAppLoading)
 
     const getUser = useCallback((user) => {
         // console.log('user', user)

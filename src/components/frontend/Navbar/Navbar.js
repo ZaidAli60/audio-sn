@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Avatar, Button, Drawer, Dropdown } from 'antd'
 import { useNavigate } from 'react-router-dom';
 // import { data } from "pages/Dashboard/SidebarItems"
-import { LiaBarsSolid } from 'react-icons/lia'
+// import { LiaBarsSolid } from 'react-icons/lia'
 import { useAuthContext } from 'context/AuthContext';
 import { UserOutlined } from "@ant-design/icons"
 import './Navbar.css'
@@ -12,7 +12,7 @@ export default function Navbar() {
     const [selectedItem, setSelectedItem] = useState("home");
     const [drawerVisible, setDrawerVisible] = useState(false);
     const [isNavbarShadowed, setIsNavbarShadowed] = useState(false);
-    console.log('selectedItem', selectedItem)
+    // console.log('selectedItem', selectedItem)
     let navigate = useNavigate()
 
     useEffect(() => {

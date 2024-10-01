@@ -11,8 +11,8 @@ export default function Navbar() {
     const [selectedItem, setSelectedItem] = useState("home");
     const [drawerVisible, setDrawerVisible] = useState(false);
     const [isNavbarShadowed, setIsNavbarShadowed] = useState(false);
-    console.log('selectedItem', selectedItem)
-    console.log('isNavbarShadowed', isNavbarShadowed)
+    // console.log('selectedItem', selectedItem)
+    // console.log('isNavbarShadowed', isNavbarShadowed)
 
     let navigate = useNavigate()
 

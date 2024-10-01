@@ -7,7 +7,7 @@ import { PlayIcon, PauseIcon, PrevIcon, NextIcon, DownloadIcon, VolumeIcon, Mute
 import formatTime from "../../outils/formatTime"
 import './AudioVisualizer.css'
 
-const AudioVisualizer = ({ audioURL }) => {
+const AudioVisualizer = ({ audioURL ,isAutoPlay}) => {
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(1)
     const [tmpVolume, setTmpVolume] = useState(volume)
@@ -16,13 +16,57 @@ const AudioVisualizer = ({ audioURL }) => {
     const [currentTime, setCurrentTime] = useState(0)
     const [duration, setDuration] = useState(0)
     const [clicked, setClicked] = useState(false)
-
+    const [isP5Ready, setIsP5Ready] = useState(false)
+   
     const pRef = useRef()
     const songRef = useRef(null)
     const fftRef = useRef(null)
     const waveRef = useRef([])
     const particlesRef = useRef([])
 
+    useEffect(() => {
+        if (!isP5Ready) {
+            return; // Don't run this effect until p5 is ready
+        }
+
+        if (songRef.current) {
+            songRef.current.stop(); // Stop the current song if it's playing
+        }
+
+        // Load the new audio file
+        songRef.current = pRef.current.loadSound(audioURL, () => {
+            setDuration(songRef.current.duration());
+            setCurrentTime(0);
+            if (isAutoPlay) {
+                songRef.current.play();
+                setIsPlaying(true); // Start playing after loading
+            }
+            // setIsPlaying(true); // Auto-play when new audio is loaded
+            // songRef.current.play();
+            // if (!firstTime) { // Check if it's not the first time
+            //     // Load the new audio file
+            //     songRef.current = pRef.current.loadSound(audioURL, () => {
+            //         setDuration(songRef.current.duration());
+            //         setCurrentTime(0);
+            //         setIsPlaying(true); // Start playing after loading
+            //     });
+            // } else {
+            //     // For the first time, just load the audio, no auto-play
+            //     songRef.current = pRef.current.loadSound(audioURL, () => {
+            //         setDuration(songRef.current.duration());
+            //         setCurrentTime(0);
+            //         setFirstTime(false); // Set flag to false after first load
+            //     });
+            // }
+        });
+
+        return () => {
+            if (songRef.current) {
+                songRef.current.stop(); // Cleanup on unmount or audioURL change
+            }
+        };
+    }, [audioURL, isP5Ready, isAutoPlay]);
+    
     useEffect(() => {
         const song = songRef.current
         const handleSongEnd = () => {
@@ -142,6 +186,7 @@ const AudioVisualizer = ({ audioURL }) => {
         fftRef.current = new window.p5.FFT()
         p.noLoop()
         window.addEventListener('resize', handleResize);
+        setIsP5Ready(true)
     }
 
     function handleResize() {

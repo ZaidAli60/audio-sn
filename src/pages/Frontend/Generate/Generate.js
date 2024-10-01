@@ -96,7 +96,6 @@ const Generate = () => {
 
             const audioBlob = new Blob([response.data], { type: 'audio/wav' });
             const url = URL.createObjectURL(audioBlob);
-            // console.log('url', url)
             setAudioURL(url)
             setIsAutoPlay(true)
             // setAudio(new Audio(url)); // Create and set a new Audio object
@@ -113,7 +112,7 @@ const Generate = () => {
             // const cooldownExpiration = Date.now() + nextCooldown * 1000;
             // localStorage.setItem('cooldownExpiration', cooldownExpiration);
             // setCooldown(nextCooldown);
-            console.log('Error occurred:', error);
+            // console.log('Error occurred:', error);
             setIsAutoPlay(false)
             if (error.message === "Network Error") {
                 console.error("Network issue detected. Check server endpoint and connectivity.");
@@ -122,6 +121,12 @@ const Generate = () => {
             setIsProcessing(false);
         }
     };
+    // useEffect(() => {
+    //     if (cooldown > 0) {
+    //         const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [cooldown]);
 
     const handleDownload = () => {
         if (audioURL) { // Ensure the URL is valid
@@ -141,12 +146,6 @@ const Generate = () => {
         }
     };
 
-    // useEffect(() => {
-    //     if (cooldown > 0) {
-    //         const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
-    //         return () => clearTimeout(timer);
-    //     }
-    // }, [cooldown]);
 
 
 
@@ -202,7 +201,7 @@ const Generate = () => {
                         <div className="d-flex gap-3 justify-content-between align-items-center generate-btn">
                             <Dropdown options={options} defaultSelectedValue={selectedOption} selectedValue={selectedOption} onSelect={handleSelect} openDirection={'up'} />
                             <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing} disabled={cooldown > 0} onClick={handleGenerate}>{cooldown > 0 ? `Wait ${Math.floor(cooldown / 60)}:${('0' + (cooldown % 60)).slice(-2)}` : 'Generate'}</Button>
-                            {/* <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing} disabled onClick={handleGenerate}>Generate</Button> */}
+                            {/* <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing}  onClick={handleGenerate}>Generate</Button> */}
                         </div>
                     </div>
                 </div>
