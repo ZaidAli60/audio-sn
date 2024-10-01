@@ -18,7 +18,7 @@ export default function Hero() {
                 <div style={{ fontWeight: '500', fontSize: '24px', marginBottom: 25 }}>with</div>
                 <div style={{ fontWeight: '700', fontSize: '46px', border: '1px solid #fff', borderRadius: 12, margin: '0 auto', marginBottom: 25, padding: '5px 20px' }}>AI</div>
                 <div style={{ fontWeight: '500', fontSize: '24px', marginBottom: 5 }}>Powered by Bittensor</div>
-                <div style={{ fontWeight: '700', fontSize: '16px', marginBottom: 25 }}>Subnet X</div>
+                <div style={{ fontWeight: '700', fontSize: '16px', marginBottom: 25 }}>Subnet 50</div>
                 <Button style={{
                     background: '#299898',
                     fontWeight: '500',
