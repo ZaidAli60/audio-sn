@@ -102,7 +102,7 @@ const Generate = () => {
             setPrompt("")
             // setCooldown(300);
             setIsProcessing(false) // Reset loading state
-            const nextCooldown = 600; // Set cooldown to 5 minutes (300 seconds)
+            const nextCooldown = 300; // Set cooldown to 5 minutes (300 seconds)
             const cooldownExpiration = Date.now() + nextCooldown * 1000;
             localStorage.setItem('cooldownExpiration', cooldownExpiration);
             setCooldown(nextCooldown);
