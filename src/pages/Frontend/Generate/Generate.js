@@ -201,8 +201,8 @@ const Generate = () => {
                     <div className='prompt__buttons-wrap d-flex justify-content-end gap-2 align-items-center'>
                         <div className="d-flex gap-3 justify-content-between align-items-center generate-btn">
                             <Dropdown options={options} defaultSelectedValue={selectedOption} selectedValue={selectedOption} onSelect={handleSelect} openDirection={'up'} />
-                            {/* <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing} disabled={cooldown > 0} onClick={handleGenerate}>{cooldown > 0 ? `Wait ${Math.floor(cooldown / 60)}:${('0' + (cooldown % 60)).slice(-2)}` : 'Generate'}</Button> */}
-                            <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing}  onClick={handleGenerate}>Generate</Button>
+                            <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing} disabled={cooldown > 0} onClick={handleGenerate}>{cooldown > 0 ? `Wait ${Math.floor(cooldown / 60)}:${('0' + (cooldown % 60)).slice(-2)}` : 'Generate'}</Button>
+                            {/* <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing}  onClick={handleGenerate}>Generate</Button> */}
                         </div>
                     </div>
                 </div>
