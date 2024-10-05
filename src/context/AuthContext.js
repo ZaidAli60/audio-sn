@@ -80,9 +80,9 @@ export default function AuthContextProvider({ children }) {
                 localStorage.removeItem("jwt")
                 setIsAppLoding(false)
             })
-        // .finally(() => {
-        //     setIsAppLoding(false)
-        // })
+        .finally(() => {
+            setIsAppLoding(false)
+        })
     }, [getUser])
 
     const handleLogout = () => {
