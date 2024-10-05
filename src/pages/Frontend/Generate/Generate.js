@@ -99,7 +99,7 @@ const Generate = () => {
             setAudioURL(url)
             setIsAutoPlay(true)
             // setAudio(new Audio(url)); // Create and set a new Audio object
-            setPrompt("")
+            // setPrompt("")
             // setCooldown(300);
             setIsProcessing(false) // Reset loading state
             const nextCooldown = 300; // Set cooldown to 5 minutes (300 seconds)
@@ -195,13 +195,14 @@ const Generate = () => {
             <div className='w-100 d-flex flex-column justify-content-center align-items-center'>
                 <div className="prompt d-flex justify-content-between flex-wrap gap-3">
                     <div className="input-sizer stacked" style={{ overflow: "hidden" }}>
-                        <textarea className="prompt__textarea" name='prompt' value={prompt} onChange={(e) => setPrompt(e.target.value)} rows="1" placeholder='Prompt here...'></textarea>
+                        <textarea className="prompt__textarea" name='prompt' value={prompt} onChange={(e) => setPrompt(e.target.value)} onFocus={() => setPrompt("")} 
+                         rows="1" placeholder='Prompt here...'></textarea>
                     </div>
                     <div className='prompt__buttons-wrap d-flex justify-content-end gap-2 align-items-center'>
                         <div className="d-flex gap-3 justify-content-between align-items-center generate-btn">
                             <Dropdown options={options} defaultSelectedValue={selectedOption} selectedValue={selectedOption} onSelect={handleSelect} openDirection={'up'} />
-                            <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing} disabled={cooldown > 0} onClick={handleGenerate}>{cooldown > 0 ? `Wait ${Math.floor(cooldown / 60)}:${('0' + (cooldown % 60)).slice(-2)}` : 'Generate'}</Button>
-                            {/* <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing}  onClick={handleGenerate}>Generate</Button> */}
+                            {/* <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing} disabled={cooldown > 0} onClick={handleGenerate}>{cooldown > 0 ? `Wait ${Math.floor(cooldown / 60)}:${('0' + (cooldown % 60)).slice(-2)}` : 'Generate'}</Button> */}
+                            <Button size='large' type='primary' style={{ fontWeight: '500', }} loading={isProcessing}  onClick={handleGenerate}>Generate</Button>
                         </div>
                     </div>
                 </div>
