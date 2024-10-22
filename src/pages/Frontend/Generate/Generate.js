@@ -16,48 +16,13 @@ const Generate = () => {
     const [isProcessing, setIsProcessing] = useState(false)
     const [audioURL, setAudioURL] = useState(audioFile)
     const [isAutoPlay, setIsAutoPlay] = useState(false)
+    const [data, setData] = useState({})
     // const [cooldown, setCooldown] = useState(0);
     const [cooldown, setCooldown] = useState(() => {
         const savedCooldown = localStorage.getItem('cooldown');
         return savedCooldown ? parseInt(savedCooldown, 10) : 0;
     });
 
-    // const handleGenerate = async () => {
-
-    //     if (!duration) {
-    //         return window.toastify("Please select duration time", "error");
-    //     }
-    //     if (!prompt) {
-    //         return window.toastify("Please enter a text prompt", "error");
-    //     }
-
-    //     const data = {
-    //         duration: Number(duration), // Convert duration to number
-    //         prompt
-    //     };
-
-    //     // console.log('data', data);
-    //     setIsProcessing(true);
-
-    //     try {
-    //         const response = await axios.post(
-    //             'http://85.239.241.96:8000/api/ttm_endpoint',
-    //             data, // Pass data object
-    //             { responseType: 'arraybuffer' } // Receive response as ArrayBuffer
-    //         );
-
-    //         const audioBlob = new Blob([response.data], { type: 'audio/wav' }); // Convert ArrayBuffer to Blob
-    //         const url = URL.createObjectURL(audioBlob);
-    //         // console.log('url', url);
-    //         setAudioURL(url);
-    //         setAudioData(audioBlob);
-    //         setIsProcessing(false); // Set loading to false on success
-    //     } catch (error) {
-    //         // console.log('Error:', error);
-    //         window.toastify("Something went wrong", "error");
-    //         setIsProcessing(false); // Set loading to false on error
-    //     }
-    // }
 
     const handleGenerate = async () => {
 
@@ -93,11 +58,13 @@ const Generate = () => {
                 data,
                 requestOptions
             );
-
+         
+            const responseData = JSON.parse(response.config.data)
             const audioBlob = new Blob([response.data], { type: 'audio/wav' });
             const url = URL.createObjectURL(audioBlob);
             setAudioURL(url)
             setIsAutoPlay(true)
+            setData(responseData)
             // setAudio(new Audio(url)); // Create and set a new Audio object
             // setPrompt("")
             // setCooldown(300);
@@ -128,12 +95,24 @@ const Generate = () => {
     //     }
     // }, [cooldown]);
 
+   
+
+
     const handleDownload = () => {
         if (audioURL) { // Ensure the URL is valid
             try {
                 const a = document.createElement('a'); // Create an anchor element
                 a.href = audioURL; // Set the Blob URL
-                a.download = 'generated_audio.wav'; // Specify the filename
+
+                // Sanitize the prompt text for the filename (remove special characters and limit to 20 characters)
+                // const sanitizedPrompt = data?.prompt?.replace(/[^a-zA-Z0-9]/g, "_").slice(0, 20);
+                const sanitizedPrompt = data?.prompt 
+                ? data.prompt.replace(/[^a-zA-Z0-9]/g, "_").slice(0, 20) 
+                : 'Music'; // Default text if prompt is missing
+
+                // Dynamically create the filename using the sanitized prompt and your website name
+                a.download = `${sanitizedPrompt}_BittAudio.wav`; // Specify the filename with prompt and website name
+
                 document.body.appendChild(a); // Append to the document
                 a.click(); // Trigger a click event to download
                 document.body.removeChild(a); // Clean up by removing the anchor

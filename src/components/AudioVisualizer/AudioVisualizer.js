@@ -7,7 +7,7 @@ import { PlayIcon, PauseIcon, PrevIcon, NextIcon, DownloadIcon, VolumeIcon, Mute
 import formatTime from "../../outils/formatTime"
 import './AudioVisualizer.css'
 
-const AudioVisualizer = ({ audioURL ,isAutoPlay}) => {
+const AudioVisualizer = ({ audioURL ,isAutoPlay,handleDownload}) => {
     const [isPlaying, setIsPlaying] = useState(false)
     const [volume, setVolume] = useState(1)
     const [tmpVolume, setTmpVolume] = useState(volume)
@@ -298,16 +298,16 @@ const AudioVisualizer = ({ audioURL ,isAutoPlay}) => {
         border: 'none'
     }
 
-    const handleDownload = () => {
-        setClicked(true);
-        const link = document.createElement('a');
-        link.href = audioURL;
-        link.download = 'audio.mp3';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        setClicked(false);
-    }
+    // const handleDownload = () => {
+    //     setClicked(true);
+    //     const link = document.createElement('a');
+    //     link.href = audioURL;
+    //     link.download = 'abc.mp3';
+    //     document.body.appendChild(link);
+    //     link.click();
+    //     document.body.removeChild(link);
+    //     setClicked(false);
+    // }
 
 
     return (
