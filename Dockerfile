@@ -1,5 +1,5 @@
-# Stage 1: Build the React app
-FROM node:18 as build
+# Use an official Node.js runtime as the base image
+FROM node:18
 
 # Set the working directory in the container
 WORKDIR /app
@@ -16,20 +16,8 @@ COPY . .
 # Build your React app
 RUN npm run build
 
-# Stage 2: Serve the app using a lightweight Node.js server
-FROM node:18
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy only the build files from the previous stage
-COPY --from=build /app/build ./build
-
-# Install 'serve' globally to serve static files
-RUN npm install -g serve
-
-# Expose port 3000
+# Expose the port your app will run on
 EXPOSE 3000
 
-# Start the application using 'serve'
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Start the application
+CMD ["npm", "start"]
