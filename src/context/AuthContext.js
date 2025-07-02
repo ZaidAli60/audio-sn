@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useEffect, useReducer, useState } from 
 import { createContext } from 'react';
 
 const AuthContext = createContext()
-const initialState = { isAuthenticated: false, user: {} }
+const initialState = { isAuthenticated: true, user: {} }
 
 const reducer = (state, { type, payload }) => {
     switch (type) {
